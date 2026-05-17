@@ -11,6 +11,7 @@
     "new-project": "node scripts/new-project.mjs",
     "format": "biome check --write .",
     "lint": "biome check .",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -36,7 +37,7 @@
     "@clack/prompts": "^1.4.0",
     "handlebars": "^4.7.8",
     "handlebars-helpers": "^0.10.0",
-    "juice": "^11.0.0",
+    "juice": "~11.1.0",
     "nanoid": "^5.0.7",
     "picocolors": "^1.1.1",
     "react": "^18.3.1",

@@ -268,7 +268,6 @@ function buildPreviewRuntime() {
   const hb = Handlebars.create();
 
   // Carrega handlebars-helpers (cobre #compare, math, #group, etc)
-  // @ts-expect-error - typing
   handlebarsHelpers({ handlebars: hb });
 
   // Fakes neutros pros helpers VTEX específicos

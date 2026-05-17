@@ -11,8 +11,23 @@
     "isolatedModules": true,
     "allowImportingTsExtensions": false,
     "verbatimModuleSyntax": false,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "react-email-bridge": ["./packages/react-email-bridge/src/index.ts"],
+      "react-email-bridge/hbs": ["./packages/react-email-bridge/src/hbs/index.ts"],
+      "react-email-bridge/hbs/preview-helpers": [
+        "./packages/react-email-bridge/src/hbs/preview-helpers.ts"
+      ]
+    }
   },
   "include": ["validation/**/*", "packages/**/*", "examples/**/*"],
-  "exclude": ["node_modules", "**/dist", "refs"]
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    "refs",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "packages/react-email-bridge-ui"
+  ]
 }

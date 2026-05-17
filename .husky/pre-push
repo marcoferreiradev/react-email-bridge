@@ -1,13 +1,17 @@
 #
 # Mirrors the CI gate before push:
+#   pnpm typecheck -> tsc --noEmit at workspace root
 #   pnpm validate  -> P0 pipeline stress test (28 asserts)
-#   pnpm build     -> tsdown builds + typechecks our packages
+#   pnpm build     -> tsdown builds the packages
 #   pnpm test      -> vitest (107+ tests)
 #
 # Bypass with `git push --no-verify` for WIP / docs-only pushes when
 # you've already validated locally.
 
 set -e
+
+echo "▸ pnpm typecheck"
+pnpm typecheck
 
 echo "▸ pnpm validate"
 pnpm validate

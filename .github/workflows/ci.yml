@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Typecheck (workspace root)
+        run: pnpm typecheck
+
       - name: Validate pipeline (P0 stress test)
         run: pnpm validate
 
