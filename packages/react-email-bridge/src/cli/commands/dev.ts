@@ -8,6 +8,8 @@ import { createJiti } from 'jiti';
 import { addDevDependency } from 'nypm';
 import prompts from 'prompts';
 import { Server as SocketServer, type Socket } from 'socket.io';
+import * as p from '@clack/prompts';
+import pc from 'picocolors';
 
 interface Args {
   dir: string;
@@ -57,9 +59,12 @@ export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
   const cwd = process.cwd();
   const emailsDirAbs = path.resolve(cwd, emailsDirArg);
 
+  p.intro(pc.bgCyan(pc.black(' react-email-bridge dev ')));
+
   if (!fs.existsSync(emailsDirAbs)) {
-    console.error(`✗ Emails directory not found: ${emailsDirArg}`);
-    console.error(`  Run "react-email-bridge init" first.`);
+    p.cancel(
+      `Emails directory not found: ${pc.cyan(emailsDirArg)}. Run ${pc.bold('react-email-bridge init')} first.`
+    );
     process.exit(1);
   }
 
@@ -97,10 +102,12 @@ export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
     conf: { images: { unoptimized: true } },
   });
 
-  console.log(`  ◇ Loading preview from ${uiLocation}`);
-  console.log(`  ◇ Watching ${emailsDirArg}/`);
+  p.log.step(`Watching ${pc.cyan(emailsDirArg + '/')}`);
 
+  const sp = p.spinner();
+  sp.start('Loading preview server');
   await app.prepare();
+  sp.stop('Preview server ready');
   const handle = app.getRequestHandler();
 
   const server = http.createServer((req, res) => {
@@ -114,12 +121,14 @@ export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
   // Try to bind; bump port if in use.
   let result = await tryListen(server, port);
   while (result.portAlreadyInUse) {
-    console.warn(`  ⚠ Port ${port} in use, trying ${port + 1}`);
+    p.log.warn(pc.yellow(`Port ${port} in use, trying ${port + 1}`));
     port += 1;
     result = await tryListen(server, port);
   }
 
-  console.log(`\n  React Email Bridge — http://localhost:${port}\n`);
+  p.outro(
+    `${pc.green('✓')} ${pc.bold('Ready')} ${pc.dim('—')} ${pc.cyan(`http://localhost:${port}`)}`
+  );
 
   // ─ Hot reload: chokidar → socket.io → useHotreload in the UI ────────
   let clients: Socket[] = [];
@@ -147,7 +156,7 @@ export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
   });
 
   const shutdown = async () => {
-    console.log('\n  Stopping...');
+    console.log(`\n  ${pc.dim('Stopping…')}`);
     await watcher.close();
     await app.close();
     server.close();

@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import * as p from '@clack/prompts';
+import pc from 'picocolors';
 
 const SAMPLE_TEMPLATE = `import {
   Html,
@@ -98,36 +100,51 @@ export async function init({ dir }: Args) {
   const cwd = process.cwd();
   const emailsDir = path.resolve(cwd, dir);
 
+  p.intro(pc.bgCyan(pc.black(' react-email-bridge init ')));
+
+  const created: string[] = [];
+  const skipped: string[] = [];
+
+  function writeIfMissing(filePath: string, content: string) {
+    const rel = path.relative(cwd, filePath) || filePath;
+    if (fs.existsSync(filePath)) {
+      skipped.push(rel);
+      return;
+    }
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, content, 'utf-8');
+    created.push(rel);
+  }
+
   if (!fs.existsSync(emailsDir)) {
     fs.mkdirSync(emailsDir, { recursive: true });
-    console.log(`  ✓ created ${path.relative(cwd, emailsDir)}/`);
+    created.push(`${path.relative(cwd, emailsDir)}/`);
   }
 
-  const tsxPath = path.join(emailsDir, 'welcome.tsx');
-  if (!fs.existsSync(tsxPath)) {
-    fs.writeFileSync(tsxPath, SAMPLE_TEMPLATE, 'utf-8');
-    console.log(`  ✓ created ${path.relative(cwd, tsxPath)}`);
+  writeIfMissing(path.join(emailsDir, 'welcome.tsx'), SAMPLE_TEMPLATE);
+  writeIfMissing(path.join(emailsDir, 'welcome.json'), SAMPLE_FIXTURE);
+  writeIfMissing(path.resolve(cwd, 'react-email-bridge.config.ts'), SAMPLE_CONFIG);
+  writeIfMissing(path.resolve(cwd, 'tsconfig.json'), TSCONFIG);
+
+  if (created.length > 0) {
+    p.log.step(
+      `Created:\n${created.map((f) => `  ${pc.green('+')} ${f}`).join('\n')}`
+    );
+  }
+  if (skipped.length > 0) {
+    p.log.step(
+      pc.dim(
+        `Already present:\n${skipped.map((f) => `  ${pc.dim('·')} ${f}`).join('\n')}`
+      )
+    );
   }
 
-  const jsonPath = path.join(emailsDir, 'welcome.json');
-  if (!fs.existsSync(jsonPath)) {
-    fs.writeFileSync(jsonPath, SAMPLE_FIXTURE, 'utf-8');
-    console.log(`  ✓ created ${path.relative(cwd, jsonPath)}`);
-  }
+  p.outro(
+    `${pc.green('✓ Done')}
 
-  const configPath = path.resolve(cwd, 'react-email-bridge.config.ts');
-  if (!fs.existsSync(configPath)) {
-    fs.writeFileSync(configPath, SAMPLE_CONFIG, 'utf-8');
-    console.log(`  ✓ created ${path.relative(cwd, configPath)}`);
-  }
-
-  const tsconfigPath = path.resolve(cwd, 'tsconfig.json');
-  if (!fs.existsSync(tsconfigPath)) {
-    fs.writeFileSync(tsconfigPath, TSCONFIG, 'utf-8');
-    console.log(`  ✓ created ${path.relative(cwd, tsconfigPath)}`);
-  }
-
-  console.log(
-    `\n  Next: pnpm react-email-bridge dev\n  Preview will open at http://localhost:3737\n`
+  ${pc.dim('Next:')}
+    ${pc.cyan('pnpm react-email-bridge dev')}
+    ${pc.dim('Preview at http://localhost:3737')}
+`
   );
 }

@@ -15,17 +15,14 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import url from 'node:url';
+import * as p from '@clack/prompts';
+import pc from 'picocolors';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const startersRoot = path.join(repoRoot, 'starters');
-
-function bail(msg) {
-  console.error(`\n  ✗ ${msg}\n`);
-  process.exit(1);
-}
 
 function listAvailableStarters() {
   if (!fs.existsSync(startersRoot)) return [];
@@ -35,10 +32,15 @@ function listAvailableStarters() {
     .map((d) => d.name);
 }
 
+function bail(msg) {
+  p.cancel(msg);
+  process.exit(1);
+}
+
+// ── Parse args ──────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const skipInstall = args.includes('--skip-install');
 
-// Find --template <name> and remove both from positional args
 const templateIdx = args.findIndex((a) => a === '--template' || a === '-t');
 let template = 'default';
 const consumed = new Set();
@@ -48,31 +50,33 @@ if (templateIdx >= 0 && args[templateIdx + 1]) {
   consumed.add(templateIdx + 1);
 }
 
-const target = args.find(
-  (a, i) => !a.startsWith('--') && !consumed.has(i)
-);
+const target = args.find((a, i) => !a.startsWith('--') && !consumed.has(i));
 
 if (!target) {
   console.log(`
-  Usage: pnpm -w run new-project <dir> [--template <name>] [--skip-install]
+${pc.bold('react-email-bridge')} ${pc.dim('· new-project')}
 
-  Examples:
+  ${pc.dim('Usage:')}
+    pnpm -w run new-project ${pc.cyan('<dir>')} [--template ${pc.cyan('<name>')}] [--skip-install]
+
+  ${pc.dim('Examples:')}
     pnpm -w run new-project ../my-emails
     pnpm -w run new-project ../my-vtex --template vtex-full
     pnpm -w run new-project ../tmp --skip-install
 
-  Available templates:
+  ${pc.dim('Available templates:')}
 ${listAvailableStarters()
-  .map((s) => `    - ${s}`)
+  .map((s) => `    ${pc.green('·')} ${s}`)
   .join('\n')}
 `);
   process.exit(1);
 }
 
+// ── Validate ────────────────────────────────────────────────────────
 const starterDir = path.join(startersRoot, template);
 if (!fs.existsSync(starterDir)) {
   bail(
-    `Unknown template "${template}". Available: ${listAvailableStarters().join(', ')}`
+    `Unknown template ${pc.bold(template)}. Available: ${listAvailableStarters().join(', ')}`
   );
 }
 
@@ -80,25 +84,34 @@ const vendorDir = path.join(starterDir, 'vendor');
 const tarballs = fs.existsSync(vendorDir)
   ? fs.readdirSync(vendorDir).filter((f) => f.endsWith('.tgz'))
   : [];
-
 if (tarballs.length < 2) {
   bail(
-    `No tarballs in ${path.relative(repoRoot, vendorDir)}/. Run \`pnpm pack-all\` from ${repoRoot} first.`
+    `No tarballs in ${pc.cyan(path.relative(repoRoot, vendorDir) + '/')}. Run ${pc.bold('pnpm pack-all')} from the repo root first.`
   );
 }
 
 const destination = path.resolve(process.cwd(), target);
 if (fs.existsSync(destination)) {
-  bail(`Destination already exists: ${destination}`);
+  bail(`Destination already exists: ${pc.cyan(destination)}`);
 }
 
 const parent = path.dirname(destination);
 if (!fs.existsSync(parent)) {
-  bail(`Parent directory does not exist: ${parent}`);
+  bail(`Parent directory does not exist: ${pc.cyan(parent)}`);
 }
 
-console.log(`\n  ◇ Template: ${template}`);
-console.log(`  ◇ Copying starter → ${destination}`);
+// ── Run ─────────────────────────────────────────────────────────────
+const t0 = Date.now();
+p.intro(pc.bgCyan(pc.black(' react-email-bridge ')));
+
+// Show shortest of: relative path, abs path, ~/...
+const home = process.env.HOME || process.env.USERPROFILE || '';
+const rel = path.relative(process.cwd(), destination);
+const tilde = home && destination.startsWith(home) ? '~' + destination.slice(home.length) : destination;
+const shown = [rel, tilde, destination].sort((a, b) => a.length - b.length)[0];
+
+p.log.step(`Template: ${pc.cyan(template)}`);
+p.log.step(`Destination: ${pc.cyan(shown)}`);
 
 function copy(src, dst) {
   const stat = fs.statSync(src);
@@ -113,45 +126,74 @@ function copy(src, dst) {
     fs.copyFileSync(src, dst);
   }
 }
-copy(starterDir, destination);
 
-console.log(`  ✓ Files copied (${tarballs.length} tarballs in vendor/)`);
-
-if (skipInstall) {
-  console.log(
-    `\n  Skipping install. Run \`pnpm install && pnpm dev\` in ${target}.\n`
+const copySpinner = p.spinner();
+copySpinner.start('Copying starter');
+try {
+  copy(starterDir, destination);
+  copySpinner.stop(
+    `Files copied ${pc.dim(`(${tarballs.length} tarballs in vendor/)`)}`
   );
-  initGitRepo(destination);
-  process.exit(0);
+} catch (e) {
+  copySpinner.stop(pc.red(`Copy failed: ${e.message}`), 1);
+  process.exit(1);
 }
 
-console.log(`  ◇ Running pnpm install in ${target}...\n`);
-const install = spawnSync('pnpm', ['install'], {
-  cwd: destination,
-  stdio: 'inherit',
-});
-
-if (install.status !== 0) {
-  bail(`pnpm install failed in ${destination}`);
+if (!skipInstall) {
+  await runWithSpinner('Installing dependencies', 'pnpm', ['install'], destination);
 }
 
-initGitRepo(destination);
+await initGitRepo(destination);
 
-console.log(`
-  ✓ Ready.
+const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
 
-  Next:
-    cd ${target}
-    pnpm dev
-`);
+p.outro(
+  `${pc.green('✓ Ready')} ${pc.dim(`in ${elapsed}s`)}
 
-function initGitRepo(dir) {
+  ${pc.dim('Next:')}
+    ${pc.cyan(`cd ${shown}`)}
+    ${pc.cyan(skipInstall ? 'pnpm install && pnpm dev' : 'pnpm dev')}
+`
+);
+
+// ── Helpers ─────────────────────────────────────────────────────────
+
+async function runWithSpinner(label, cmd, cmdArgs, cwd) {
+  const sp = p.spinner();
+  sp.start(label);
+
+  let stdoutBuf = '';
+  let stderrBuf = '';
+
+  await new Promise((resolve) => {
+    const child = spawn(cmd, cmdArgs, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.on('data', (d) => (stdoutBuf += d.toString()));
+    child.stderr.on('data', (d) => (stderrBuf += d.toString()));
+    child.on('close', (code) => {
+      if (code === 0) {
+        sp.stop(label);
+        resolve();
+      } else {
+        sp.stop(pc.red(`${label} failed`), 1);
+        if (stderrBuf) console.error(stderrBuf);
+        if (stdoutBuf) console.error(stdoutBuf);
+        process.exit(code ?? 1);
+      }
+    });
+    child.on('error', (err) => {
+      sp.stop(pc.red(`${label} failed: ${err.message}`), 1);
+      process.exit(1);
+    });
+  });
+}
+
+async function initGitRepo(dir) {
   const inGit = spawnSync('git', ['rev-parse', '--is-inside-work-tree'], {
     cwd: dir,
     stdio: 'ignore',
   });
   if (inGit.status === 0) {
-    console.log(`  ◇ Inside an existing git repo — skipping git init`);
+    p.log.step(pc.dim('Already inside a git repo — skipping git init'));
     return;
   }
 
@@ -160,27 +202,22 @@ function initGitRepo(dir) {
     stdio: 'ignore',
   });
   if (init.status !== 0) {
-    console.warn(`  ⚠ git init failed (git not available?). Skipping.`);
+    p.log.warn(pc.yellow('git not available — skipping git init'));
     return;
   }
 
   spawnSync('git', ['add', '.'], { cwd: dir, stdio: 'ignore' });
   const commit = spawnSync(
     'git',
-    [
-      'commit',
-      '-q',
-      '-m',
-      'chore: bootstrap from react-email-bridge starter',
-    ],
+    ['commit', '-q', '-m', 'chore: bootstrap from react-email-bridge starter'],
     { cwd: dir, stdio: 'ignore' }
   );
 
   if (commit.status === 0) {
-    console.log(`  ✓ Initialised git repo (branch: main)`);
+    p.log.step(`Initialised git repo ${pc.dim('(branch: main)')}`);
   } else {
-    console.log(
-      `  ✓ Initialised git repo (no initial commit — set user.name/email)`
+    p.log.step(
+      `Initialised git repo ${pc.dim('(set user.name/email for initial commit)')}`
     );
   }
 }

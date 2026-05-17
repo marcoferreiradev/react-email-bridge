@@ -3,6 +3,8 @@ import path from 'node:path';
 import url from 'node:url';
 import { build } from 'esbuild';
 import type { ReactElement } from 'react';
+import * as p from '@clack/prompts';
+import pc from 'picocolors';
 import { render } from '../../core/render.js';
 import { loadConfig } from '../utils/load-config.js';
 
@@ -78,8 +80,10 @@ export async function exportCmd(
   const emailsDir = path.resolve(cwd, emailsDirArg);
   const outDirAbs = path.resolve(cwd, outDir);
 
+  p.intro(pc.bgCyan(pc.black(' react-email-bridge export ')));
+
   if (!fs.existsSync(emailsDir)) {
-    console.error(`✗ Emails directory not found: ${emailsDirArg}`);
+    p.cancel(`Emails directory not found: ${pc.cyan(emailsDirArg)}`);
     process.exit(1);
   }
 
@@ -96,7 +100,7 @@ export async function exportCmd(
       : null;
 
   if (!targets) {
-    console.error('✗ Provide a template name or pass --all');
+    p.cancel('Provide a template name or pass --all');
     process.exit(1);
   }
 
@@ -106,6 +110,7 @@ export async function exportCmd(
 
   let succeeded = 0;
   let failed = 0;
+  const lines: string[] = [];
 
   for (const name of targets) {
     const candidates = ['.tsx', '.jsx', '.ts', '.js']
@@ -113,7 +118,7 @@ export async function exportCmd(
       .filter((p) => fs.existsSync(p));
 
     if (candidates.length === 0) {
-      console.error(`  ✗ ${name}: file not found`);
+      lines.push(`  ${pc.red('✗')} ${name} ${pc.dim('— file not found')}`);
       failed++;
       continue;
     }
@@ -124,18 +129,27 @@ export async function exportCmd(
       const html = await render(element);
       const outPath = path.join(outDirAbs, `${name}${extension}`);
       fs.writeFileSync(outPath, html, 'utf-8');
-      console.log(
-        `  ✓ ${name} → ${path.relative(cwd, outPath)} (${html.length} bytes)`
+      const sizeKb = (html.length / 1024).toFixed(1);
+      lines.push(
+        `  ${pc.green('✓')} ${name} ${pc.dim('→')} ${pc.cyan(path.relative(cwd, outPath))} ${pc.dim(`(${sizeKb} kB)`)}`
       );
       succeeded++;
     } catch (e) {
-      console.error(`  ✗ ${name}: ${(e as Error).message}`);
+      lines.push(
+        `  ${pc.red('✗')} ${name} ${pc.dim('—')} ${pc.red((e as Error).message)}`
+      );
       failed++;
     }
   }
 
-  console.log(
-    `\n  ${succeeded} succeeded, ${failed} failed (output → ${path.relative(cwd, outDirAbs)}/)`
-  );
+  p.log.step(lines.join('\n'));
+
+  const summary =
+    failed === 0
+      ? `${pc.green(`✓ ${succeeded} template${succeeded === 1 ? '' : 's'} exported`)} ${pc.dim(`→ ${path.relative(cwd, outDirAbs)}/`)}`
+      : `${pc.green(`${succeeded} succeeded`)} ${pc.dim('·')} ${pc.red(`${failed} failed`)} ${pc.dim(`→ ${path.relative(cwd, outDirAbs)}/`)}`;
+
+  p.outro(summary);
+
   if (failed > 0) process.exit(1);
 }
