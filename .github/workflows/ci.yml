@@ -54,10 +54,15 @@ jobs:
           grep -q "{{#richShippingData shippingData}}" dist/order-confirmed.hbs
           grep -q "{{#each ../../../../items}}" dist/order-invoiced.hbs
 
-      - name: Smoke pack-all + starter bootstrap
+      - name: Smoke pack-all + new-project bootstrap (default + vtex-full)
         run: |
           pnpm pack-all
-          node scripts/new-project.mjs /tmp/ci-bootstrap --skip-install
-          test -f /tmp/ci-bootstrap/emails/welcome.tsx
-          test -f /tmp/ci-bootstrap/vendor/react-email-bridge-0.0.1.tgz
-          test -f /tmp/ci-bootstrap/vendor/react-email-bridge-ui-0.0.1.tgz
+          # default starter
+          node scripts/new-project.mjs /tmp/ci-default --skip-install
+          test -f /tmp/ci-default/emails/welcome.tsx
+          test -f /tmp/ci-default/vendor/react-email-bridge-0.0.1.tgz
+          test -f /tmp/ci-default/vendor/react-email-bridge-ui-0.0.1.tgz
+          # vtex-full starter
+          node scripts/new-project.mjs /tmp/ci-vtex --template vtex-full --skip-install
+          test -f /tmp/ci-vtex/package.json
+          test -f /tmp/ci-vtex/vendor/react-email-bridge-0.0.1.tgz

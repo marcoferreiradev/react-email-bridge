@@ -7,6 +7,7 @@ import {
   getCodeLocationFromAstElement,
 } from './get-code-location-from-ast-element';
 import { quickFetch } from './quick-fetch';
+import { isTemplateMarker } from '../../utils/is-template-marker';
 
 export type LinkCheck = { passed: boolean } & (
   | {
@@ -40,6 +41,9 @@ export const checkLinks = async (code: string) => {
         const link = anchor.attributes.href;
         if (!link) continue;
         if (link.startsWith('mailto:')) continue;
+        // Skip dynamic markers ({{trackingUrl}}, etc) — they're filled at
+        // send time on the destination platform; we can't validate them.
+        if (isTemplateMarker(link)) continue;
 
         const result: LinkCheckingResult = {
           link,

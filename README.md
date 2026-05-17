@@ -64,7 +64,7 @@ pnpm install
 pnpm pack-all
 ```
 
-`pack-all` builds both packages, writes them to `dist-tarballs/`, **and copies them into `starter/vendor/`** so the starter is ready to use.
+`pack-all` builds both packages, writes them to `dist-tarballs/`, **and copies them into `starters/*/vendor/`** so the starter is ready to use.
 
 ### Step 2 — Bootstrap a new email project (one command)
 
@@ -74,8 +74,22 @@ pnpm -w run new-project ../my-emails
 
 This:
 
-1. Copies the `starter/` folder to `../my-emails` (relative to repo, anywhere you want).
+1. Copies `starters/default/` to `../my-emails` (relative to repo, anywhere you want).
 2. Runs `pnpm install` inside it. The starter's `package.json` resolves `react-email-bridge` and `react-email-bridge-ui` from `./vendor/*.tgz`.
+3. Runs `git init` + initial commit so `git status` works out of the box.
+
+Pick a different starter with `--template`:
+
+```bash
+pnpm -w run new-project ../my-vtex-emails --template vtex-full
+```
+
+Starters available today:
+
+| Name | What's inside |
+|---|---|
+| `default` (default if you omit `--template`) | One `welcome.tsx` template + fixture + config + tsconfig. Generic. |
+| `vtex-full` | VTEX-tuned package.json + config; empty `emails/`. Pre-ported VTEX templates incoming — see [ROADMAP.md](./ROADMAP.md). |
 
 Use `--skip-install` if you want to inspect first:
 
@@ -313,7 +327,7 @@ react-email-bridge/                  # this repo
 │   ├── react-email-bridge/          # CLI + core + HBS preset  (~30KB built)
 │   └── react-email-bridge-ui/       # Next.js preview server (forked @react-email/ui, MIT)
 ├── examples/
-├── starter/                         # `cp -R` to bootstrap a new project
+├── starters/                        # bootstrap scaffolds (default, vtex-full, ...)
 ├── validation/
 └── DECISIONS.md                     # 16 design decisions rationale
 ```
@@ -343,8 +357,8 @@ Read [DECISIONS.md](./DECISIONS.md) for the 16 design choices and the reasoning 
 | `pnpm build` | Build both packages (`react-email-bridge` + `react-email-bridge-ui`). |
 | `pnpm test` | Run the full vitest suite. |
 | `pnpm validate` | End-to-end stress test of the render pipeline (validation/test-pipeline.tsx). |
-| `pnpm pack-all` | Build + pack both packages into `dist-tarballs/` and copy into `starter/vendor/`. |
-| `pnpm -w run new-project <dir> [--skip-install]` | Bootstrap a new email project from `starter/`. |
+| `pnpm pack-all` | Build + pack both packages into `dist-tarballs/` and copy into `starters/*/vendor/`. |
+| `pnpm -w run new-project <dir> [--template <name>] [--skip-install]` | Bootstrap a new email project from a starter (default: `default`). |
 
 ## Tests
 

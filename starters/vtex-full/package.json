@@ -1,7 +1,7 @@
 {
-  "name": "my-emails-project",
+  "name": "my-vtex-emails",
   "version": "0.0.1",
-  "description": "Email templates built with react-email-bridge",
+  "description": "VTEX transactional email templates built with react-email-bridge",
   "private": true,
   "type": "module",
   "scripts": {
@@ -15,6 +15,11 @@
     "react-dom": "^19.0.0",
     "react-email-bridge": "file:./vendor/react-email-bridge-0.0.1.tgz",
     "react-email-bridge-ui": "file:./vendor/react-email-bridge-ui-0.0.1.tgz"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.6.0"
   },
   "pnpm": {
     "overrides": {

@@ -7,6 +7,7 @@ import {
   getCodeLocationFromAstElement,
 } from './get-code-location-from-ast-element';
 import { quickFetch } from './quick-fetch';
+import { isTemplateMarker } from '../../utils/is-template-marker';
 
 export type ImageCheck = { passed: boolean } & (
   | {
@@ -59,6 +60,9 @@ export const checkImages = async (code: string, base: string) => {
       for await (const image of images) {
         const rawSource = image.attributes.src;
         if (!rawSource) continue;
+        // Skip dynamic markers ({{logoUrl}}, *|IMG|*, etc) — they're filled
+        // at send time on the destination platform; we can't validate them.
+        if (isTemplateMarker(rawSource)) continue;
 
         const source = rawSource?.startsWith('/')
           ? `${base}${rawSource}`
@@ -72,14 +76,18 @@ export const checkImages = async (code: string, base: string) => {
         };
 
         const alt = image.attributes.alt;
+        // Dynamic alt (alt={`{{name}}`}) is treated as present — the platform
+        // supplies the real text at send time.
+        const altPresent = alt !== undefined && alt.length > 0;
+        const altIsDynamic = isTemplateMarker(alt);
         result.checks.push({
-          passed: alt !== undefined,
+          passed: altPresent || altIsDynamic,
           type: 'accessibility',
           metadata: {
             alt,
           },
         });
-        if (alt === undefined) {
+        if (!altPresent && !altIsDynamic) {
           result.status = 'warning';
         }
 

@@ -8,4 +8,7 @@ export {
   defineConfig,
   type Preset,
   type BridgeConfig,
+  type PreviewHelper,
+  type PreviewInlineHelper,
+  type PreviewBlockHelper,
 } from './types.js';
