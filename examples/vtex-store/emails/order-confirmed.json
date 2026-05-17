@@ -1,15 +1,4 @@
 {
-  "customer": {
-    "firstName": "Marco"
-  },
-  "storeTheme": {
-    "primary": "#0066ff",
-    "packageBg": "#fafafa",
-    "stripeColor": "#f5f5ff"
-  },
-  "accountInfo": {
-    "MainAccountName": "oficinareserva"
-  },
   "orders": [
     {
       "package": null,
