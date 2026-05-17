@@ -15,9 +15,7 @@ export async function loadConfig(cwd: string): Promise<BridgeConfig> {
     const p = path.join(cwd, name);
     if (fs.existsSync(p)) {
       const jiti = createJiti(cwd, { interopDefault: true });
-      const mod = await jiti.import<BridgeConfig | { default: BridgeConfig }>(
-        p
-      );
+      const mod = await jiti.import<BridgeConfig | { default: BridgeConfig }>(p);
       return 'default' in (mod as object)
         ? (mod as { default: BridgeConfig }).default
         : (mod as BridgeConfig);

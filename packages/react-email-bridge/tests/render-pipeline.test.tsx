@@ -16,16 +16,12 @@ describe('render() pipeline', () => {
     });
 
     it('string-attr markers survive', async () => {
-      const html = await render(
-        <a href={`{{url}}`}>link</a>
-      );
+      const html = await render(<a href={`{{url}}`}>link</a>);
       expect(html).toContain('href="{{url}}"');
     });
 
     it('hbs() in style becomes {{path}}', async () => {
-      const html = await render(
-        <div style={{ color: hbs('theme.color') }}>x</div>
-      );
+      const html = await render(<div style={{ color: hbs('theme.color') }}>x</div>);
       expect(html).toContain('color:{{theme.color}}');
     });
 
@@ -38,9 +34,7 @@ describe('render() pipeline', () => {
     });
 
     it('no sentinels leak to output', async () => {
-      const html = await render(
-        <div style={{ color: hbs('x') }}>{`{{y}}`}</div>
-      );
+      const html = await render(<div style={{ color: hbs('x') }}>{`{{y}}`}</div>);
       expect(html).not.toMatch(/HBSSENTINEL/);
     });
   });
@@ -109,17 +103,12 @@ describe('render() pipeline', () => {
 
   describe('CSS inlining', () => {
     it('juice runs (style attrs present)', async () => {
-      const html = await render(
-        <div style={{ color: 'red', padding: '8px' }}>x</div>
-      );
+      const html = await render(<div style={{ color: 'red', padding: '8px' }}>x</div>);
       expect(html).toMatch(/style="[^"]*color:\s*red/);
     });
 
     it('inlineCss: false skips juice', async () => {
-      const html = await render(
-        <div style={{ color: hbs('c') }}>x</div>,
-        { inlineCss: false }
-      );
+      const html = await render(<div style={{ color: hbs('c') }}>x</div>, { inlineCss: false });
       // markers still substituted, just no juice processing
       expect(html).toContain('{{c}}');
     });
@@ -151,17 +140,13 @@ describe('unescapeMarkers — direct', () => {
   });
 
   it('multiple entity types in one marker', () => {
-    expect(unescapeMarkers('{{#cmp a &#x27;&gt;&#x27; &quot;b&quot;}}')).toBe(
-      `{{#cmp a '>' "b"}}`
-    );
+    expect(unescapeMarkers('{{#cmp a &#x27;&gt;&#x27; &quot;b&quot;}}')).toBe(`{{#cmp a '>' "b"}}`);
   });
 });
 
 describe('Raw escape hatch', () => {
   it('emits children verbatim', async () => {
-    const html = await render(
-      <Raw>{`{{#group items by="cat"}}`}</Raw>
-    );
+    const html = await render(<Raw>{`{{#group items by="cat"}}`}</Raw>);
     expect(html).toContain('{{#group items by="cat"}}');
   });
 });

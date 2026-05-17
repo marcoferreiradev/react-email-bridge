@@ -14,18 +14,7 @@
  *
  * The exported .hbs pastes directly into VTEX Message Center.
  */
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Section,
-  Row,
-  Column,
-  Text,
-  Heading,
-  Img,
-} from 'react-email';
+import { Html, Head, Body, Container, Section, Row, Column, Text, Heading, Img } from 'react-email';
 import { hbs } from 'react-email-bridge';
 import { Each, If, Unless, Else, Raw } from 'react-email-bridge/hbs';
 
@@ -43,10 +32,7 @@ export default function OrderConfirmed() {
         >
           {/* Header with store logo + greeting */}
           <Section style={{ padding: '24px', borderBottom: '1px solid #ddd' }}>
-            <Heading
-              as="h1"
-              style={{ color: hbs('storeTheme.primary'), margin: 0 }}
-            >
+            <Heading as="h1" style={{ color: hbs('storeTheme.primary'), margin: 0 }}>
               {`{{_accountInfo.TradingName}}`}
             </Heading>
             <Text style={{ color: '#666', marginTop: '8px' }}>
@@ -63,8 +49,7 @@ export default function OrderConfirmed() {
               <Each path="orders.0.paymentData.transactions">
                 <Each path="payments">
                   <Text style={{ margin: '4px 0' }}>
-                    {`{{paymentSystemName}}`} — R${' '}
-                    {`{{formatCurrency value}}`}
+                    {`{{paymentSystemName}}`} — R$ {`{{formatCurrency value}}`}
                   </Text>
                 </Each>
               </Each>
@@ -93,8 +78,7 @@ export default function OrderConfirmed() {
                   <Each path="paymentData.transactions">
                     <Each path="payments">
                       <Text style={{ margin: '4px 0' }}>
-                        {`{{paymentSystemName}}`} — R${' '}
-                        {`{{formatCurrency value}}`}
+                        {`{{paymentSystemName}}`} — R$ {`{{formatCurrency value}}`}
                       </Text>
                     </Each>
                   </Each>
@@ -109,9 +93,7 @@ export default function OrderConfirmed() {
                       <Text style={{ margin: '4px 0' }}>{`{{id}}`}</Text>
                     </Column>
                     <Column align="right">
-                      <Text style={{ margin: '4px 0' }}>
-                        R$ {`{{formatCurrency value}}`}
-                      </Text>
+                      <Text style={{ margin: '4px 0' }}>R$ {`{{formatCurrency value}}`}</Text>
                     </Column>
                   </Row>
                 </Each>
@@ -144,25 +126,16 @@ export default function OrderConfirmed() {
                   <Each path="items">
                     <Row>
                       <Column style={{ width: '70px', verticalAlign: 'top' }}>
-                        <Img
-                          src={`{{imageUrl}}`}
-                          alt={`{{name}}`}
-                          width="60"
-                          height="60"
-                        />
+                        <Img src={`{{imageUrl}}`} alt={`{{name}}`} width="60" height="60" />
                       </Column>
                       <Column>
                         <Text style={{ margin: 0 }}>
                           <strong>{`{{name}}`}</strong>
                         </Text>
-                        <Text
-                          style={{ margin: '4px 0', color: '#666', fontSize: '12px' }}
-                        >
+                        <Text style={{ margin: '4px 0', color: '#666', fontSize: '12px' }}>
                           Qtd: {`{{quantity}}`}
                         </Text>
-                        <Text style={{ margin: 0 }}>
-                          R$ {`{{formatCurrency sellingPrice}}`}
-                        </Text>
+                        <Text style={{ margin: 0 }}>R$ {`{{formatCurrency sellingPrice}}`}</Text>
                       </Column>
                     </Row>
                   </Each>
@@ -181,9 +154,7 @@ export default function OrderConfirmed() {
             </Heading>
             <Each path="orders.0.items">
               <Raw>{`{{#eq (math @index "%" 2) 0}}`}</Raw>
-              <Row
-                style={{ backgroundColor: hbs('storeTheme.stripeColor') }}
-              >
+              <Row style={{ backgroundColor: hbs('storeTheme.stripeColor') }}>
                 <Column>
                   <Text style={{ margin: 0 }}>
                     {`{{@index}}`} — {`{{name}}`}

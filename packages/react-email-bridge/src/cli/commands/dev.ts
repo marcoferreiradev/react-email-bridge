@@ -30,8 +30,7 @@ async function resolveUiLocation(): Promise<string> {
     const response = await prompts({
       type: 'confirm',
       name: 'install',
-      message:
-        'The preview server requires "react-email-bridge-ui". Install it now?',
+      message: 'The preview server requires "react-email-bridge-ui". Install it now?',
       initial: true,
     });
     if (!response.install) {
@@ -111,10 +110,7 @@ export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
   const handle = app.getRequestHandler();
 
   const server = http.createServer((req, res) => {
-    res.setHeader(
-      'Cache-Control',
-      'no-cache, max-age=0, must-revalidate, no-store'
-    );
+    res.setHeader('Cache-Control', 'no-cache, max-age=0, must-revalidate, no-store');
     handle(req, res);
   });
 

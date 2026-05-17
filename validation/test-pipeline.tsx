@@ -7,20 +7,10 @@
  * Se algum check falhar, ajustar antes de seguir com monorepo/UI/CLI.
  */
 
-import React, { type ReactNode } from 'react';
+import type React from 'react';
+import type { ReactNode } from 'react';
 import { render } from 'react-email';
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Section,
-  Row,
-  Column,
-  Text,
-  Img,
-  Link,
-} from 'react-email';
+import { Html, Head, Body, Container, Section, Row, Column, Text, Img, Link } from 'react-email';
 import juice from 'juice';
 import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
@@ -70,15 +60,7 @@ function unescapeMarkers(html: string): string {
 // PRESET /hbs: componentes-açúcar
 // ────────────────────────────────────────────────────────────────────
 
-function Each({
-  path: p,
-  as,
-  children,
-}: {
-  path: string;
-  as?: string;
-  children: ReactNode;
-}) {
+function Each({ path: p, as, children }: { path: string; as?: string; children: ReactNode }) {
   const open = as ? `{{#each ${p} as |${as}|}}` : `{{#each ${p}}}`;
   return (
     <>
@@ -159,12 +141,7 @@ function StressTest() {
           <Text>Olá {`{{client.firstName}}`}, bem-vindo!</Text>
 
           {/* 2. Variável em atributo string */}
-          <Img
-            src={`{{logoUrl}}`}
-            alt={`{{accountName}}`}
-            width="150"
-            height="50"
-          />
+          <Img src={`{{logoUrl}}`} alt={`{{accountName}}`} width="150" height="50" />
 
           {/* 3. Variável em atributo style (via hbs()) */}
           <Section
@@ -198,8 +175,7 @@ function StressTest() {
           {/* 6. If/Else com path */}
           <If path="invoiceUrl">
             <Text>
-              Nota fiscal:{' '}
-              <Link href={`{{invoiceUrl}}`}>{`{{invoiceUrl}}`}</Link>
+              Nota fiscal: <Link href={`{{invoiceUrl}}`}>{`{{invoiceUrl}}`}</Link>
             </Text>
             <Else />
             <Text>Sua nota será enviada em breve.</Text>
@@ -304,7 +280,7 @@ function buildPreviewRuntime() {
   );
 
   // helperMissing fallback
-  hb.registerHelper('helperMissing', function (...args: any[]) {
+  hb.registerHelper('helperMissing', (...args: any[]) => {
     const options = args.pop();
     const params = args.map((a) => JSON.stringify(a)).join(', ');
     return new hb.SafeString(`[${options.name}(${params})]`);
@@ -492,14 +468,8 @@ async function main() {
   console.log('• Rendering export pipeline (render → sentinels → juice)...');
   const exported = await exportTemplate(element);
 
-  fs.writeFileSync(
-    path.join(import.meta.dirname, 'output-export.hbs'),
-    exported,
-    'utf-8'
-  );
-  console.log(
-    `  → wrote validation/output-export.hbs (${exported.length} bytes)\n`
-  );
+  fs.writeFileSync(path.join(import.meta.dirname, 'output-export.hbs'), exported, 'utf-8');
+  console.log(`  → wrote validation/output-export.hbs (${exported.length} bytes)\n`);
 
   let passed = 0;
   let failed = 0;
@@ -515,14 +485,8 @@ async function main() {
   let preview = '';
   try {
     preview = await previewTemplate(element, fixture);
-    fs.writeFileSync(
-      path.join(import.meta.dirname, 'output-preview.html'),
-      preview,
-      'utf-8'
-    );
-    console.log(
-      `  → wrote validation/output-preview.html (${preview.length} bytes)\n`
-    );
+    fs.writeFileSync(path.join(import.meta.dirname, 'output-preview.html'), preview, 'utf-8');
+    console.log(`  → wrote validation/output-preview.html (${preview.length} bytes)\n`);
 
     console.log('• Checking PREVIEW output (dados interpolados):\n');
     for (const check of previewChecks) {

@@ -27,21 +27,15 @@ export const vtexFakeHelpers: Record<string, Handlebars.HelperDelegate> = {
     if (typeof n !== 'number') return String(n ?? '');
     return (n / 100).toFixed(2);
   },
-  multiplyCurrency: (a: unknown, b: unknown) =>
-    (Number(a) * Number(b)).toFixed(2),
+  multiplyCurrency: (a: unknown, b: unknown) => (Number(a) * Number(b)).toFixed(2),
 
-  formatDate: (d: unknown) =>
-    d ? new Date(d as string).toISOString().slice(0, 10) : '',
-  formatTime: (d: unknown) =>
-    d ? new Date(d as string).toISOString().slice(11, 16) : '',
+  formatDate: (d: unknown) => (d ? new Date(d as string).toISOString().slice(0, 10) : ''),
+  formatTime: (d: unknown) => (d ? new Date(d as string).toISOString().slice(11, 16) : ''),
   formatDateTime: (d: unknown) =>
     d ? new Date(d as string).toISOString().replace('T', ' ').slice(0, 19) : '',
-  formatUSDate: (d: unknown) =>
-    d ? new Date(d as string).toLocaleDateString('en-US') : '',
-  formatUSDateTime: (d: unknown) =>
-    d ? new Date(d as string).toLocaleString('en-US') : '',
-  formatDateUtc: (d: unknown) =>
-    d ? new Date(d as string).toUTCString() : '',
+  formatUSDate: (d: unknown) => (d ? new Date(d as string).toLocaleDateString('en-US') : ''),
+  formatUSDateTime: (d: unknown) => (d ? new Date(d as string).toLocaleString('en-US') : ''),
+  formatDateUtc: (d: unknown) => (d ? new Date(d as string).toUTCString() : ''),
   formatDateNoTimezone: (d: unknown) => {
     if (!d) return '';
     const [y, m, dd] = String(d).split('T')[0]!.split('-');
@@ -70,23 +64,30 @@ export const vtexFakeHelpers: Record<string, Handlebars.HelperDelegate> = {
     }
     return options.inverse(this);
   },
-  ifCond(
-    v1: unknown,
-    operator: unknown,
-    v2: unknown,
-    options: Handlebars.HelperOptions
-  ) {
+  ifCond(v1: unknown, operator: unknown, v2: unknown, options: Handlebars.HelperOptions) {
     switch (operator) {
-      case '==': return v1 == v2 ? options.fn(this) : options.inverse(this);
-      case '===': return v1 === v2 ? options.fn(this) : options.inverse(this);
-      case '!=': return v1 != v2 ? options.fn(this) : options.inverse(this);
-      case '<': return (v1 as number) < (v2 as number) ? options.fn(this) : options.inverse(this);
-      case '<=': return (v1 as number) <= (v2 as number) ? options.fn(this) : options.inverse(this);
-      case '>': return (v1 as number) > (v2 as number) ? options.fn(this) : options.inverse(this);
-      case '>=': return (v1 as number) >= (v2 as number) ? options.fn(this) : options.inverse(this);
-      case '&&': return v1 && v2 ? options.fn(this) : options.inverse(this);
-      case '||': return v1 || v2 ? options.fn(this) : options.inverse(this);
-      default: return options.inverse(this);
+      case '==':
+        // biome-ignore lint/suspicious/noDoubleEquals: implements == operator for templates
+        return v1 == v2 ? options.fn(this) : options.inverse(this);
+      case '===':
+        return v1 === v2 ? options.fn(this) : options.inverse(this);
+      case '!=':
+        // biome-ignore lint/suspicious/noDoubleEquals: implements != operator for templates
+        return v1 != v2 ? options.fn(this) : options.inverse(this);
+      case '<':
+        return (v1 as number) < (v2 as number) ? options.fn(this) : options.inverse(this);
+      case '<=':
+        return (v1 as number) <= (v2 as number) ? options.fn(this) : options.inverse(this);
+      case '>':
+        return (v1 as number) > (v2 as number) ? options.fn(this) : options.inverse(this);
+      case '>=':
+        return (v1 as number) >= (v2 as number) ? options.fn(this) : options.inverse(this);
+      case '&&':
+        return v1 && v2 ? options.fn(this) : options.inverse(this);
+      case '||':
+        return v1 || v2 ? options.fn(this) : options.inverse(this);
+      default:
+        return options.inverse(this);
     }
   },
   isMoreThanOneDay(d: unknown, options: Handlebars.HelperOptions) {
@@ -104,12 +105,18 @@ export const vtexFakeHelpers: Record<string, Handlebars.HelperDelegate> = {
     const a = parseFloat(String(lvalue));
     const b = parseFloat(String(rvalue));
     switch (String(operator)) {
-      case '+': return a + b;
-      case '-': return a - b;
-      case '*': return a * b;
-      case '/': return b === 0 ? 0 : a / b;
-      case '%': return a % b;
-      default: return '';
+      case '+':
+        return a + b;
+      case '-':
+        return a - b;
+      case '*':
+        return a * b;
+      case '/':
+        return b === 0 ? 0 : a / b;
+      case '%':
+        return a % b;
+      default:
+        return '';
     }
   },
 
@@ -120,18 +127,12 @@ export const vtexFakeHelpers: Record<string, Handlebars.HelperDelegate> = {
    *     {{value}}: {{#each items}}{{name}}{{/each}}
    *   {{/group}}
    */
-  group(
-    list: unknown,
-    options: Handlebars.HelperOptions & { hash: { by?: string } }
-  ) {
+  group(list: unknown, options: Handlebars.HelperOptions & { hash: { by?: string } }) {
     if (!Array.isArray(list) || !options.hash.by) {
       return options.inverse?.(this) ?? '';
     }
     const prop = options.hash.by;
-    const groups: Record<
-      string,
-      { index: number; value: string; items: unknown[] }
-    > = {};
+    const groups: Record<string, { index: number; value: string; items: unknown[] }> = {};
     const order: string[] = [];
     for (const item of list as Record<string, unknown>[]) {
       const key = String(item[prop]);

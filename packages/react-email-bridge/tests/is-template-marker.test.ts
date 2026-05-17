@@ -32,9 +32,7 @@ describe('isTemplateMarker', () => {
       expect(isTemplateMarker('{{formatCurrency price}}')).toBe(true);
     });
     it('matches marker inside longer URL', () => {
-      expect(
-        isTemplateMarker('https://cdn.example.com/{{accountSlug}}/logo.png')
-      ).toBe(true);
+      expect(isTemplateMarker('https://cdn.example.com/{{accountSlug}}/logo.png')).toBe(true);
     });
   });
 

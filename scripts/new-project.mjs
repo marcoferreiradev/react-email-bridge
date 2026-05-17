@@ -75,9 +75,7 @@ ${listAvailableStarters()
 // ── Validate ────────────────────────────────────────────────────────
 const starterDir = path.join(startersRoot, template);
 if (!fs.existsSync(starterDir)) {
-  bail(
-    `Unknown template ${pc.bold(template)}. Available: ${listAvailableStarters().join(', ')}`
-  );
+  bail(`Unknown template ${pc.bold(template)}. Available: ${listAvailableStarters().join(', ')}`);
 }
 
 const vendorDir = path.join(starterDir, 'vendor');
@@ -107,7 +105,8 @@ p.intro(pc.bgCyan(pc.black(' react-email-bridge ')));
 // Show shortest of: relative path, abs path, ~/...
 const home = process.env.HOME || process.env.USERPROFILE || '';
 const rel = path.relative(process.cwd(), destination);
-const tilde = home && destination.startsWith(home) ? '~' + destination.slice(home.length) : destination;
+const tilde =
+  home && destination.startsWith(home) ? '~' + destination.slice(home.length) : destination;
 const shown = [rel, tilde, destination].sort((a, b) => a.length - b.length)[0];
 
 p.log.step(`Template: ${pc.cyan(template)}`);
@@ -131,9 +130,7 @@ const copySpinner = p.spinner();
 copySpinner.start('Copying starter');
 try {
   copy(starterDir, destination);
-  copySpinner.stop(
-    `Files copied ${pc.dim(`(${tarballs.length} tarballs in vendor/)`)}`
-  );
+  copySpinner.stop(`Files copied ${pc.dim(`(${tarballs.length} tarballs in vendor/)`)}`);
 } catch (e) {
   copySpinner.stop(pc.red(`Copy failed: ${e.message}`), 1);
   process.exit(1);
@@ -216,8 +213,6 @@ async function initGitRepo(dir) {
   if (commit.status === 0) {
     p.log.step(`Initialised git repo ${pc.dim('(branch: main)')}`);
   } else {
-    p.log.step(
-      `Initialised git repo ${pc.dim('(set user.name/email for initial commit)')}`
-    );
+    p.log.step(`Initialised git repo ${pc.dim('(set user.name/email for initial commit)')}`);
   }
 }

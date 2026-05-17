@@ -17,10 +17,7 @@ export interface RenderOptions {
  * Pipeline: renderToStaticMarkup → substitute hbs() sentinels →
  * unescape markers → juice → unescape again.
  */
-export async function render(
-  element: ReactElement,
-  options: RenderOptions = {}
-): Promise<string> {
+export async function render(element: ReactElement, options: RenderOptions = {}): Promise<string> {
   const { inlineCss = true } = options;
   const rawHtml = await reactEmailRender(element, { pretty: false });
   const withMarkers = substituteSentinels(rawHtml);

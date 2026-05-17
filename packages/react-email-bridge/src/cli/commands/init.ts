@@ -127,15 +127,11 @@ export async function init({ dir }: Args) {
   writeIfMissing(path.resolve(cwd, 'tsconfig.json'), TSCONFIG);
 
   if (created.length > 0) {
-    p.log.step(
-      `Created:\n${created.map((f) => `  ${pc.green('+')} ${f}`).join('\n')}`
-    );
+    p.log.step(`Created:\n${created.map((f) => `  ${pc.green('+')} ${f}`).join('\n')}`);
   }
   if (skipped.length > 0) {
     p.log.step(
-      pc.dim(
-        `Already present:\n${skipped.map((f) => `  ${pc.dim('·')} ${f}`).join('\n')}`
-      )
+      pc.dim(`Already present:\n${skipped.map((f) => `  ${pc.dim('·')} ${f}`).join('\n')}`)
     );
   }
 

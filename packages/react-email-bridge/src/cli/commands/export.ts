@@ -20,10 +20,7 @@ interface Args {
  * pick up the user's tsconfig.json across a programmatic boundary). The
  * bundle resolves bare specifiers from the user's project node_modules.
  */
-async function loadEmailComponent(
-  filePath: string,
-  cwd: string
-): Promise<() => ReactElement> {
+async function loadEmailComponent(filePath: string, cwd: string): Promise<() => ReactElement> {
   // Temp file goes inside the user's project so Node's ESM resolver can find
   // node_modules (react, @react-email/components, react-email-bridge, etc).
   // os.tmpdir() doesn't work — it's outside any node_modules tree.
@@ -135,9 +132,7 @@ export async function exportCmd(
       );
       succeeded++;
     } catch (e) {
-      lines.push(
-        `  ${pc.red('✗')} ${name} ${pc.dim('—')} ${pc.red((e as Error).message)}`
-      );
+      lines.push(`  ${pc.red('✗')} ${name} ${pc.dim('—')} ${pc.red((e as Error).message)}`);
       failed++;
     }
   }

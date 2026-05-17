@@ -26,17 +26,9 @@ export default function OrderSummary() {
             maxWidth: '600px',
           }}
         >
-          <Img
-            src={`{{logoUrl}}`}
-            alt={`{{accountName}}`}
-            width="180"
-            height="40"
-          />
+          <Img src={`{{logoUrl}}`} alt={`{{accountName}}`} width="180" height="40" />
 
-          <Heading
-            as="h1"
-            style={{ color: hbs('theme.primaryColor'), marginTop: '24px' }}
-          >
+          <Heading as="h1" style={{ color: hbs('theme.primaryColor'), marginTop: '24px' }}>
             Olá {`{{customer.firstName}}`}!
           </Heading>
 
@@ -92,17 +84,13 @@ export default function OrderSummary() {
             </Section>
             <Else />
             <Section style={{ marginTop: '24px' }}>
-              <Text style={{ color: '#666' }}>
-                Sua nota fiscal será enviada em breve.
-              </Text>
+              <Text style={{ color: '#666' }}>Sua nota fiscal será enviada em breve.</Text>
             </Section>
           </If>
 
           <Unless path="cancelled">
             <If compare={['items.length', '>', '1']}>
-              <Text style={{ color: '#666', fontSize: '12px' }}>
-                Você comprou múltiplos itens.
-              </Text>
+              <Text style={{ color: '#666', fontSize: '12px' }}>Você comprou múltiplos itens.</Text>
             </If>
           </Unless>
 
@@ -112,13 +100,17 @@ export default function OrderSummary() {
               <Raw>{`{{#eq (math @index "%" 2) 0}}`}</Raw>
               <Row style={{ backgroundColor: hbs('theme.stripeColor') }}>
                 <Column>
-                  <Text>par #{`{{@index}}`}: {`{{productName}}`}</Text>
+                  <Text>
+                    par #{`{{@index}}`}: {`{{productName}}`}
+                  </Text>
                 </Column>
               </Row>
               <Raw>{`{{else}}`}</Raw>
               <Row>
                 <Column>
-                  <Text>impar #{`{{@index}}`}: {`{{productName}}`}</Text>
+                  <Text>
+                    impar #{`{{@index}}`}: {`{{productName}}`}
+                  </Text>
                 </Column>
               </Row>
               <Raw>{`{{/eq}}`}</Raw>

@@ -6,9 +6,6 @@
     "firstName": "Marco"
   },
   "orderId": "12345",
-  "items": [
-    { "name": "Black helmet", "quantity": 1 },
-    { "name": "Leather gloves", "quantity": 2 }
-  ],
+  "items": [{ "name": "Black helmet", "quantity": 1 }, { "name": "Leather gloves", "quantity": 2 }],
   "trackingUrl": "https://example.com/track/12345"
 }

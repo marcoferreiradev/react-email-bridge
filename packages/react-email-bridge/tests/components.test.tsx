@@ -79,8 +79,6 @@ describe('hbs sugar components', () => {
   });
 
   it('If with no props throws', () => {
-    expect(() => renderToStaticMarkup(<If>x</If>)).toThrow(
-      /requires one of: path, eq, compare/
-    );
+    expect(() => renderToStaticMarkup(<If>x</If>)).toThrow(/requires one of: path, eq, compare/);
   });
 });

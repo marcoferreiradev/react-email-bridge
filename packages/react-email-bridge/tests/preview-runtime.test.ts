@@ -68,11 +68,15 @@ describe('preview runtime', () => {
   });
 
   it('extra helpers from config override defaults', () => {
-    const result = previewWithFixture('{{formatCurrency 100}}', {}, {
-      extraHelpers: {
-        formatCurrency: (n: unknown) => `R$ ${Number(n).toFixed(2)} (custom)`,
-      },
-    });
+    const result = previewWithFixture(
+      '{{formatCurrency 100}}',
+      {},
+      {
+        extraHelpers: {
+          formatCurrency: (n: unknown) => `R$ ${Number(n).toFixed(2)} (custom)`,
+        },
+      }
+    );
     expect(result.html).toBe('R$ 100.00 (custom)');
   });
 });
