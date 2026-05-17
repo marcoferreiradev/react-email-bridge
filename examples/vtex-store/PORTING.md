@@ -45,10 +45,10 @@ preserved. Our port mirrors that output shape:
 | 01-confirmed                   |   106 |       10 |       5 | PR B.5  | `order-confirmed.tsx` — faithful rewrite, pending manual Message Center validation |
 | 04-invoiced                    |   118 |        6 |       6 | PR B.5  | `order-invoiced.tsx` — faithful rewrite, pending manual Message Center validation |
 | 06-shipped                     |   103 |       12 |       4 | Onda 1  | `order-shipped.tsx` — PR B, pending manual Message Center validation |
-| 05-invoiced-cancel-request     |    81 |        8 |       5 | Onda 2  | PR C — variant of 04 |
-| 07-shipped-cancel-request      |   109 |       14 |       4 | Onda 2  | PR C — variant of 06 |
-| 08-shipping-update             |   110 |        8 |       6 | Onda 2  | PR C — variant of 06 |
-| 10-delivered                   |   101 |       11 |       4 | Onda 2  | PR C — variant of 06 |
+| 05-invoiced-cancel-request     |    81 |        8 |       5 | Onda 2  | `order-invoiced-cancel-request.tsx` — pending manual Message Center validation |
+| 07-shipped-cancel-request      |   109 |       14 |       4 | Onda 2  | `order-shipped-cancel-request.tsx` — pending manual Message Center validation |
+| 08-shipping-update             |   110 |        8 |       6 | Onda 2  | `order-shipping-update.tsx` — pending manual Message Center validation |
+| 10-delivered                   |   101 |       11 |       4 | Onda 2  | `order-delivered.tsx` — pending manual Message Center validation |
 | 02-cancelled                   |    53 |        6 |       4 | Onda 3  | PR D |
 | 03-payment-approved            |    55 |        6 |       3 | Onda 3  | PR D |
 | 09-replaced                    |    98 |       10 |       5 | Onda 3  | PR D — stand-alone complex |
