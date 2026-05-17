@@ -42,8 +42,8 @@ preserved. Our port mirrors that output shape:
 
 | Template                       | Lines | Partials | Helpers | Wave    | Status |
 |--------------------------------|------:|---------:|--------:|---------|--------|
-| 01-confirmed                   |   N/A |       10 |       5 | (v0.1)  | in `order-confirmed.tsx` (refactor in PR A) |
-| 04-invoiced                    |   N/A |        6 |       6 | (v0.1)  | in `order-invoiced.tsx` (refactor in PR A) |
+| 01-confirmed                   |   N/A |       10 |       5 | (v0.1)  | in `order-confirmed.tsx` — freeform demo, faithful rewrite deferred (see scope note below) |
+| 04-invoiced                    |   N/A |        6 |       6 | (v0.1)  | in `order-invoiced.tsx` — freeform demo, faithful rewrite deferred (see scope note below) |
 | 06-shipped                     |   103 |       12 |       4 | Onda 1  | PR B — stress test |
 | 05-invoiced-cancel-request     |    81 |        8 |       5 | Onda 2  | PR C — variant of 04 |
 | 07-shipped-cancel-request      |   109 |       14 |       4 | Onda 2  | PR C — variant of 06 |
@@ -191,6 +191,27 @@ verbatim from `refs/vtex-email-framework/source/data/vtex/<NN-name>.json`.
 These are the real fixtures the framework's preview uses — full shape
 parity is the goal, so any helper or path that resolves against them at
 preview time matches what VTEX Message Center would receive in production.
+
+---
+
+## Scope note on the v0.1 templates
+
+The 2 templates ported in v0.1 (`order-confirmed.tsx`, `order-invoiced.tsx`)
+were freeform demo templates designed to stress-test the pipeline, not
+faithful ports of `01-confirmed.hbs` / `04-invoiced.hbs`. They inline
+patterns the source doesn't have (e.g. a striped item recap using
+`(math @index "%" 2)`) and omit sections the source does (Logo, Regards,
+`shipping-summary`, Payment partial, AddressDeliveryTitle, etc.).
+
+PR A ships the shared-components infrastructure only. The 2 v0.1
+templates stay as-is. A faithful rewrite of both — using the new
+components and inlining the remaining single-use partials
+(`shipping-summary`, `order-link`, `shipping-summary-estimate-*`) — is
+deferred to a follow-up PR after the wave templates have validated the
+component conventions in real usage.
+
+The wave templates (Onda 1, 2, 3) are faithful ports from the start —
+they don't carry the v0.1 demo baggage.
 
 ---
 
