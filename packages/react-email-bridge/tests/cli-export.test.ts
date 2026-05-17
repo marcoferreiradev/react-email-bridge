@@ -16,6 +16,10 @@ const __dirname = path.dirname(__filename);
 
 const CLI = path.resolve(__dirname, '../dist/cli/index.mjs');
 
+// CLI output uses picocolors; under a TTY-less spawn the bytes still include
+// ANSI codes, so substring asserts on emoji+text break unless we normalize.
+const stripAnsi = (s: string) => s.replace(/\[[0-9;]*m/g, '');
+
 // Tests scaffold tmp projects INSIDE the package dir (sibling of node_modules)
 // so esbuild's `packages: external` resolution finds react/@react-email/* via
 // pnpm's hoisted store. A tmp dir under os.tmpdir() can't resolve those.
@@ -89,7 +93,7 @@ describe('CLI export', () => {
       console.error('STDERR:', result.stderr);
     }
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain('✓ simple');
+    expect(stripAnsi(result.stdout)).toContain('✓ simple');
 
     const out = fs.readFileSync(path.join(dir, 'dist/simple.hbs'), 'utf-8');
     expect(out).toContain('{{name}}');
