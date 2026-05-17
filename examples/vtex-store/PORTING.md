@@ -49,12 +49,12 @@ preserved. Our port mirrors that output shape:
 | 07-shipped-cancel-request      |   109 |       14 |       4 | Onda 2  | `order-shipped-cancel-request.tsx` — pending manual Message Center validation |
 | 08-shipping-update             |   110 |        8 |       6 | Onda 2  | `order-shipping-update.tsx` — pending manual Message Center validation |
 | 10-delivered                   |   101 |       11 |       4 | Onda 2  | `order-delivered.tsx` — pending manual Message Center validation |
-| 02-cancelled                   |    53 |        6 |       4 | Onda 3  | PR D |
-| 03-payment-approved            |    55 |        6 |       3 | Onda 3  | PR D |
-| 09-replaced                    |    98 |       10 |       5 | Onda 3  | PR D — stand-alone complex |
-| 11-let-me-know                 |    47 |        3 |       0 | Onda 3  | PR D |
-| 12-abandoned-cart              |    51 |        4 |       0 | Onda 3  | PR D |
-| 13-refund                      |    62 |        3 |       4 | Onda 3  | PR D |
+| 02-cancelled                   |    53 |        6 |       4 | Onda 3  | `order-cancelled.tsx` — pending manual Message Center validation |
+| 03-payment-approved            |    55 |        6 |       3 | Onda 3  | `order-payment-approved.tsx` — pending manual Message Center validation |
+| 09-replaced                    |    98 |       10 |       5 | Onda 3  | `order-replaced.tsx` — pending manual Message Center validation |
+| 11-let-me-know                 |    47 |        3 |       0 | Onda 3  | `back-in-stock.tsx` (renamed for clarity) — pending manual Message Center validation |
+| 12-abandoned-cart              |    51 |        4 |       0 | Onda 3  | `abandoned-cart.tsx` — pending manual Message Center validation |
+| 13-refund                      |    62 |        3 |       4 | Onda 3  | `order-refund.tsx` — pending manual Message Center validation |
 
 Helper counts include only block helpers (`#each`, `#if`, `#compare`,
 `#group`, `#math`, `#with`, `#richShippingData`, `#hasSubStr`, `else`).
