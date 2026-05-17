@@ -19,7 +19,8 @@
       "!validation/output-*",
       "!validation/test-helpers.*",
       "!.changeset",
-      "!pnpm-lock.yaml"
+      "!pnpm-lock.yaml",
+      "!examples/*/emails/*.json"
     ]
   },
   "formatter": {
