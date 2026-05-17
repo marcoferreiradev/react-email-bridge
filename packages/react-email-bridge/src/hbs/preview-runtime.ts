@@ -46,9 +46,17 @@ export function buildPreviewRuntime(
     }
   }
 
-  // 4. helperMissing fallback (only used when strict=false)
+  // 4. helperMissing fallback.
+  //
+  // Handlebars invokes this for unknown helpers AND for unknown variables (in
+  // non-strict mode). To preserve idiomatic behavior:
+  //   - `{{missingVar}}` (no args)  → empty string (variable lookup semantics)
+  //   - `{{customHelper "a" 1}}` (with args) → `[customHelper("a", 1)]` debug stub
+  // Without this split, `{{orderId}}` against an empty fixture would render
+  // `[orderId()]` instead of '', which is surprising and ugly.
   hb.registerHelper('helperMissing', function (...args: unknown[]) {
     const opts = args.pop() as Handlebars.HelperOptions & { name: string };
+    if (args.length === 0) return '';
     const params = args.map((a) => JSON.stringify(a)).join(', ');
     return new hb.SafeString(`[${opts.name}(${params})]`);
   });

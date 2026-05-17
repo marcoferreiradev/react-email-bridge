@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate pipeline (P0 stress test)
+        run: pnpm validate
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Smoke export — generic-hbs example
+        run: |
+          cd examples/generic-hbs
+          node ../../packages/react-email-bridge/dist/cli/index.mjs export --all
+          test -f dist/order-summary.hbs
+          grep -q "{{customer.firstName}}" dist/order-summary.hbs
+
+      - name: Smoke export — vtex-store example
+        run: |
+          cd examples/vtex-store
+          node ../../packages/react-email-bridge/dist/cli/index.mjs export --all
+          test -f dist/order-confirmed.hbs
+          test -f dist/order-invoiced.hbs
+          grep -q "{{#richShippingData shippingData}}" dist/order-confirmed.hbs
+          grep -q "{{#each ../../../../items}}" dist/order-invoiced.hbs
+
+      - name: Smoke pack-all + starter bootstrap
+        run: |
+          pnpm pack-all
+          node scripts/new-project.mjs /tmp/ci-bootstrap --skip-install
+          test -f /tmp/ci-bootstrap/emails/welcome.tsx
+          test -f /tmp/ci-bootstrap/vendor/react-email-bridge-0.0.1.tgz
+          test -f /tmp/ci-bootstrap/vendor/react-email-bridge-ui-0.0.1.tgz

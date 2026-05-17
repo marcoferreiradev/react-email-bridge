@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
-import { tsImport } from 'tsx/esm/api';
+import { build } from 'esbuild';
 import type { ReactElement } from 'react';
 import { render } from '../../core/render.js';
 import { loadConfig } from '../utils/load-config.js';
@@ -10,6 +10,64 @@ interface Args {
   dir: string;
   outDir: string;
   all?: boolean;
+}
+
+/**
+ * Bundles a single .tsx email into a transient ESM file via esbuild, then
+ * dynamic-imports it. Avoids tsx loader registration quirks (which fail to
+ * pick up the user's tsconfig.json across a programmatic boundary). The
+ * bundle resolves bare specifiers from the user's project node_modules.
+ */
+async function loadEmailComponent(
+  filePath: string,
+  cwd: string
+): Promise<() => ReactElement> {
+  // Temp file goes inside the user's project so Node's ESM resolver can find
+  // node_modules (react, @react-email/components, react-email-bridge, etc).
+  // os.tmpdir() doesn't work — it's outside any node_modules tree.
+  const tmpDir = path.join(cwd, '.react-email-bridge-tmp');
+  fs.mkdirSync(tmpDir, { recursive: true });
+  const outFile = path.join(
+    tmpDir,
+    `${Date.now()}-${path.basename(filePath, path.extname(filePath))}.mjs`
+  );
+
+  await build({
+    entryPoints: [filePath],
+    bundle: true,
+    platform: 'node',
+    format: 'esm',
+    target: 'node20',
+    outfile: outFile,
+    jsx: 'automatic',
+    loader: { '.js': 'jsx' },
+    absWorkingDir: cwd,
+    // Externalize everything from node_modules — Node resolves React,
+    // @react-email/components, react-email-bridge at import time.
+    packages: 'external',
+    logLevel: 'silent',
+  });
+
+  try {
+    const mod = (await import(url.pathToFileURL(outFile).href)) as {
+      default?: () => ReactElement;
+    };
+    if (typeof mod.default !== 'function') {
+      throw new Error('No default export (expected a React component function)');
+    }
+    return mod.default;
+  } finally {
+    try {
+      fs.unlinkSync(outFile);
+      // Best-effort cleanup of the temp dir if empty
+      const dir = path.dirname(outFile);
+      if (fs.existsSync(dir) && fs.readdirSync(dir).length === 0) {
+        fs.rmdirSync(dir);
+      }
+    } catch {
+      // ignore cleanup failures
+    }
+  }
 }
 
 export async function exportCmd(
@@ -46,10 +104,6 @@ export async function exportCmd(
     fs.mkdirSync(outDirAbs, { recursive: true });
   }
 
-  // tsx's tsImport bundles + executes .tsx with esbuild — same toolchain as
-  // the vendored UI uses for sandboxed email loading. Output stays consistent.
-  const parentURL = url.pathToFileURL(path.join(emailsDir, 'index.ts')).href;
-
   let succeeded = 0;
   let failed = 0;
 
@@ -65,17 +119,8 @@ export async function exportCmd(
     }
 
     try {
-      const mod = (await tsImport(
-        url.pathToFileURL(candidates[0]!).href,
-        { parentURL }
-      )) as { default?: () => ReactElement };
-      const Component = mod.default;
-      if (typeof Component !== 'function') {
-        console.error(`  ✗ ${name}: no default export`);
-        failed++;
-        continue;
-      }
-      const element = (Component as () => ReactElement)();
+      const Component = await loadEmailComponent(candidates[0]!, cwd);
+      const element = Component();
       const html = await render(element);
       const outPath = path.join(outDirAbs, `${name}${extension}`);
       fs.writeFileSync(outPath, html, 'utf-8');

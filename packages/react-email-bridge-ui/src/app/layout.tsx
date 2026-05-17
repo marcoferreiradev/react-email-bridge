@@ -7,7 +7,7 @@ import { emailsDirectoryAbsolutePath } from './env';
 import { inter, sfMono } from './fonts';
 
 export const metadata: Metadata = {
-  title: 'React Email',
+  title: 'react-email-bridge',
 };
 
 export const dynamic = 'force-dynamic';

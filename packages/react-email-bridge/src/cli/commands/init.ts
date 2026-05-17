@@ -73,6 +73,23 @@ export default defineConfig({
 });
 `;
 
+const TSCONFIG = `{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": ["emails/**/*", "react-email-bridge.config.ts"]
+}
+`;
+
 interface Args {
   dir: string;
 }
@@ -102,6 +119,12 @@ export async function init({ dir }: Args) {
   if (!fs.existsSync(configPath)) {
     fs.writeFileSync(configPath, SAMPLE_CONFIG, 'utf-8');
     console.log(`  ✓ created ${path.relative(cwd, configPath)}`);
+  }
+
+  const tsconfigPath = path.resolve(cwd, 'tsconfig.json');
+  if (!fs.existsSync(tsconfigPath)) {
+    fs.writeFileSync(tsconfigPath, TSCONFIG, 'utf-8');
+    console.log(`  ✓ created ${path.relative(cwd, tsconfigPath)}`);
   }
 
   console.log(

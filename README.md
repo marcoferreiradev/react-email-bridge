@@ -4,7 +4,7 @@
 
 ![status: pre-release v0.1](https://img.shields.io/badge/status-pre--release%20v0.1-orange)
 ![license: MIT](https://img.shields.io/badge/license-MIT-blue)
-![tests: 29/29](https://img.shields.io/badge/tests-29%2F29-green)
+![tests: 93/93](https://img.shields.io/badge/tests-93%2F93-green)
 
 ---
 
@@ -51,11 +51,11 @@ The pain: writing and maintaining that HTML by hand is **brutal**.
 
 ---
 
-## Quickstart (until published to npm)
+## Quickstart — start a test template in <2 minutes
 
-Until `react-email-bridge` is published to npm, the workflow uses **local tarballs**: you produce them once from this repo, then any number of email projects can install from them.
+Until `react-email-bridge` is published to npm, the workflow uses **local tarballs** produced once from this repo. After that, the `new-project` script bootstraps an isolated project in a single command.
 
-### Step 1 — Build the tarballs (one time)
+### Step 1 — Clone and build the tarballs (one time)
 
 ```bash
 git clone <this-repo> react-email-bridge
@@ -64,41 +64,44 @@ pnpm install
 pnpm pack-all
 ```
 
-`pack-all` builds both packages and writes:
+`pack-all` builds both packages, writes them to `dist-tarballs/`, **and copies them into `starter/vendor/`** so the starter is ready to use.
 
-```
-dist-tarballs/
-├── react-email-bridge-0.0.1.tgz       # ~12KB — CLI + core + HBS preset
-└── react-email-bridge-ui-0.0.1.tgz    # ~13MB — Next.js preview server (pre-built)
-```
-
-It also copies them into `starter/vendor/` so the starter is ready to clone.
-
-### Step 2 — Create your email project
+### Step 2 — Bootstrap a new email project (one command)
 
 ```bash
-cp -R starter ~/my-emails-project
-cd ~/my-emails-project
-pnpm install
+pnpm -w run new-project ../my-emails
 ```
 
-The starter's `package.json` already points to `./vendor/*.tgz`, so `pnpm install` resolves locally.
+This:
+
+1. Copies the `starter/` folder to `../my-emails` (relative to repo, anywhere you want).
+2. Runs `pnpm install` inside it. The starter's `package.json` resolves `react-email-bridge` and `react-email-bridge-ui` from `./vendor/*.tgz`.
+
+Use `--skip-install` if you want to inspect first:
+
+```bash
+pnpm -w run new-project ../my-emails --skip-install
+cd ../my-emails && pnpm install
+```
 
 ### Step 3 — Start the preview server
 
 ```bash
+cd ../my-emails
 pnpm dev
 ```
 
-Open the URL it prints (e.g. http://localhost:3737). You'll see:
+Open the URL it prints (default http://localhost:3737). You'll see:
 
-- **Left sidebar**: list of your `.tsx` templates
-- **Center iframe**: live preview with Handlebars + fixture data interpolated
-- **Bottom tabs**: Compatibility check, Linter, Spam score, Resend send
-- **Top toggle**: switch to code view (React / HTML / Plain Text / Data)
-- **Right side**: resize for desktop/mobile
+- **Left sidebar**: list of your `.tsx` templates (auto-discovered from `emails/`).
+- **Center iframe**: live preview with Handlebars + fixture data interpolated.
+- **Bottom tabs**: Compatibility check, Linter, Spam score, Resend send.
+- **Top toggle**: switch to code view (React / HTML / Plain Text / Data).
+- **Right side**: drag to resize for desktop/mobile.
 
-Edit `emails/welcome.tsx` or `emails/welcome.json` — the iframe reloads automatically.
+Edit `emails/welcome.tsx` or `emails/welcome.json` — the iframe reloads automatically (server-side render + socket.io push).
+
+If you delete `emails/welcome.json`, you'll see a banner with a one-click "Create empty fixture" button.
 
 ### Step 4 — Export to paste in VTEX (or Mandrill, etc.)
 
@@ -332,15 +335,35 @@ Read [DECISIONS.md](./DECISIONS.md) for the 16 design choices and the reasoning 
 
 ---
 
+## Repo scripts
+
+| Command | What it does |
+|---|---|
+| `pnpm install` | Install workspace deps. |
+| `pnpm build` | Build both packages (`react-email-bridge` + `react-email-bridge-ui`). |
+| `pnpm test` | Run the full vitest suite. |
+| `pnpm validate` | End-to-end stress test of the render pipeline (validation/test-pipeline.tsx). |
+| `pnpm pack-all` | Build + pack both packages into `dist-tarballs/` and copy into `starter/vendor/`. |
+| `pnpm -w run new-project <dir> [--skip-install]` | Bootstrap a new email project from `starter/`. |
+
 ## Tests
 
 ```bash
 pnpm test
 ```
 
-29/29 vitest tests covering: sugar components emit correct HBS strings, sentinel substitution, marker unescape (Plano B), helper registration, preview interpolation, end-to-end render pipeline.
+**93 vitest tests** across 7 files covering:
 
-A separate `pnpm validate` runs a stress-test template against the export pipeline (28 assertions covering every marker context).
+- Sugar components (`Each`, `If`, `Unless`, `Else`, `Raw`) — output strings.
+- Sentinel substitution + marker unescape (Plano B for React entity escaping).
+- All 16 VTEX-flavored fake helpers (`formatCurrency`, `formatDate`, `math`, `group`, `eval`, `richShippingData`, etc) — input/output pairs.
+- `helperMissing` semantics (variable lookup vs unknown helper).
+- Preview runtime with config-supplied helper overrides.
+- Full `render()` pipeline against every marker context (text, attr, style, sub-expressions, nested blocks).
+- CLI commands (`init`, `export`, `export --all`, error paths, config-driven extension).
+- End-to-end fixture interpolation (Handlebars + `.json`).
+
+Plus `pnpm validate` runs a stress-test template through the export pipeline with 28 assertions (covering every marker context).
 
 ---
 

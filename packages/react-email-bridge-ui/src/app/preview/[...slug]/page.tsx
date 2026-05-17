@@ -151,5 +151,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
 
-  return { title: `${path.basename(slug.join('/'))} — React Email` };
+  return {
+    title: `${path.basename(slug.join('/'))} — react-email-bridge`,
+  };
 }
