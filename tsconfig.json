@@ -14,5 +14,12 @@
     "noEmit": true
   },
   "include": ["validation/**/*", "packages/**/*", "examples/**/*"],
-  "exclude": ["node_modules", "**/dist", "refs"]
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    "refs",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "packages/react-email-bridge-ui"
+  ]
 }

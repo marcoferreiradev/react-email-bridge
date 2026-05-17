@@ -71,13 +71,15 @@ export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
   let port = parseInt(portArg, 10);
 
   // Env vars consumed by the vendored UI app to know where the user's emails live.
+  // NODE_ENV is set AFTER the spread so it always wins — the bundled Next app
+  // must run in production mode regardless of the caller's NODE_ENV.
   process.env = {
-    NODE_ENV: 'production',
     ...process.env,
     REACT_EMAIL_INTERNAL_EMAILS_DIR_RELATIVE_PATH: emailsDirArg,
     REACT_EMAIL_INTERNAL_EMAILS_DIR_ABSOLUTE_PATH: emailsDirAbs,
     REACT_EMAIL_INTERNAL_PREVIEW_SERVER_LOCATION: uiLocation,
     REACT_EMAIL_INTERNAL_USER_PROJECT_LOCATION: cwd,
+    NODE_ENV: 'production',
   };
 
   // Programmatic Next so we can attach socket.io to the same http.Server.
