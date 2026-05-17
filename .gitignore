@@ -13,3 +13,5 @@ validation/*.png
 validation/test-helpers.*
 /tmp/
 *.log
+dist-tarballs/
+starter/vendor/*.tgz

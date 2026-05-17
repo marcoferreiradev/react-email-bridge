@@ -1,10 +1,13 @@
-import { spawn } from 'node:child_process';
+import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { watch } from 'chokidar';
+import debounce from 'debounce';
 import { createJiti } from 'jiti';
 import { addDevDependency } from 'nypm';
 import prompts from 'prompts';
+import { Server as SocketServer, type Socket } from 'socket.io';
 
 interface Args {
   dir: string;
@@ -38,7 +41,19 @@ async function resolveUiLocation(): Promise<string> {
   }
 }
 
-export async function dev({ dir: emailsDirArg, port }: Args) {
+async function tryListen(
+  server: http.Server,
+  port: number
+): Promise<{ portAlreadyInUse: boolean }> {
+  return new Promise((resolve) => {
+    server.listen(port, () => resolve({ portAlreadyInUse: false }));
+    server.on('error', (e: NodeJS.ErrnoException) => {
+      if (e.code === 'EADDRINUSE') resolve({ portAlreadyInUse: true });
+    });
+  });
+}
+
+export async function dev({ dir: emailsDirArg, port: portArg }: Args) {
   const cwd = process.cwd();
   const emailsDirAbs = path.resolve(cwd, emailsDirArg);
 
@@ -49,39 +64,95 @@ export async function dev({ dir: emailsDirArg, port }: Args) {
   }
 
   const uiLocation = await resolveUiLocation();
+  let port = parseInt(portArg, 10);
 
-  console.log(`  ◇ Loading preview server from ${uiLocation}`);
-  console.log(`  ◇ Watching ${emailsDirArg}/`);
-  console.log(`  ◇ Starting on port ${port}\n`);
-
-  const env = {
+  // Env vars consumed by the vendored UI app to know where the user's emails live.
+  process.env = {
+    NODE_ENV: 'production',
     ...process.env,
-    NODE_OPTIONS:
-      (process.env.NODE_OPTIONS ?? '') +
-      ' --experimental-vm-modules --disable-warning=ExperimentalWarning',
     REACT_EMAIL_INTERNAL_EMAILS_DIR_RELATIVE_PATH: emailsDirArg,
     REACT_EMAIL_INTERNAL_EMAILS_DIR_ABSOLUTE_PATH: emailsDirAbs,
     REACT_EMAIL_INTERNAL_PREVIEW_SERVER_LOCATION: uiLocation,
     REACT_EMAIL_INTERNAL_USER_PROJECT_LOCATION: cwd,
-    NODE_ENV: 'production',
   };
 
-  // We spawn Next directly. Could be inlined via Next's programmatic API but
-  // that requires more wiring; spawn is the simplest reliable approach.
-  const next = spawn(
-    'pnpm',
-    ['exec', 'next', 'start', uiLocation, '-p', port],
-    {
-      cwd: uiLocation,
-      env,
-      stdio: 'inherit',
-    }
-  );
+  // Programmatic Next so we can attach socket.io to the same http.Server.
+  // jiti is used to import next from the UI package's deps (Next is large and
+  // the user shouldn't have to install it separately).
+  const uiJiti = createJiti(uiLocation);
+  const nextMod = await uiJiti.import<{
+    default: (opts: unknown) => {
+      prepare: () => Promise<void>;
+      getRequestHandler: () => http.RequestListener;
+      close: () => Promise<void>;
+    };
+  }>('next');
+  const next = nextMod.default;
 
-  next.on('exit', (code) => process.exit(code ?? 0));
-
-  process.on('SIGINT', () => {
-    next.kill('SIGINT');
-    process.exit(0);
+  const app = next({
+    dev: false,
+    hostname: 'localhost',
+    port,
+    dir: uiLocation,
+    conf: { images: { unoptimized: true } },
   });
+
+  console.log(`  ◇ Loading preview from ${uiLocation}`);
+  console.log(`  ◇ Watching ${emailsDirArg}/`);
+
+  await app.prepare();
+  const handle = app.getRequestHandler();
+
+  const server = http.createServer((req, res) => {
+    res.setHeader(
+      'Cache-Control',
+      'no-cache, max-age=0, must-revalidate, no-store'
+    );
+    handle(req, res);
+  });
+
+  // Try to bind; bump port if in use.
+  let result = await tryListen(server, port);
+  while (result.portAlreadyInUse) {
+    console.warn(`  ⚠ Port ${port} in use, trying ${port + 1}`);
+    port += 1;
+    result = await tryListen(server, port);
+  }
+
+  console.log(`\n  React Email Bridge — http://localhost:${port}\n`);
+
+  // ─ Hot reload: chokidar → socket.io → useHotreload in the UI ────────
+  let clients: Socket[] = [];
+  const io = new SocketServer(server);
+  io.on('connection', (client) => {
+    clients.push(client);
+    client.on('disconnect', () => {
+      clients = clients.filter((c) => c !== client);
+    });
+  });
+
+  let pendingChanges: { event: string; filename: string }[] = [];
+  const flush = debounce(() => {
+    for (const client of clients) {
+      client.emit('reload', pendingChanges);
+    }
+    pendingChanges = [];
+  }, 150);
+
+  const watcher = watch('', { cwd: emailsDirAbs, ignoreInitial: true });
+  watcher.on('all', (event, file) => {
+    if (!file) return;
+    pendingChanges.push({ event, filename: file });
+    flush();
+  });
+
+  const shutdown = async () => {
+    console.log('\n  Stopping...');
+    await watcher.close();
+    await app.close();
+    server.close();
+    process.exit(0);
+  };
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
 }

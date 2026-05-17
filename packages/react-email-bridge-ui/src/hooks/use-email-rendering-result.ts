@@ -22,31 +22,41 @@ export const useEmailRenderingResult = (
   if (!isBuilding && !isPreviewDevelopment) {
     useHotreload(async (changes) => {
       for await (const change of changes) {
-        const relativePathForChangedFile =
-          // ex: apple-receipt.tsx
-          // it will be the path relative to the emails directory, so it is already
-          // going to be equivalent to the slug
-          change.filename;
+        const relativePathForChangedFile = change.filename;
 
-        if (
-          !containsEmailTemplate(
-            relativePathForChangedFile,
-            emailsDirectoryMetadata,
-          )
-        ) {
+        // react-email-bridge: .json fixtures live adjacent to the .tsx and
+        // share the basename. If the changed file is a .json with the same
+        // basename as the current template, trigger a re-render too.
+        const isFixtureForCurrentEmail =
+          relativePathForChangedFile.endsWith('.json') &&
+          relativePathForChangedFile
+            .replace(/\.json$/, '')
+            .split(/[\\/]/)
+            .at(-1) ===
+            emailPath
+              .replace(/\.(tsx|jsx|ts|js)$/, '')
+              .split(/[\\/]/)
+              .at(-1);
+
+        const isTemplateInMetadata = containsEmailTemplate(
+          relativePathForChangedFile,
+          emailsDirectoryMetadata,
+        );
+
+        if (!isTemplateInMetadata && !isFixtureForCurrentEmail) {
           continue;
         }
 
-        const pathForChangedEmail = await getEmailPathFromSlug(
-          relativePathForChangedFile,
-        );
+        const pathForChangedEmail = isFixtureForCurrentEmail
+          ? emailPath
+          : await getEmailPathFromSlug(relativePathForChangedFile);
         if (!pathForChangedEmail) {
           continue;
         }
 
         const newRenderingResult = await renderEmailByPath(
           pathForChangedEmail,
-          true,
+          true
         );
 
         if (pathForChangedEmail === emailPath) {

@@ -18,6 +18,7 @@ import { ActiveViewToggleGroup } from '../../../components/topbar/active-view-to
 import { EmulatedDarkModeToggle } from '../../../components/topbar/emulated-dark-mode-toggle';
 import { ViewSizeControls } from '../../../components/topbar/view-size-controls';
 import { usePreviewContext } from '../../../contexts/preview';
+import { MissingFixtureBanner } from '../../../components/missing-fixture-banner';
 import { useClampedState } from '../../../hooks/use-clamped-state';
 import { cn } from '../../../utils';
 import { EmailFrame } from './email-frame';
@@ -28,7 +29,9 @@ interface PreviewProps extends React.ComponentProps<'div'> {
 }
 
 const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
-  const { renderingResult, renderedEmailMetadata } = usePreviewContext();
+  const { renderingResult, renderedEmailMetadata, emailPath } = usePreviewContext();
+  const fixtureMissing =
+    renderedEmailMetadata?.fixture && !renderedEmailMetadata.fixture.found;
 
   const router = useRouter();
   const pathname = usePathname();
@@ -162,6 +165,17 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
       >
         {hasErrors ? <ErrorOverlay error={renderingResult.error} /> : null}
 
+        {fixtureMissing && activeView === 'preview' ? (
+          <div className="absolute top-4 left-4 right-4 z-20 pointer-events-none flex justify-center">
+            <div className="max-w-[800px] w-full pointer-events-auto">
+              <MissingFixtureBanner
+                emailPath={emailPath}
+                fixturePath={renderedEmailMetadata!.fixture!.path}
+              />
+            </div>
+          </div>
+        ) : null}
+
         {hasRenderingMetadata ? (
           <>
             {activeView === 'preview' && (
@@ -222,6 +236,19 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
                           language: 'markdown',
                           extension: 'md',
                           content: renderedEmailMetadata.plainText,
+                        },
+                        // react-email-bridge: 4th tab for the adjacent .json
+                        // fixture. Shows the data Handlebars interpolates
+                        // against. Read-only in v0.1.
+                        {
+                          language: 'json',
+                          content: renderedEmailMetadata.fixture?.found
+                            ? JSON.stringify(
+                                renderedEmailMetadata.fixture.data,
+                                null,
+                                2
+                              )
+                            : `// No fixture found at:\n//   ${renderedEmailMetadata.fixture?.path ?? '(unknown)'}\n//\n// Create the file with sample data to enable the preview.\n// The file must share the basename of the template, e.g.\n//   ${renderedEmailMetadata.basename}.tsx + ${renderedEmailMetadata.basename}.json`,
                         },
                       ]}
                       setActiveLang={handleLangChange}

@@ -43,6 +43,8 @@
     "@react-email/render": "^1.0.5",
     "chokidar": "^4.0.3",
     "commander": "^12.1.0",
+    "debounce": "^2.0.0",
+    "socket.io": "^4.8.0",
     "handlebars": "^4.7.8",
     "handlebars-helpers": "^0.10.0",
     "jiti": "^2.4.0",
