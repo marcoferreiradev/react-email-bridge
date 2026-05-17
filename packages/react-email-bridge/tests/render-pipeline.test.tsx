@@ -77,6 +77,20 @@ describe('render() pipeline', () => {
       expect(opens).toBe(2);
     });
 
+    it('#each with parent path (..) survives end-to-end', async () => {
+      // VTEX pattern: inside a nested loop, reach back to the outer scope's
+      // sibling collection — {{#each ../../../../items}} appears in
+      // refs/vtex-email-framework/source/templates/order-invoiced.
+      const html = await render(
+        <Each path="orders">
+          <Each path="../items">
+            <p>{`{{name}}`}</p>
+          </Each>
+        </Each>
+      );
+      expect(html).toContain('{{#each ../items}}');
+    });
+
     it('if/else/closing tags balanced', async () => {
       const html = await render(
         <If path="x">

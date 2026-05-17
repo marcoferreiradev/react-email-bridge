@@ -40,4 +40,21 @@ describe('unescapeMarkers', () => {
   it('handles adjacent markers without consuming between them', () => {
     expect(unescapeMarkers('{{a}} text {{b}}')).toBe('{{a}} text {{b}}');
   });
+
+  it('preserves parent paths (..) intact inside #each', () => {
+    // VTEX templates use {{#each ../items}} and even {{#each ../../../../items}}.
+    // The dots and slashes are not HTML-escapable so they should pass through
+    // both renderToStaticMarkup and unescapeMarkers untouched.
+    expect(unescapeMarkers('{{#each ../items}}')).toBe('{{#each ../items}}');
+    expect(unescapeMarkers('{{#each ../../../../items}}')).toBe('{{#each ../../../../items}}');
+  });
+
+  it('decodes entities inside sub-expressions', () => {
+    // Real VTEX pattern: {{#eq (math @index "%" 2) 0}}. The inner "%" gets
+    // entity-encoded by React, and the entire outer {{...}} is one marker
+    // boundary — unescapeMarkers must decode through the nested parens.
+    expect(unescapeMarkers('{{#eq (math @index &quot;%&quot; 2) 0}}')).toBe(
+      '{{#eq (math @index "%" 2) 0}}'
+    );
+  });
 });
