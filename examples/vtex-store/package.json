@@ -1,0 +1,12 @@
+{
+  "name": "example-vtex-store",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "react-email-bridge": "workspace:*",
+    "@react-email/components": "^0.0.36",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  }
+}

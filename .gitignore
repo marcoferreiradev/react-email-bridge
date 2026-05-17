@@ -5,3 +5,11 @@ node_modules/
 .env.local
 dist/
 build/
+*.tsbuildinfo
+.turbo/
+.next/
+validation/output-*
+validation/*.png
+validation/test-helpers.*
+/tmp/
+*.log

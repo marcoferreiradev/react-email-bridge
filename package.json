@@ -1,0 +1,31 @@
+{
+  "name": "react-email-bridge-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "tsx validation/test-pipeline.tsx",
+    "build": "pnpm -r --filter './packages/*' build",
+    "test": "pnpm -r --filter './packages/*' test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "tsdown": "^0.22.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "unrun": "^0.3.0",
+    "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.0.36",
+    "@react-email/render": "^1.0.5",
+    "handlebars": "^4.7.8",
+    "handlebars-helpers": "^0.10.0",
+    "juice": "^11.0.0",
+    "nanoid": "^5.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

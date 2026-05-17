@@ -1,0 +1,21 @@
+{
+  "accountName": "Loja Exemplo",
+  "logoUrl": "https://placehold.co/180x40/4f46e5/white/png?text=LOJA",
+  "orderId": "12345",
+  "orderDate": "2026-05-16",
+  "customer": {
+    "firstName": "Marco"
+  },
+  "theme": {
+    "primaryColor": "#4f46e5",
+    "stripeColor": "#f5f5ff"
+  },
+  "items": [
+    { "productName": "Capacete preto", "quantity": 1, "sellingPrice": 19990 },
+    { "productName": "Luva de couro", "quantity": 2, "sellingPrice": 8990 },
+    { "productName": "Camisa térmica", "quantity": 1, "sellingPrice": 14990 }
+  ],
+  "total": 53960,
+  "invoiceUrl": "https://example.com/invoice/12345",
+  "cancelled": false
+}

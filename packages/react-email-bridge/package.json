@@ -1,0 +1,62 @@
+{
+  "name": "react-email-bridge",
+  "version": "0.0.1",
+  "description": "Write transactional emails in React Email, export to HTML with template markers (Handlebars, Liquid, Mailchimp). Live preview, real engine, copy-paste into VTEX, Mandrill, etc.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "bin": {
+    "react-email-bridge": "./dist/cli/index.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./hbs": {
+      "types": "./dist/hbs/index.d.mts",
+      "import": "./dist/hbs/index.mjs"
+    },
+    "./hbs/preview-helpers": {
+      "types": "./dist/hbs/preview-helpers.d.mts",
+      "import": "./dist/hbs/preview-helpers.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "react": "^18.0 || ^19.0",
+    "react-dom": "^18.0 || ^19.0"
+  },
+  "dependencies": {
+    "@react-email/render": "^1.0.5",
+    "chokidar": "^4.0.3",
+    "commander": "^12.1.0",
+    "handlebars": "^4.7.8",
+    "handlebars-helpers": "^0.10.0",
+    "jiti": "^2.4.0",
+    "tsx": "^4.21.0",
+    "juice": "^11.0.0",
+    "nanoid": "^5.0.7",
+    "nypm": "^0.6.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@react-email/components": "^0.0.36",
+    "@types/handlebars-helpers": "^0.5.6",
+    "@types/prompts": "^2.4.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
