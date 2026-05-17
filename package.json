@@ -8,7 +8,15 @@
     "build": "pnpm -r --filter './packages/*' build",
     "test": "pnpm -r --filter './packages/*' test",
     "pack-all": "pnpm build && mkdir -p dist-tarballs && pnpm --filter react-email-bridge exec pnpm pack --pack-destination ../../dist-tarballs && pnpm --filter react-email-bridge-ui exec pnpm pack --pack-destination ../../dist-tarballs && node scripts/distribute-tarballs.mjs",
-    "new-project": "node scripts/new-project.mjs"
+    "new-project": "node scripts/new-project.mjs",
+    "format": "biome check --write .",
+    "lint": "biome check .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs,json}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",

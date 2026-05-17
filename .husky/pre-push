@@ -1,0 +1,19 @@
+#
+# Mirrors the CI gate before push:
+#   pnpm validate  -> P0 pipeline stress test (28 asserts)
+#   pnpm build     -> tsdown builds + typechecks our packages
+#   pnpm test      -> vitest (107+ tests)
+#
+# Bypass with `git push --no-verify` for WIP / docs-only pushes when
+# you've already validated locally.
+
+set -e
+
+echo "▸ pnpm validate"
+pnpm validate
+
+echo "▸ pnpm build"
+pnpm build
+
+echo "▸ pnpm test"
+pnpm test
