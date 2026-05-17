@@ -44,7 +44,7 @@ preserved. Our port mirrors that output shape:
 |--------------------------------|------:|---------:|--------:|---------|--------|
 | 01-confirmed                   |   N/A |       10 |       5 | (v0.1)  | in `order-confirmed.tsx` — freeform demo, faithful rewrite deferred (see scope note below) |
 | 04-invoiced                    |   N/A |        6 |       6 | (v0.1)  | in `order-invoiced.tsx` — freeform demo, faithful rewrite deferred (see scope note below) |
-| 06-shipped                     |   103 |       12 |       4 | Onda 1  | PR B — stress test |
+| 06-shipped                     |   103 |       12 |       4 | Onda 1  | `order-shipped.tsx` — PR B, pending manual Message Center validation |
 | 05-invoiced-cancel-request     |    81 |        8 |       5 | Onda 2  | PR C — variant of 04 |
 | 07-shipped-cancel-request      |   109 |       14 |       4 | Onda 2  | PR C — variant of 06 |
 | 08-shipping-update             |   110 |        8 |       6 | Onda 2  | PR C — variant of 06 |
