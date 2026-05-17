@@ -1,4 +1,4 @@
-import { render as reactEmailRender } from '@react-email/render';
+import { render as reactEmailRender } from 'react-email';
 import juice from 'juice';
 import type { ReactElement } from 'react';
 import { substituteSentinels, unescapeMarkers } from './hbs-sentinels.js';

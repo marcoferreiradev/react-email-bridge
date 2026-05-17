@@ -10,7 +10,7 @@ import {
   Img,
   Link,
   Heading,
-} from '@react-email/components';
+} from 'react-email';
 import { hbs } from 'react-email-bridge';
 import { Each, If, Unless, Else, Raw } from 'react-email-bridge/hbs';
 

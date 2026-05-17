@@ -6,7 +6,7 @@ import {
   Heading,
   Text,
   Link,
-} from '@react-email/components';
+} from 'react-email';
 import { hbs } from 'react-email-bridge';
 import { Each, If, Else } from 'react-email-bridge/hbs';
 

@@ -9,10 +9,9 @@
     "export": "react-email-bridge export --all"
   },
   "dependencies": {
-    "@react-email/components": "^1.0.12",
-    "@react-email/render": "^1.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-email": "^6.1.4",
     "react-email-bridge": "file:./vendor/react-email-bridge-0.0.1.tgz",
     "react-email-bridge-ui": "file:./vendor/react-email-bridge-ui-0.0.1.tgz"
   },

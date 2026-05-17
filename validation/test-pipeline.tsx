@@ -8,7 +8,7 @@
  */
 
 import React, { type ReactNode } from 'react';
-import { render } from '@react-email/render';
+import { render } from 'react-email';
 import {
   Html,
   Head,
@@ -20,7 +20,7 @@ import {
   Text,
   Img,
   Link,
-} from '@react-email/components';
+} from 'react-email';
 import juice from 'juice';
 import { nanoid } from 'nanoid';
 import Handlebars from 'handlebars';
