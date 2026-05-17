@@ -55,9 +55,7 @@ describe('VTEX fake helpers', () => {
 
   describe('formatDateNoTimezone', () => {
     it('converts YYYY-MM-DD to DD/MM/YYYY', () => {
-      expect(run('{{formatDateNoTimezone "2024-03-15T00:00:00Z"}}')).toBe(
-        '15/03/2024'
-      );
+      expect(run('{{formatDateNoTimezone "2024-03-15T00:00:00Z"}}')).toBe('15/03/2024');
     });
   });
 
@@ -69,14 +67,10 @@ describe('VTEX fake helpers', () => {
 
   describe('hasSubStr', () => {
     it('matches substring', () => {
-      expect(
-        run('{{#hasSubStr "hello world" "world"}}yes{{else}}no{{/hasSubStr}}')
-      ).toBe('yes');
+      expect(run('{{#hasSubStr "hello world" "world"}}yes{{else}}no{{/hasSubStr}}')).toBe('yes');
     });
     it('negative branch', () => {
-      expect(
-        run('{{#hasSubStr "hello" "xyz"}}yes{{else}}no{{/hasSubStr}}')
-      ).toBe('no');
+      expect(run('{{#hasSubStr "hello" "xyz"}}yes{{else}}no{{/hasSubStr}}')).toBe('no');
     });
   });
 
@@ -90,27 +84,19 @@ describe('VTEX fake helpers', () => {
       ['||', 0, 1, 'yes'],
       ['unknown', 1, 1, 'no'],
     ])('%s with %s and %s → %s', (op, a, b, expected) => {
-      expect(
-        run(`{{#ifCond a "${op}" b}}yes{{else}}no{{/ifCond}}`, { a, b })
-      ).toBe(expected);
+      expect(run(`{{#ifCond a "${op}" b}}yes{{else}}no{{/ifCond}}`, { a, b })).toBe(expected);
     });
   });
 
   describe('isMoreThanOneDay', () => {
     it('true for 5d', () => {
-      expect(
-        run('{{#isMoreThanOneDay "5d"}}yes{{else}}no{{/isMoreThanOneDay}}')
-      ).toBe('yes');
+      expect(run('{{#isMoreThanOneDay "5d"}}yes{{else}}no{{/isMoreThanOneDay}}')).toBe('yes');
     });
     it('false for 1d', () => {
-      expect(
-        run('{{#isMoreThanOneDay "1d"}}yes{{else}}no{{/isMoreThanOneDay}}')
-      ).toBe('no');
+      expect(run('{{#isMoreThanOneDay "1d"}}yes{{else}}no{{/isMoreThanOneDay}}')).toBe('no');
     });
     it('false for non-day duration', () => {
-      expect(
-        run('{{#isMoreThanOneDay "3h"}}yes{{else}}no{{/isMoreThanOneDay}}')
-      ).toBe('no');
+      expect(run('{{#isMoreThanOneDay "3h"}}yes{{else}}no{{/isMoreThanOneDay}}')).toBe('no');
     });
   });
 
@@ -120,8 +106,7 @@ describe('VTEX fake helpers', () => {
     it('multiplication', () => expect(run('{{math 6 "*" 7}}')).toBe('42'));
     it('division', () => expect(run('{{math 10 "/" 2}}')).toBe('5'));
     it('modulo', () => expect(run('{{math 7 "%" 2}}')).toBe('1'));
-    it('div-by-zero → 0', () =>
-      expect(run('{{math 10 "/" 0}}')).toBe('0'));
+    it('div-by-zero → 0', () => expect(run('{{math 10 "/" 0}}')).toBe('0'));
     it('unknown op → empty', () => expect(run('{{math 1 "@" 2}}')).toBe(''));
   });
 
@@ -151,9 +136,7 @@ describe('VTEX fake helpers', () => {
 
   describe('eval', () => {
     it('interpolates hash params and evaluates', () => {
-      expect(
-        run(`{{eval "'${'$'}{name}'.split(' ')[0]" name="Marco Silva"}}`)
-      ).toBe('Marco');
+      expect(run(`{{eval "'${'$'}{name}'.split(' ')[0]" name="Marco Silva"}}`)).toBe('Marco');
     });
 
     it('errors render inline', () => {

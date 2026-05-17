@@ -8,12 +8,24 @@
     "build": "pnpm -r --filter './packages/*' build",
     "test": "pnpm -r --filter './packages/*' test",
     "pack-all": "pnpm build && mkdir -p dist-tarballs && pnpm --filter react-email-bridge exec pnpm pack --pack-destination ../../dist-tarballs && pnpm --filter react-email-bridge-ui exec pnpm pack --pack-destination ../../dist-tarballs && node scripts/distribute-tarballs.mjs",
-    "new-project": "node scripts/new-project.mjs"
+    "new-project": "node scripts/new-project.mjs",
+    "format": "biome check --write .",
+    "lint": "biome check .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs,json}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@changesets/cli": "^2.31.0",
     "@types/node": "^22.0.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
     "tsdown": "^0.22.0",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",

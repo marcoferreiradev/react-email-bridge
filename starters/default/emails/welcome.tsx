@@ -1,12 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Heading,
-  Text,
-  Link,
-} from 'react-email';
+import { Html, Head, Body, Container, Heading, Text, Link } from 'react-email';
 import { hbs } from 'react-email-bridge';
 import { Each, If, Else } from 'react-email-bridge/hbs';
 

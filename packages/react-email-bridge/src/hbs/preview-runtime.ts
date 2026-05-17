@@ -22,9 +22,7 @@ export interface PreviewRuntimeOptions {
  * 4. `helperMissing` fallback that emits `[helperName(args)]` for unknown
  *    helpers so the preview doesn't crash on custom platform helpers.
  */
-export function buildPreviewRuntime(
-  options: PreviewRuntimeOptions = {}
-): typeof Handlebars {
+export function buildPreviewRuntime(options: PreviewRuntimeOptions = {}): typeof Handlebars {
   const hb = Handlebars.create();
 
   // 1. handlebars-helpers (compare, math, contains, group, ...)
@@ -54,7 +52,7 @@ export function buildPreviewRuntime(
   //   - `{{customHelper "a" 1}}` (with args) → `[customHelper("a", 1)]` debug stub
   // Without this split, `{{orderId}}` against an empty fixture would render
   // `[orderId()]` instead of '', which is surprising and ugly.
-  hb.registerHelper('helperMissing', function (...args: unknown[]) {
+  hb.registerHelper('helperMissing', (...args: unknown[]) => {
     const opts = args.pop() as Handlebars.HelperOptions & { name: string };
     if (args.length === 0) return '';
     const params = args.map((a) => JSON.stringify(a)).join(', ');

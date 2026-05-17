@@ -19,9 +19,7 @@ if (!fs.existsSync(tarballsDir)) {
   process.exit(1);
 }
 
-const tarballs = fs
-  .readdirSync(tarballsDir)
-  .filter((f) => f.endsWith('.tgz'));
+const tarballs = fs.readdirSync(tarballsDir).filter((f) => f.endsWith('.tgz'));
 
 if (tarballs.length === 0) {
   console.error('  ✗ No .tgz files in dist-tarballs/.');
@@ -50,10 +48,7 @@ for (const starter of starters) {
   }
 
   for (const tgz of tarballs) {
-    fs.copyFileSync(
-      path.join(tarballsDir, tgz),
-      path.join(vendorDir, tgz)
-    );
+    fs.copyFileSync(path.join(tarballsDir, tgz), path.join(vendorDir, tgz));
   }
   console.log(`  ✓ starters/${starter}/vendor/ — ${tarballs.length} tarballs`);
 }

@@ -16,6 +16,11 @@ const __dirname = path.dirname(__filename);
 
 const CLI = path.resolve(__dirname, '../dist/cli/index.mjs');
 
+// CLI output uses picocolors; under a TTY-less spawn the bytes still include
+// ANSI codes, so substring asserts on emoji+text break unless we normalize.
+// biome-ignore lint/suspicious/noControlCharactersInRegex: ANSI escape sequences
+const stripAnsi = (s: string) => s.replace(/\[[0-9;]*m/g, '');
+
 // Tests scaffold tmp projects INSIDE the package dir (sibling of node_modules)
 // so esbuild's `packages: external` resolution finds react/@react-email/* via
 // pnpm's hoisted store. A tmp dir under os.tmpdir() can't resolve those.
@@ -89,7 +94,7 @@ describe('CLI export', () => {
       console.error('STDERR:', result.stderr);
     }
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain('✓ simple');
+    expect(stripAnsi(result.stdout)).toContain('✓ simple');
 
     const out = fs.readFileSync(path.join(dir, 'dist/simple.hbs'), 'utf-8');
     expect(out).toContain('{{name}}');
@@ -128,9 +133,7 @@ describe('CLI export', () => {
     projects.push(dir);
     const result = runCli(dir, ['export']);
     expect(result.status).not.toBe(0);
-    expect(result.stdout + result.stderr).toMatch(
-      /Provide a template name or pass --all/
-    );
+    expect(result.stdout + result.stderr).toMatch(/Provide a template name or pass --all/);
   });
 
   it('respects config.outputExtension', () => {
@@ -155,10 +158,7 @@ describe('CLI export', () => {
   it('exits with code 1 if at least one template fails', () => {
     const dir = makeTmpProject();
     projects.push(dir);
-    fs.writeFileSync(
-      path.join(dir, 'emails', 'ok.tsx'),
-      `export default () => <div>ok</div>;`
-    );
+    fs.writeFileSync(path.join(dir, 'emails', 'ok.tsx'), `export default () => <div>ok</div>;`);
     fs.writeFileSync(
       path.join(dir, 'emails', 'bad.tsx'),
       `export default () => { throw new Error('intentional'); };`
@@ -178,9 +178,7 @@ describe('CLI init', () => {
 
     expect(fs.existsSync(path.join(dir, 'emails/welcome.tsx'))).toBe(true);
     expect(fs.existsSync(path.join(dir, 'emails/welcome.json'))).toBe(true);
-    expect(fs.existsSync(path.join(dir, 'react-email-bridge.config.ts'))).toBe(
-      true
-    );
+    expect(fs.existsSync(path.join(dir, 'react-email-bridge.config.ts'))).toBe(true);
     expect(fs.existsSync(path.join(dir, 'tsconfig.json'))).toBe(true);
 
     const tsx = fs.readFileSync(path.join(dir, 'emails/welcome.tsx'), 'utf-8');

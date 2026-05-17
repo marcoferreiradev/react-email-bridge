@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+# Permissions needed by changesets/action to open the Version Packages PR.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history so changesets can compute the right bump.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Opens (or updates) a "Version Packages" PR when pending changesets
+      # exist on main. Merging that PR bumps versions + writes CHANGELOG.md.
+      #
+      # Publishing to npm is intentionally NOT wired up yet. When ready
+      # (Bloco 10), add:
+      #   publish: pnpm changeset publish
+      #   env:    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create Version Packages PR
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          commit: 'chore: version packages'
+          title: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
