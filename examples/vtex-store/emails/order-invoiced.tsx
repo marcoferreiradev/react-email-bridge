@@ -1,185 +1,112 @@
 /**
- * VTEX order-invoiced template, ported from
+ * VTEX `order-invoiced` template — faithful port of
  * `refs/vtex-email-framework/source/templates/04-invoiced.hbs`.
  *
- * Adds patterns not present in order-confirmed:
- *   - Pluralization via {{#compare items.length '>' 1}}…{{else}}…{{/compare}}
- *   - Nested conditionals (#if + #compare on the same path)
- *   - Multi-invoice alert when items.length != logisticsInfo.length
- *   - Fallback when sellingPrice is null ({{#if sellingPrice}}…{{else}})
- *   - Bundle items nested inside item iteration ({{#each bundleItems}})
- *   - Parent-path traversal up 4 levels: `../../../../items`
+ * Bloco 7 PR B.5 — rewrites the v0.1 freeform demo to match the source
+ * (which the original port diverged from). Composes from PR A's shared
+ * components.
  *
- * Uses the real VTEX 04-invoiced fixture (1971 lines, top-level shape:
- * items, shippingData, clientProfileData, paymentData, totals, _accountInfo).
+ * Section map (matches source line ranges):
+ *  - HtmlHead                           src:3
+ *  - Header: Logo + h1 + OrderRef +     src:11–26
+ *    many-invoices alert (when split)
+ *  - Intro: Hi + Handling (only if      src:28–42
+ *    non-anonymous client)
+ *  - Per-group invoice items            src:44–106
+ *  - Regards                            src:108–112
+ *
+ * Special patterns:
+ *  - The order-info section is structurally `richShippingData → group by
+ *    addressId → group by packageId → items table`. The items table body
+ *    is exactly what the shared `Items` component renders — so we use it
+ *    directly inside the group.
+ *  - The "Products" vs "Product" heading is gated by items.length > 1.
  */
-import { Html, Head, Body, Container, Section, Row, Column, Text, Heading, Img } from 'react-email';
-import { hbs } from 'react-email-bridge';
-import { Each, If, Unless, Else, Raw } from 'react-email-bridge/hbs';
+
+import { Body, Container, Heading, Html, Section } from 'react-email';
+import { Else, If, Raw } from 'react-email-bridge/hbs';
+
+import {
+  Handling,
+  Hi,
+  HtmlHead,
+  Items,
+  Logo,
+  OrderReference,
+  Regards,
+} from '../components/index.js';
+
+const sectionStyle = { padding: '24px' };
+const sectionWithDividerStyle = {
+  ...sectionStyle,
+  borderTop: '1px solid #ddd',
+};
 
 export default function OrderInvoiced() {
   return (
     <Html>
-      <Head />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial' }}>
-        <Container
-          style={{
-            backgroundColor: '#fff',
-            maxWidth: '600px',
-            padding: '0',
-          }}
-        >
-          {/* Header */}
-          <Section
-            style={{
-              padding: '32px 24px 24px',
-              borderBottom: '1px solid #ddd',
-              textAlign: 'center',
-            }}
-          >
-            <Heading as="h1" style={{ color: hbs('storeTheme.primary'), margin: 0 }}>
-              {`{{_accountInfo.TradingName}}`}
-            </Heading>
-            <Text style={{ color: '#666', marginTop: '8px' }}>Sua nota fiscal está disponível</Text>
-            <Text style={{ color: '#888', fontSize: '13px' }}>
-              Pedido <strong>#{`{{orderId}}`}</strong>
-            </Text>
+      <HtmlHead />
+      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
+        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
+          {/* Header: logo + headline + order ref + many-invoices alert */}
+          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
+            <Logo />
+            <Heading as="h1">Sua Nota Fiscal foi emitida.</Heading>
+            <OrderReference />
 
-            {/* Multi-invoice alert: split shipment with items.length != logisticsInfo.length */}
+            {/* Alert: more than 1 invoice (items / packages mismatch) */}
             <If compare={['items.length', '!=', 'shippingData.logisticsInfo.length']}>
               <Section
                 style={{
-                  backgroundColor: '#fff3cd',
+                  backgroundColor: '#f4f4f4',
                   padding: '12px 16px',
                   marginTop: '16px',
-                  borderRadius: '6px',
-                  textAlign: 'left',
+                  fontWeight: 700,
+                  lineHeight: 1.4,
                 }}
               >
-                <Text style={{ margin: 0, fontSize: '13px' }}>
-                  <strong>Seu pedido foi dividido em mais de uma entrega.</strong>
-                </Text>
-                <Text style={{ margin: '4px 0 0', fontSize: '12px', color: '#666' }}>
-                  Você receberá notificações de cada parte.
-                </Text>
+                <div>Seu pedido possui mais de uma Nota Fiscal.</div>
+                <div>Avisaremos sobre a emissão de cada uma delas.</div>
               </Section>
             </If>
           </Section>
 
-          {/* Greeting — only for non-anonymous purchases */}
-          <If path="clientProfileData.firstName">
-            <If compare={['clientProfileData.firstName', '!=', '"isAnonymous"']}>
-              <Section style={{ padding: '24px' }}>
-                <Text>
-                  Olá <strong>{`{{clientProfileData.firstName}}`}</strong>, sua nota fiscal foi
-                  emitida. Continuaremos atualizando você sobre o status da entrega.
-                </Text>
-              </Section>
+          {/* Intro: greet + handling message — only if non-anonymous client */}
+          <Section style={sectionStyle}>
+            <If path="clientProfileData.firstName">
+              <If compare={['clientProfileData.firstName', '!=', "'isAnonymous'"]}>
+                <p>
+                  <Hi /> <Handling />
+                </p>
+              </If>
             </If>
-          </If>
+          </Section>
 
-          {/* Items grouped by address, then by package */}
-          <Raw>{`{{#richShippingData shippingData}}`}</Raw>
-          <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-          <Section style={{ padding: '0 24px 24px' }}>
-            {/* Pluralization: "Produto" vs "Produtos" */}
-            <If compare={['items.length', '>', '1']}>
-              <Heading as="h3" style={{ marginTop: 0 }}>
-                Produtos enviados
-              </Heading>
-              <Else />
-              <Heading as="h3" style={{ marginTop: 0 }}>
-                Produto enviado
-              </Heading>
-            </If>
-
-            <Raw>{`{{#group items by="packageId"}}`}</Raw>
-            <Section
-              style={{
-                padding: '12px',
-                border: '1px solid #eee',
-                marginBottom: '12px',
-                backgroundColor: hbs('storeTheme.packageBg'),
-              }}
-            >
-              {/* Item iteration with parent-path lookup to get full item data */}
-              <Each path="items">
-                <Raw>{`{{#each ../../../../items}}`}</Raw>
-                <Raw>{`{{#eq id ../itemId}}`}</Raw>
-                <Row>
-                  <Column style={{ width: '70px', verticalAlign: 'top' }}>
-                    <Img src={`{{imageUrl}}`} alt={`{{name}}`} width="60" height="60" />
-                  </Column>
-                  <Column>
-                    <Text style={{ margin: 0 }}>
-                      <strong>{`{{name}}`}</strong>
-                    </Text>
-                    <Text
-                      style={{
-                        margin: '4px 0 0',
-                        color: '#666',
-                        fontSize: '12px',
-                      }}
-                    >
-                      Qtd: {`{{quantity}}`}
-                    </Text>
-                    {/* Fallback: price may be null for free items */}
-                    <If path="sellingPrice">
-                      <Text style={{ margin: 0 }}>R$ {`{{formatCurrency sellingPrice}}`}</Text>
-                      <Else />
-                      <Text style={{ margin: 0, color: '#22c55e' }}>Grátis</Text>
-                    </If>
-
-                    {/* Bundle items nested inside main item */}
-                    <Each path="bundleItems">
-                      <If path="name">
-                        <Row style={{ marginTop: '8px', marginLeft: '16px' }}>
-                          <Column style={{ width: '50px', verticalAlign: 'top' }}>
-                            <Img src={`{{imageUrl}}`} alt={`{{name}}`} width="40" height="40" />
-                          </Column>
-                          <Column>
-                            <Text style={{ margin: 0, fontSize: '13px' }}>+ {`{{name}}`}</Text>
-                            <Text
-                              style={{
-                                margin: 0,
-                                color: '#888',
-                                fontSize: '11px',
-                              }}
-                            >
-                              Qtd: {`{{quantity}}`}
-                              {' • '}
-                              <If path="price">
-                                R$ {`{{formatCurrency price}}`}
-                                <Else />
-                                Grátis
-                              </If>
-                            </Text>
-                          </Column>
-                        </Row>
-                      </If>
-                    </Each>
-                  </Column>
-                </Row>
-                <Raw>{`{{/eq}}`}</Raw>
-                <Raw>{`{{/each}}`}</Raw>
-              </Each>
-            </Section>
+          {/* Per-group invoice items: richShippingData + group + group + Items */}
+          <Section style={sectionStyle}>
+            <Raw>{`{{#richShippingData shippingData}}`}</Raw>
+            <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
+            <div>
+              <If compare={['items.length', '>', '1']}>
+                <Heading as="h3" style={{ margin: 0 }}>
+                  Produtos na Nota Fiscal
+                </Heading>
+                <Else />
+                <Heading as="h3" style={{ margin: 0 }}>
+                  Produto na Nota Fiscal
+                </Heading>
+              </If>
+              <Raw>{`{{#group items by="packageId"}}`}</Raw>
+              <Items />
+              <Raw>{`{{/group}}`}</Raw>
+            </div>
             <Raw>{`{{/group}}`}</Raw>
+            <Raw>{`{{/richShippingData}}`}</Raw>
           </Section>
-          <Raw>{`{{/group}}`}</Raw>
-          <Raw>{`{{/richShippingData}}`}</Raw>
 
           {/* Footer */}
-          <Section
-            style={{
-              padding: '24px',
-              borderTop: '1px solid #ddd',
-              color: '#888',
-              fontSize: '12px',
-              textAlign: 'center',
-            }}
-          >
-            <Text>Obrigado por comprar com {`{{_accountInfo.TradingName}}`}.</Text>
+          <Section style={sectionWithDividerStyle}>
+            <Regards />
           </Section>
         </Container>
       </Body>

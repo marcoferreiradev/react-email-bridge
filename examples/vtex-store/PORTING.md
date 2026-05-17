@@ -42,8 +42,8 @@ preserved. Our port mirrors that output shape:
 
 | Template                       | Lines | Partials | Helpers | Wave    | Status |
 |--------------------------------|------:|---------:|--------:|---------|--------|
-| 01-confirmed                   |   N/A |       10 |       5 | (v0.1)  | in `order-confirmed.tsx` — freeform demo, faithful rewrite deferred (see scope note below) |
-| 04-invoiced                    |   N/A |        6 |       6 | (v0.1)  | in `order-invoiced.tsx` — freeform demo, faithful rewrite deferred (see scope note below) |
+| 01-confirmed                   |   106 |       10 |       5 | PR B.5  | `order-confirmed.tsx` — faithful rewrite, pending manual Message Center validation |
+| 04-invoiced                    |   118 |        6 |       6 | PR B.5  | `order-invoiced.tsx` — faithful rewrite, pending manual Message Center validation |
 | 06-shipped                     |   103 |       12 |       4 | Onda 1  | `order-shipped.tsx` — PR B, pending manual Message Center validation |
 | 05-invoiced-cancel-request     |    81 |        8 |       5 | Onda 2  | PR C — variant of 04 |
 | 07-shipped-cancel-request      |   109 |       14 |       4 | Onda 2  | PR C — variant of 06 |
@@ -196,22 +196,29 @@ preview time matches what VTEX Message Center would receive in production.
 
 ## Scope note on the v0.1 templates
 
-The 2 templates ported in v0.1 (`order-confirmed.tsx`, `order-invoiced.tsx`)
-were freeform demo templates designed to stress-test the pipeline, not
-faithful ports of `01-confirmed.hbs` / `04-invoiced.hbs`. They inline
-patterns the source doesn't have (e.g. a striped item recap using
-`(math @index "%" 2)`) and omit sections the source does (Logo, Regards,
-`shipping-summary`, Payment partial, AddressDeliveryTitle, etc.).
+**Status updated by PR B.5**: both v0.1 templates rewritten as faithful
+ports. The freeform demo versions are gone.
 
-PR A ships the shared-components infrastructure only. The 2 v0.1
-templates stay as-is. A faithful rewrite of both — using the new
-components and inlining the remaining single-use partials
-(`shipping-summary`, `order-link`, `shipping-summary-estimate-*`) — is
-deferred to a follow-up PR after the wave templates have validated the
-component conventions in real usage.
+History (kept for context):
 
-The wave templates (Onda 1, 2, 3) are faithful ports from the start —
-they don't carry the v0.1 demo baggage.
+- v0.1 shipped `order-confirmed.tsx` + `order-invoiced.tsx` as freeform
+  demos to stress-test the pipeline. They inlined patterns the source
+  doesn't have (e.g. a striped recap using `(math @index "%" 2)`) and
+  omitted sections the source does (Logo, Regards, shipping-summary,
+  Payment partial, AddressDeliveryTitle, etc.).
+- PR A (Bloco 7) shipped the 18 shared components but left the 2 v0.1
+  templates as-is — the refactor turned out to be a rewrite, not a
+  drop-in.
+- PR B.5 (this) rewrote both: they now mirror 01-confirmed.hbs and
+  04-invoiced.hbs section-by-section, use PR A's shared components, and
+  inline the 4 single-use partials (`messages/intro` + `order-link` for
+  01-confirmed; `shipping-summary` + its 3 transitive
+  `shipping-summary-estimate-*` for 01-confirmed). Fixtures were also
+  replaced with the canonical source versions from
+  `refs/vtex-email-framework/source/data/vtex/`.
+- `ShippingEstimateRangeTime` was promoted from internal-to-Package to
+  exported (used by both Package and the shipping-summary block in
+  order-confirmed).
 
 ---
 
