@@ -120,6 +120,33 @@ Isso quase elimina o ciclo de pack pra iterar. Trade-off: o starter vira "almost
 
 ## v0.3+
 
+### Modernização visual dos templates VTEX
+
+Os 13 templates portados no Bloco 7 são **faithful ports** do `vtex-email-framework` (oficial mas de 2018-2019): markup table-based, classes Tachyons, paleta cinza, imagens hard-coded em URL externa (algumas já 404). Funcionam mas o design é datado.
+
+**Visão:** modernizar visual mantendo a fidelidade comportamental (mesmos markers Handlebars, mesma estrutura de seções, mesma compatibilidade com VTEX Message Center). Inspiração: [react-email Studio examples](https://demo.react.email/preview/05-Studio/) — especialmente os do ecommerce (abandoned-cart, order-confirmation, order-shipping, promo).
+
+Características do design moderno alvo:
+
+- **Card-based layout** com border-radius (com fallback pra Outlook via VML)
+- **Tipografia limpa** (Figtree já tá importado pelo HtmlHead — usar de fato)
+- **Espaço respirável** (margens generosas, less density)
+- **Hierarquia clara** (h1 grande, body compacto, CTAs com destaque)
+- **Botões CTA elegantes** (background sólido, border-radius, padding generoso)
+- **Imagens funcionais** — substituir URLs deadlinkadas. Opções:
+  - Placeholder service (`placehold.co/600x400`) durante dev
+  - Vercel OG / Cloudflare Images como CDN final
+  - Self-hosted no domínio do storefront
+- **Theme system compartilhado**: `examples/vtex-store/theme.ts` com tokens (colors, typography, spacing) que todos os 13 templates referenciam — single source of truth visual
+
+**Estratégia de execução** (a definir quando começar):
+
+1. **In-place vs parallel**: redesenhar os 13 atuais OU criar `examples/vtex-modern-store/` como novo starter, mantendo o atual como "faithful reference". Decisão pesa: parallel preserva a referência educacional do faithful port, mas dobra trabalho de manutenção.
+2. **Compat 1:1 com Studio examples**: portar os designs do Studio o mais literal possível, ou criar nossa identidade visual? Studio examples têm 7 (abandoned-cart, activation, newsletter, order-confirmation, order-shipping, password-reset, promo, welcome) — cobertura overlapping mas não 1:1 com os 13 VTEX status.
+3. **Outlook compatibility**: alguns elementos modernos (border-radius, certos webfonts) não rendem em Outlook desktop. Decidir caso a caso: degradar elegantemente OU usar VML fallback OU descartar Outlook desktop (público real de transactional de Oficina presumível: webmail / mobile, não Outlook 2019).
+
+**Quando atacar:** depois do Bloco 7 fechar (13 templates faithful no main). Antes do npm publish (v0.2.0) idealmente — pra que a primeira release pública mostre design 2026, não 2018.
+
 ### ESLint plugin
 Avisa quando o usuário usa um helper que **não está documentado como suportado pela plataforma alvo** (configurável via preset).
 
