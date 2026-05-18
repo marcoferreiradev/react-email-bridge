@@ -98,11 +98,16 @@
             },
             "Teste": {
               "maximumNumberOfCharacters": 10,
-              "domain": ["0987654321"]
+              "domain": [
+                "0987654321"
+              ]
             },
             "Embalagem": {
               "maximumNumberOfCharacters": 6,
-              "domain": ["true", " false"]
+              "domain": [
+                "true",
+                " false"
+              ]
             }
           }
         }
@@ -316,7 +321,9 @@
             }
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "15",
         "deliveryChannels": [
           {

@@ -94,7 +94,9 @@
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-delivered-1/200/200",
       "detailUrl": "/polera-de-futbol-nike-manga-corta-20/p",
       "components": [],
@@ -240,7 +242,9 @@
             "polygonName": null
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "31",
         "deliveryChannels": [
           {
@@ -321,7 +325,9 @@
             "polygonName": null
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "33",
         "deliveryChannels": [
           {

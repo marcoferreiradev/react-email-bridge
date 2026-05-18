@@ -324,7 +324,9 @@
             }
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2004169",
         "deliveryChannels": [
           {

@@ -6,63 +6,63 @@
         "quantity": 1,
         "price": 8330,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 1,
         "quantity": 1,
         "price": 6930,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 2,
         "quantity": 1,
         "price": 11130,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 3,
         "quantity": 1,
         "price": 6930,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 4,
         "quantity": 1,
         "price": 6930,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 5,
         "quantity": 1,
         "price": 8330,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 6,
         "quantity": 1,
         "price": 6930,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 7,
         "quantity": 1,
         "price": 0,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 8,
         "quantity": 1,
         "price": 6930,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       }
     ],
     "courier": "CD - CAMPO GRANDE - DCASA COPIAS (CORREIOS)",
@@ -95,11 +95,11 @@
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 140.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 140,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,510,514",
@@ -142,12 +142,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-1/200/200",
       "detailUrl": "/lenco-viscose-xadrez-201154201/p",
       "components": [],
@@ -180,17 +182,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 140.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 140,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,510",
@@ -233,12 +235,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-2/200/200",
       "detailUrl": "/lenco-viscose-bordeaux-201152101/p",
       "components": [],
@@ -271,17 +275,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 60.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 60,
+          "width": 1
         },
         "categoriesIds": "/17/18/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,509,510",
@@ -324,12 +328,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/18/",
       "productCategories": {
-        "18": "Bijoux",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "18": "Bijoux"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-3/200/200",
       "detailUrl": "/colar-longo-resina-manchada-201264000/p",
       "components": [],
@@ -362,17 +368,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 120.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 120,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,507,510",
@@ -415,12 +421,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-4/200/200",
       "detailUrl": "/lenco-viscose-lima-201153302/p",
       "components": [],
@@ -453,17 +461,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 120.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 120,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,507,510",
@@ -506,12 +514,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-5/200/200",
       "detailUrl": "/lenco-viscose-roxo-201153301/p",
       "components": [],
@@ -544,17 +554,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 140.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 140,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,509,510,514",
@@ -597,12 +607,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-6/200/200",
       "detailUrl": "/lenco-viscose-poa-off-white-201151100/p",
       "components": [],
@@ -635,17 +647,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 100.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 100,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,507,510",
@@ -688,12 +700,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-7/200/200",
       "detailUrl": "/lenco-viscose-azul-201151102/p",
       "components": [],
@@ -726,17 +740,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 100.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 100,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,507,510",
@@ -779,12 +793,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-8/200/200",
       "detailUrl": "/lenco-viscose-azul-201151102/p",
       "components": [],
@@ -796,7 +812,7 @@
         {
           "name": "DISCOUNT@GIFT",
           "value": 100,
-          "rawValue": 1.0,
+          "rawValue": 1,
           "isPercentual": true,
           "identifier": "2bc27cdd-10c0-4707-bf68-f8d345df7ae6"
         },
@@ -817,17 +833,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     },
     {
       "additionalInfo": {
         "dimension": {
-          "cubicweight": 0.0,
-          "height": 1.0,
-          "length": 1.0,
-          "weight": 120.0,
-          "width": 1.0
+          "cubicweight": 0,
+          "height": 1,
+          "length": 1,
+          "weight": 120,
+          "width": 1
         },
         "categoriesIds": "/17/23/",
         "productClusterId": "136,226,235,284,348,447,459,466,468,507,510",
@@ -870,12 +886,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/17/23/",
       "productCategories": {
-        "23": "Lenços",
-        "17": "Acessórios"
+        "17": "Acessórios",
+        "23": "Lenços"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-shipped-9/200/200",
       "detailUrl": "/lenco-viscose-vermelho-201153300/p",
       "components": [],
@@ -908,7 +926,7 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": null
     }
   ],
@@ -1070,7 +1088,10 @@
       "neighborhood": "COSTA AZUL",
       "complement": "APTº 804 EDF. ANA VI",
       "reference": null,
-      "geoCoordinates": [-38.446762084960938, -12.993664741516113]
+      "geoCoordinates": [
+        -38.44676208496094,
+        -12.993664741516113
+      ]
     },
     "logisticsInfo": [
       {
@@ -1109,7 +1130,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1143,12 +1164,14 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2053271",
         "deliveryChannels": [
           {
@@ -1193,7 +1216,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1266,7 +1289,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2052895",
         "deliveryChannels": [
           {
@@ -1311,7 +1336,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1384,7 +1409,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2051591",
         "deliveryChannels": [
           {
@@ -1429,7 +1456,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1502,7 +1529,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2051154",
         "deliveryChannels": [
           {
@@ -1547,7 +1576,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1620,7 +1649,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2051153",
         "deliveryChannels": [
           {
@@ -1665,7 +1696,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1699,12 +1730,14 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2050844",
         "deliveryChannels": [
           {
@@ -1749,7 +1782,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1822,7 +1855,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2051428",
         "deliveryChannels": [
           {
@@ -1867,7 +1902,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1940,7 +1975,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2051428",
         "deliveryChannels": [
           {
@@ -1985,7 +2022,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -2058,7 +2095,9 @@
             "transitTime": "6bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "2049450",
         "deliveryChannels": [
           {
@@ -2083,7 +2122,10 @@
         "neighborhood": "COSTA AZUL",
         "complement": "APTº 804 EDF. ANA VI",
         "reference": null,
-        "geoCoordinates": [-38.446762084960938, -12.993664741516113]
+        "geoCoordinates": [
+          -38.44676208496094,
+          -12.993664741516113
+        ]
       }
     ],
     "availableAddresses": [
@@ -2101,7 +2143,10 @@
         "neighborhood": "COSTA AZUL",
         "complement": "APTº 804 EDF. ANA VI",
         "reference": null,
-        "geoCoordinates": [-38.446762084960938, -12.993664741516113]
+        "geoCoordinates": [
+          -38.44676208496094,
+          -12.993664741516113
+        ]
       }
     ],
     "pickupPoints": []

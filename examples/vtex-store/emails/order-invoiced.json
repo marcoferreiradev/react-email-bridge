@@ -6,28 +6,28 @@
         "quantity": 1,
         "price": 161415,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 1,
         "quantity": 1,
         "price": 161415,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 2,
         "quantity": 1,
         "price": 0,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 3,
         "quantity": 1,
         "price": 0,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       }
     ],
     "courier": "Sedex Correios",
@@ -61,10 +61,10 @@
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.1339,
-          "height": 17.0,
+          "height": 17,
           "length": 4.2,
           "weight": 0.19,
-          "width": 9.0
+          "width": 9
         },
         "categoriesIds": "/1/12/",
         "productClusterId": "140,145",
@@ -107,12 +107,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/1/12/",
       "productCategories": {
-        "12": "Motorola",
-        "1": "Smartphone"
+        "1": "Smartphone",
+        "12": "Motorola"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-invoiced-1/200/200",
       "detailUrl": "/celular-motorola-moto-one-zoom-128gb-titanium-tela-64-camera-48mp-16mp-8mp-5mp/p",
       "components": [],
@@ -131,17 +133,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     },
     {
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.1339,
-          "height": 17.0,
+          "height": 17,
           "length": 4.2,
           "weight": 0.19,
-          "width": 9.0
+          "width": 9
         },
         "categoriesIds": "/1/12/",
         "productClusterId": "140,145",
@@ -184,12 +186,14 @@
       "preSaleDate": null,
       "productCategoryIds": "/1/12/",
       "productCategories": {
-        "12": "Motorola",
-        "1": "Smartphone"
+        "1": "Smartphone",
+        "12": "Motorola"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-invoiced-2/200/200",
       "detailUrl": "/celular-motorola-moto-one-zoom-128gb-violet-tela-64-camera-48mp-16mp-8mp-5mp/p",
       "components": [],
@@ -208,17 +212,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     },
     {
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.0625,
-          "height": 10.0,
-          "length": 5.0,
+          "height": 10,
+          "length": 5,
           "weight": 0.05,
-          "width": 6.0
+          "width": 6
         },
         "categoriesIds": "/39/",
         "productClusterId": "",
@@ -265,7 +269,9 @@
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-invoiced-3/200/200",
       "detailUrl": "/anel-de-selfie-brinde/p",
       "components": [],
@@ -277,24 +283,24 @@
         {
           "name": "DISCOUNT@GIFT",
           "value": 100,
-          "rawValue": 1.0,
+          "rawValue": 1,
           "isPercentual": true,
           "identifier": "6eceb34b-17f6-4195-94f3-256d8e45ea5c"
         }
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     },
     {
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.0625,
-          "height": 10.0,
-          "length": 5.0,
+          "height": 10,
+          "length": 5,
           "weight": 0.05,
-          "width": 6.0
+          "width": 6
         },
         "categoriesIds": "/39/",
         "productClusterId": "",
@@ -341,7 +347,9 @@
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
+      "sellerChain": [
+        "1"
+      ],
       "imageUrl": "https://picsum.photos/seed/order-invoiced-4/200/200",
       "detailUrl": "/anel-de-selfie-brinde/p",
       "components": [],
@@ -353,14 +361,14 @@
         {
           "name": "DISCOUNT@GIFT",
           "value": 100,
-          "rawValue": 1.0,
+          "rawValue": 1,
           "isPercentual": true,
           "identifier": "6eceb34b-17f6-4195-94f3-256d8e45ea5c"
         }
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     }
   ],
@@ -478,7 +486,10 @@
       "neighborhood": "Centro",
       "complement": "Restaurante beco do chopp",
       "reference": null,
-      "geoCoordinates": [-42.865016937255859, -22.925510406494141]
+      "geoCoordinates": [
+        -42.86501693725586,
+        -22.92551040649414
+      ]
     },
     "logisticsInfo": [
       {
@@ -517,7 +528,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -560,7 +571,10 @@
                 "neighborhood": "Inhauma",
                 "complement": "Quiosque 19 - 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -609,13 +623,16 @@
                 "neighborhood": "Piedade",
                 "complement": "Lojas: 1º Piso e 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -658,13 +675,16 @@
                 "neighborhood": "Vila São Luis",
                 "complement": "2° piso",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -707,18 +727,23 @@
                 "neighborhood": "Madureira",
                 "complement": "Lojas 164 / 165",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301735",
         "deliveryChannels": [
           {
@@ -767,7 +792,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -810,7 +835,10 @@
                 "neighborhood": "Inhauma",
                 "complement": "Quiosque 19 - 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -859,13 +887,16 @@
                 "neighborhood": "Piedade",
                 "complement": "Lojas: 1º Piso e 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -908,13 +939,16 @@
                 "neighborhood": "Vila São Luis",
                 "complement": "2° piso",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -957,18 +991,23 @@
                 "neighborhood": "Madureira",
                 "complement": "Lojas 164 / 165",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301736",
         "deliveryChannels": [
           {
@@ -1017,7 +1056,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1060,7 +1099,10 @@
                 "neighborhood": "Inhauma",
                 "complement": "Quiosque 19 - 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -1109,13 +1151,16 @@
                 "neighborhood": "Piedade",
                 "complement": "Lojas: 1º Piso e 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1158,13 +1203,16 @@
                 "neighborhood": "Vila São Luis",
                 "complement": "2° piso",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1207,18 +1255,23 @@
                 "neighborhood": "Madureira",
                 "complement": "Lojas 164 / 165",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301809",
         "deliveryChannels": [
           {
@@ -1267,7 +1320,7 @@
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1310,7 +1363,10 @@
                 "neighborhood": "Inhauma",
                 "complement": "Quiosque 19 - 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -1359,13 +1415,16 @@
                 "neighborhood": "Piedade",
                 "complement": "Lojas: 1º Piso e 2º Piso",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1408,13 +1467,16 @@
                 "neighborhood": "Vila São Luis",
                 "complement": "2° piso",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1457,18 +1519,23 @@
                 "neighborhood": "Madureira",
                 "complement": "Lojas 164 / 165",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301809",
         "deliveryChannels": [
           {
@@ -1497,7 +1564,10 @@
         "neighborhood": "Centro",
         "complement": "Restaurante beco do chopp",
         "reference": null,
-        "geoCoordinates": [-42.865016937255859, -22.925510406494141]
+        "geoCoordinates": [
+          -42.86501693725586,
+          -22.92551040649414
+        ]
       }
     ],
     "availableAddresses": [
@@ -1515,7 +1585,10 @@
         "neighborhood": "Centro",
         "complement": "Restaurante beco do chopp",
         "reference": null,
-        "geoCoordinates": [-42.865016937255859, -22.925510406494141]
+        "geoCoordinates": [
+          -42.86501693725586,
+          -22.92551040649414
+        ]
       }
     ],
     "pickupPoints": [
@@ -1535,7 +1608,10 @@
           "neighborhood": "Inhauma",
           "complement": "Quiosque 19 - 2º Piso",
           "reference": null,
-          "geoCoordinates": [-43.271215600000005, -22.8778881]
+          "geoCoordinates": [
+            -43.271215600000005,
+            -22.8778881
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_novamamerica",
@@ -1593,7 +1669,10 @@
           "neighborhood": "Piedade",
           "complement": "Lojas: 1º Piso e 2º Piso",
           "reference": null,
-          "geoCoordinates": [-43.2834982, -22.8864368]
+          "geoCoordinates": [
+            -43.2834982,
+            -22.8864368
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_NorteShopping",
@@ -1651,7 +1730,10 @@
           "neighborhood": "Vila São Luis",
           "complement": "2° piso",
           "reference": null,
-          "geoCoordinates": [-43.286740300000019, -22.7873054]
+          "geoCoordinates": [
+            -43.28674030000002,
+            -22.7873054
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_Caxias",
@@ -1709,7 +1791,10 @@
           "neighborhood": "Madureira",
           "complement": "Lojas 164 / 165",
           "reference": null,
-          "geoCoordinates": [-43.341083099999992, -22.870455]
+          "geoCoordinates": [
+            -43.34108309999999,
+            -22.870455
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_Madureira",
