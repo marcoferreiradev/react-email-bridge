@@ -14,6 +14,5 @@ validation/test-helpers.*
 /tmp/
 *.log
 dist-tarballs/
-starters/*/vendor/*.tgz
 validation/test-tsimport.mjs
 packages/react-email-bridge/tests/.tmp/
