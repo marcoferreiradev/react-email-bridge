@@ -54,8 +54,8 @@ project's published packages.
 - [`resend/react-email`](https://github.com/resend/react-email) — MIT
 - [`vtex/vtex-emails`](https://github.com/vtex/vtex-emails) — MIT
 - [`vtex/vtex-email-framework`](https://github.com/vtex/vtex-email-framework) — MIT
-- `email-templates-oficina` — private real-world reference (Oficina Reserva,
-  used by author with permission)
+- `email-templates-oficina` — private real-world reference (used by
+  author with permission)
 
 ## Patches contributed back upstream
 
