@@ -1,6 +1,6 @@
 {
   "name": "react-email-bridge",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Write transactional emails in React Email, export to HTML with template markers (Handlebars, Liquid, Mailchimp). Live preview, real engine, copy-paste into VTEX, Mandrill, etc.",
   "type": "module",
   "license": "MIT",
