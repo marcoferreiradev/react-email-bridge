@@ -1,62 +1,63 @@
 /**
- * VTEX `order-cancelled` template — faithful port of
- * `refs/vtex-email-framework/source/templates/02-cancelled.hbs`.
- *
- * Onda 3 of Bloco 7. One of the simpler templates: header + Totals +
- * per-group items + Regards. No payment section, no addresses.
+ * VTEX `order-cancelled` template — Halo-Tailwind (Bloco 11).
+ * Header + Totals + per-group items + Regards. No payment, no addresses.
  */
 
-import { Body, Container, Heading, Html, Section } from 'react-email';
+import { Body, Container, Heading, Html, Section, Tailwind } from 'react-email';
 import { Else, If, Raw } from 'react-email-bridge/hbs';
 
 import { HtmlHead, Items, Logo, OrderReference, Regards, Totals } from '../components/index.js';
-
-const sectionStyle = { padding: '24px' };
-const sectionWithDividerStyle = { ...sectionStyle, borderTop: '1px solid #ddd' };
+import { vtexStoreTailwindConfig } from '../tailwind.config.js';
 
 export default function OrderCancelled() {
   return (
-    <Html>
-      <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
-          {/* Header: Logo + h1 + OrderRef */}
-          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
-            <Logo />
-            <Heading as="h1">Seu pedido foi cancelado.</Heading>
-            <OrderReference />
-          </Section>
+    <Tailwind config={vtexStoreTailwindConfig}>
+      <Html>
+        <HtmlHead />
+        <Body className="bg-bg m-0 py-8 font-sans">
+          <Container className="bg-bg-2 mx-auto max-w-[600px] rounded-lg overflow-hidden">
+            <Section className="px-6 pt-2 text-center">
+              <Logo />
+              <Heading className="font-32 font-geist text-fg m-0 mb-2">
+                Seu pedido foi cancelado.
+              </Heading>
+              <OrderReference />
+            </Section>
 
-          {/* Totals + per-group items */}
-          <Section style={sectionWithDividerStyle}>
-            <Totals />
+            <hr className="border-stroke m-0 mt-6" />
 
-            <Raw>{`{{#richShippingData shippingData}}`}</Raw>
-            <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-            <div>
-              <If compare={['items.length', '>', '1']}>
-                <Heading as="h3" style={{ margin: 0 }}>
-                  Produtos
-                </Heading>
-                <Else />
-                <Heading as="h3" style={{ margin: 0 }}>
-                  Produto
-                </Heading>
-              </If>
-              <Raw>{`{{#group items by="packageId"}}`}</Raw>
-              <Items />
-              <Raw>{`{{/group}}`}</Raw>
-            </div>
-            <Raw>{`{{/group}}`}</Raw>
-            <Raw>{`{{/richShippingData}}`}</Raw>
-          </Section>
+            <Section className="px-6 py-6">
+              <Totals />
+              <div className="mt-6">
+                <Raw>{`{{#richShippingData shippingData}}`}</Raw>
+                <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
+                <div>
+                  <If compare={['items.length', '>', '1']}>
+                    <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mb-2">
+                      Produtos
+                    </div>
+                    <Else />
+                    <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mb-2">
+                      Produto
+                    </div>
+                  </If>
+                  <Raw>{`{{#group items by="packageId"}}`}</Raw>
+                  <Items />
+                  <Raw>{`{{/group}}`}</Raw>
+                </div>
+                <Raw>{`{{/group}}`}</Raw>
+                <Raw>{`{{/richShippingData}}`}</Raw>
+              </div>
+            </Section>
 
-          {/* Footer */}
-          <Section style={sectionWithDividerStyle}>
-            <Regards />
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+            <hr className="border-stroke m-0" />
+
+            <Section className="px-6 py-6">
+              <Regards />
+            </Section>
+          </Container>
+        </Body>
+      </Html>
+    </Tailwind>
   );
 }
