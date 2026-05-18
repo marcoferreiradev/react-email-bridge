@@ -51,6 +51,7 @@
   ],
   "sideEffects": false,
   "scripts": {
+    "prepack": "node -e \"require('node:fs').copyFileSync('../../README.md', './README.md')\"",
     "build": "tsdown",
     "dev": "tsdown --watch",
     "test": "vitest run",
