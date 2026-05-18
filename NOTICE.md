@@ -11,7 +11,7 @@ package directories under `node_modules/`.
 
 - **`@react-email/ui`** (Copyright 2024 Plus Five Five, Inc — MIT). Forked
   into `packages/react-email-bridge-ui/`. Original license preserved at
-  `packages/react-email-bridge-ui/license.md` and reproduced in the root
+  `packages/react-email-bridge-ui/LICENSE` and reproduced in the root
   [LICENSE](./LICENSE). Modifications documented in
   [PATCHES.md](./docs/internal/PATCHES.md); rebase process in [VENDORING.md](./docs/internal/VENDORING.md).
 
