@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^1.4.0",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "commander": "^12.1.0",
     "debounce": "^2.0.0",
     "esbuild": "^0.28.0",
