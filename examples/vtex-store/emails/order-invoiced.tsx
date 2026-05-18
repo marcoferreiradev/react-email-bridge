@@ -5,14 +5,7 @@
 
 import { Else, If, Raw } from 'react-email-bridge/hbs';
 
-import {
-  EmailDivider,
-  EmailLayout,
-  EmailSection,
-  Handling,
-  Hi,
-  Items,
-} from '../components/index.js';
+import { EmailDivider, EmailLayout, EmailSection, Handling, Hi, Items } from '../components/index';
 
 const pill = (
   <span className="bg-status-warning-bg text-status-warning-fg font-13 font-semibold px-3 py-1 rounded-full inline-block">

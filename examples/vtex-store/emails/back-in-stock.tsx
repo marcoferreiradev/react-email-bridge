@@ -5,7 +5,7 @@
 
 import { Link, Text } from 'react-email';
 
-import { EmailLayout, EmailSection } from '../components/index.js';
+import { EmailLayout, EmailSection } from '../components/index';
 
 export default function BackInStock() {
   return (

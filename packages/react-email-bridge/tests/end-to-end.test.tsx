@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { render, hbs } from '../src/core/index.js';
-import { Each, If, Else } from '../src/hbs/components/index.js';
-import { previewWithFixture } from '../src/hbs/preview-runtime.js';
+import { render, hbs } from '../src/core/index';
+import { Each, If, Else } from '../src/hbs/components/index';
+import { previewWithFixture } from '../src/hbs/preview-runtime';
 
 /**
  * End-to-end pipeline test: TSX → render() → marker-literal HTML → Handlebars

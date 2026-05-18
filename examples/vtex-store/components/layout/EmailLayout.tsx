@@ -1,11 +1,11 @@
 import { Body, Container, Heading, Html, Section, Tailwind } from 'react-email';
 import type { ReactNode } from 'react';
 
-import { vtexStoreTailwindConfig } from '../../tailwind.config.js';
-import { OrderReference } from '../messages/OrderReference.js';
-import { Regards } from '../messages/Regards.js';
-import { HtmlHead } from './HtmlHead.js';
-import { Logo } from './Logo.js';
+import { vtexStoreTailwindConfig } from '../../tailwind.config';
+import { OrderReference } from '../messages/OrderReference';
+import { Regards } from '../messages/Regards';
+import { HtmlHead } from './HtmlHead';
+import { Logo } from './Logo';
 
 interface EmailLayoutProps {
   /**

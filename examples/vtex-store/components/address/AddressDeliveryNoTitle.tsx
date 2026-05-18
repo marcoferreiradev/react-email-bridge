@@ -1,6 +1,6 @@
 import { Section } from 'react-email';
 import { If } from 'react-email-bridge/hbs';
-import { AddressDeliveryInfo } from './AddressDeliveryInfo.js';
+import { AddressDeliveryInfo } from './AddressDeliveryInfo';
 
 /**
  * Delivery address card. Two parallel branches for

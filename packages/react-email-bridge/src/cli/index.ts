@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process';
 import { program } from 'commander';
-import { dev } from './commands/dev.js';
-import { exportCmd } from './commands/export.js';
-import { init } from './commands/init.js';
+import { dev } from './commands/dev';
+import { exportCmd } from './commands/export';
+import { init } from './commands/init';
 
 const PACKAGE_NAME = 'react-email-bridge';
 

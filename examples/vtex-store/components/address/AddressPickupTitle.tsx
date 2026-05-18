@@ -1,6 +1,6 @@
 import { Heading, Section } from 'react-email';
 import { If } from 'react-email-bridge/hbs';
-import { AddressPickupInfo } from './AddressPickupInfo.js';
+import { AddressPickupInfo } from './AddressPickupInfo';
 
 /**
  * Mirrors `partials/address-pickup-title.hbs`. Adds a "Retirar" heading

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Each, If, Unless, Else, Raw } from '../src/hbs/components/index.js';
+import { Each, If, Unless, Else, Raw } from '../src/hbs/components/index';
 
 /**
  * The sugar components are pure — they just emit HBS marker strings via JSX

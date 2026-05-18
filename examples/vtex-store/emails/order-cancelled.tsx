@@ -5,7 +5,7 @@
 
 import { Else, If, Raw } from 'react-email-bridge/hbs';
 
-import { EmailDivider, EmailLayout, EmailSection, Items, Totals } from '../components/index.js';
+import { EmailDivider, EmailLayout, EmailSection, Items, Totals } from '../components/index';
 
 export default function OrderCancelled() {
   return (

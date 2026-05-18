@@ -15,7 +15,7 @@ import {
   Hi,
   Items,
   Package,
-} from '../components/index.js';
+} from '../components/index';
 
 function Delivered() {
   return (

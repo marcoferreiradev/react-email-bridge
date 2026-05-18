@@ -6,7 +6,7 @@
 import { Img, Text } from 'react-email';
 import { Each, Else, If, Raw } from 'react-email-bridge/hbs';
 
-import { EmailDivider, EmailLayout, EmailSection } from '../components/index.js';
+import { EmailDivider, EmailLayout, EmailSection } from '../components/index';
 
 export default function OrderRefund() {
   return (

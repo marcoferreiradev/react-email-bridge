@@ -6,7 +6,7 @@
 import { Text } from 'react-email';
 import { Each, Else, If } from 'react-email-bridge/hbs';
 
-import { EmailDivider, EmailLayout, EmailSection, Hi, Payment } from '../components/index.js';
+import { EmailDivider, EmailLayout, EmailSection, Hi, Payment } from '../components/index';
 
 export default function OrderPaymentApproved() {
   return (

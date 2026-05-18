@@ -1,7 +1,7 @@
 import { render as reactEmailRender } from 'react-email';
 import juice from 'juice';
 import type { ReactElement } from 'react';
-import { substituteSentinels, unescapeMarkers } from './hbs-sentinels.js';
+import { substituteSentinels, unescapeMarkers } from './hbs-sentinels';
 
 export interface RenderOptions {
   /** Run juice to inline CSS. Default true. */

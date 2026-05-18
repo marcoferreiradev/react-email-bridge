@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { previewWithFixture } from '../src/hbs/preview-runtime.js';
+import { previewWithFixture } from '../src/hbs/preview-runtime';
 
 describe('preview runtime', () => {
   it('interpolates variables', () => {

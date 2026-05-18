@@ -18,7 +18,7 @@ import {
   Package,
   Pickup,
   Shipping,
-} from '../components/index.js';
+} from '../components/index';
 
 const branchedTitle = (
   <If compare={['items.length', '==', 'shippingData.logisticsInfo.length']}>

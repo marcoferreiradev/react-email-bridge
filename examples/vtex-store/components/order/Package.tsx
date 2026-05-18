@@ -1,11 +1,11 @@
 import { Section } from 'react-email';
 import { Each, Else, If, Unless } from 'react-email-bridge/hbs';
-import { Items } from './Items.js';
+import { Items } from './Items';
 import {
   ShippingEstimateDate,
   ShippingEstimateRange,
   ShippingEstimateScheduled,
-} from './ShippingEstimate.js';
+} from './ShippingEstimate';
 
 /**
  * Per-package SLA strip + items. Used by 01, 06, 07, 08, 09, 10.

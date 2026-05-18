@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import Handlebars from 'handlebars';
-import { vtexFakeHelpers } from '../src/hbs/preview-helpers.js';
-import { buildPreviewRuntime } from '../src/hbs/preview-runtime.js';
+import { vtexFakeHelpers } from '../src/hbs/preview-helpers';
+import { buildPreviewRuntime } from '../src/hbs/preview-runtime';
 
 /**
  * Direct tests of the VTEX-flavored fake helpers we ship in

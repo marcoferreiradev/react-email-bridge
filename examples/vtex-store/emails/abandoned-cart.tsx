@@ -6,7 +6,7 @@
 import { Button, Img, Link, Text } from 'react-email';
 import { Each } from 'react-email-bridge/hbs';
 
-import { EmailDivider, EmailLayout, EmailSection } from '../components/index.js';
+import { EmailDivider, EmailLayout, EmailSection } from '../components/index';
 
 /**
  * Inlines `partials/abandoned-cart-items.hbs`. Uses math sub-expression
