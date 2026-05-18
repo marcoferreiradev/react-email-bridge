@@ -1,0 +1,41 @@
+name: Feature / enhancement
+description: A request that adds or changes behavior
+labels: ["needs-triage"]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What problem does this solve? Concrete use case beats abstract preference.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API or behavior
+      description: |
+        How would it look from a user's perspective? Code snippet of the
+        desired call site is the fastest way to get on the same page.
+      placeholder: |
+        ```tsx
+        // What you'd want to write
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try / consider, and why was it not enough?
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Core (sentinels / render / pipeline)
+        - HBS preset (sugar components, helpers)
+        - CLI (init, dev, export)
+        - Preview UI
+        - Examples / starters
+        - Docs / DX
+        - Other
