@@ -108,6 +108,6 @@ pnpm format   # check + apply safe fixes
 
 - Issues live in GitHub Issues at `marcoferreiradev/react-email-bridge`.
   Triage labels: `needs-triage`, `needs-info`, `ready-for-agent`,
-  `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+  `ready-for-human`, `wontfix`. See `docs/internal/agents/triage-labels.md`.
 - PRs should reference an issue when one exists.
 - One topic per PR. Mixed-scope PRs are hard to review and hard to revert.

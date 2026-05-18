@@ -345,7 +345,7 @@ unescape markers (Plano B)   →  juice CSS inline  →  unescape again
                        iframe in editor
 ```
 
-Read [DECISIONS.md](./DECISIONS.md) for the 16 design choices and the reasoning behind each one (sentinel format, strict mode default, helper registration strategy, etc.).
+Read [DECISIONS.md](./docs/internal/DECISIONS.md) for the 16 design choices and the reasoning behind each one (sentinel format, strict mode default, helper registration strategy, etc.).
 
 ---
 

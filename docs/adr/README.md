@@ -4,15 +4,17 @@ ADRs document architectural decisions made during the project's lifetime,
 with enough context that future contributors don't need to reverse-engineer
 the rationale.
 
-## Distinction from DECISIONS.md
+## Distinction from `docs/internal/DECISIONS.md`
 
-- **`DECISIONS.md`** (at the repo root): the 16 design decisions locked in
-  during v0.1, with rationale and trade-offs. Frozen historical record —
-  do not edit. If a new decision supersedes one of D1–D16, write a new ADR
-  here and cite the superseded D-number in its "Status" section.
-- **`docs/adr/`** (this folder): decisions made from v0.2 onwards. Created
-  on demand by `/grill-with-docs` when a non-trivial architectural choice
-  arises during work. Each ADR is its own file; the folder is the log.
+- **`docs/internal/DECISIONS.md`** (repo-internal, per ADR-0002): the 16
+  design decisions locked in during v0.1, with rationale and trade-offs.
+  Frozen historical record — do not edit. If a new decision supersedes one
+  of D1–D16, write a new ADR here and cite the superseded D-number in its
+  "Status" section.
+- **`docs/adr/`** (this folder, public): decisions made from v0.2 onwards.
+  Created on demand by `/grill-with-docs` when a non-trivial architectural
+  choice arises during work. Each ADR is its own file; the folder is the
+  log.
 
 ## File naming
 
@@ -62,7 +64,7 @@ weak documentation.
 - A pattern that recurs across the codebase in 3+ places.
 - A library / tool choice that affects multiple modules.
 - A decision that contradicts a previous one — cite the superseded ADR or
-  the relevant `DECISIONS.md` D-number.
+  the relevant `docs/internal/DECISIONS.md` D-number.
 - A decision a future contributor might reasonably second-guess without
   context — the "why did they do it this way?" test.
 
@@ -72,7 +74,7 @@ weak documentation.
   folder for a single file).
 - Bug fixes — the commit message is the record.
 - Routine refactors with no design choice involved.
-- Decisions already covered in `DECISIONS.md` (D1–D16).
+- Decisions already covered in `docs/internal/DECISIONS.md` (D1–D16).
 - Process / tooling choices that live more naturally in `CONTRIBUTING.md`
   (e.g. "we picked Biome over ESLint" — that's a contributor-facing
   workflow note, not an architectural decision about the lib).

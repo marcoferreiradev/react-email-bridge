@@ -13,7 +13,7 @@ package directories under `node_modules/`.
   into `packages/react-email-bridge-ui/`. Original license preserved at
   `packages/react-email-bridge-ui/license.md` and reproduced in the root
   [LICENSE](./LICENSE). Modifications documented in
-  [PATCHES.md](./PATCHES.md); rebase process in [VENDORING.md](./VENDORING.md).
+  [PATCHES.md](./docs/internal/PATCHES.md); rebase process in [VENDORING.md](./docs/internal/VENDORING.md).
 
 ## Runtime dependencies (shipped to end users)
 
@@ -60,6 +60,6 @@ project's published packages.
 ## Patches contributed back upstream
 
 When a fork patch generalizes naturally and could benefit the upstream
-project, it is marked as a candidate in [PATCHES.md](./PATCHES.md) and may
+project, it is marked as a candidate in [PATCHES.md](./docs/internal/PATCHES.md) and may
 be proposed as a pull request to `resend/react-email`. Contributions to
 upstream remain MIT under their copyright terms.
