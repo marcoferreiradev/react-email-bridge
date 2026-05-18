@@ -78,7 +78,7 @@
     "node-html-parser": "7.1.0",
     "picospinner": "^3.0.0",
     "postcss": "8.5.14",
-    "pretty-bytes": "6.1.1",
+    "pretty-bytes": "7.1.0",
     "prism-react-renderer": "2.4.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
