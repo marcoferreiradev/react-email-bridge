@@ -116,6 +116,32 @@ included via `{{> partial-name}}`. In our React port, partials become
 reusable components in `examples/vtex-store/components/`. On render, they
 flatten into repeated HTML — VTEX Message Center has no concept of partial.
 
+## Example
+
+A directory under `examples/<name>/` that serves double-duty:
+
+1. **Dev fixture** in the monorepo — workspace-bound (`workspace:*`),
+   `private: true`, runs in CI smoke-test steps so a regression in core
+   immediately fails the example's render.
+2. **Source for Starter** — `scripts/new-project.mjs` reads from here
+   when scaffolding a user project (see [[starter]]).
+
+Adding a template to an Example also adds it to the Starter — there is no
+separate `starters/` directory to keep in sync. See ADR-0001.
+
+## Starter
+
+A scaffolded user project produced by `react-email-bridge init` (or
+`pnpm -w run new-project`). Not a directory in the repo — a Starter only
+exists in the user's filesystem after scaffolding.
+
+The scaffold flow copies an Example, rewrites its `package.json`
+(workspace ref → registry version, drops dev-only fields), and generates
+standalone shims (`.npmrc`, `tsconfig.json`, `react-email-bridge.config.ts`,
+user-facing `README.md`). See ADR-0001 for the full transformation list.
+
+`--template <name>` maps directly to `examples/<name>/`.
+
 ## Onda
 
 A wave of template porting (Bloco 7 vocabulary). **Onda 1** = the hardest
