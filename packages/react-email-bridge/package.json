@@ -4,6 +4,27 @@
   "description": "Write transactional emails in React Email, export to HTML with template markers (Handlebars, Liquid, Mailchimp). Live preview, real engine, copy-paste into VTEX, Mandrill, etc.",
   "type": "module",
   "license": "MIT",
+  "author": "Marco Ferreira <marcoferreiradev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcoferreiradev/react-email-bridge.git",
+    "directory": "packages/react-email-bridge"
+  },
+  "homepage": "https://github.com/marcoferreiradev/react-email-bridge#readme",
+  "bugs": {
+    "url": "https://github.com/marcoferreiradev/react-email-bridge/issues"
+  },
+  "keywords": [
+    "react-email",
+    "handlebars",
+    "hbs",
+    "vtex",
+    "transactional-email",
+    "mandrill",
+    "mailchimp",
+    "template",
+    "preview"
+  ],
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "bin": {
@@ -33,7 +54,8 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
     "react": "^18.0 || ^19.0",
