@@ -18,6 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
+    # Disable Husky for the entire job. In CI we rely on the dedicated
+    # steps below (typecheck/build/test) AND CI is itself the gate, so
+    # there is no reason to also fire the pre-commit / pre-push hooks.
+    #
+    # Concrete bug it fixes: changesets/action does `git push` to push
+    # the release commit + tags. Without HUSKY=0 that push triggers
+    # `.husky/pre-push`, which runs `pnpm build` IN PARALLEL with this
+    # job's "Build packages" step. Both invocations race on the same
+    # .next/ directory; the second one fails with "Another next build
+    # process is already running". The publish itself succeeds before
+    # the race, but the workflow ends red, which is misleading.
+    env:
+      HUSKY: 0
+
     steps:
       - uses: actions/checkout@v6
         with:
