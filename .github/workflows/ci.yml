@@ -57,19 +57,28 @@ jobs:
           grep -q "{{#richShippingData shippingData}}" dist/order-confirmed.hbs
           grep -q "{{#each ../../../../items}}" dist/order-invoiced.hbs
 
-      - name: Smoke pack-all + new-project bootstrap (default + vtex-full)
-        # Vendor tarball names embed the package version (e.g.
-        # react-email-bridge-0.0.2.tgz). Globbing keeps the check
-        # version-agnostic so a `chore: version packages` merge doesn't
-        # break CI on the next push.
+      - name: Smoke new-project bootstrap (generic-hbs + vtex-store)
+        # After ADR-0001 (examples-as-starter), new-project copies from
+        # examples/<name> and rewrites the package.json for a standalone
+        # project. --skip-install avoids fetching from npm (the bumped
+        # version may not be published yet at CI time).
         run: |
-          pnpm pack-all
-          # default starter
-          node scripts/new-project.mjs /tmp/ci-default --skip-install
-          test -f /tmp/ci-default/emails/welcome.tsx
-          ls /tmp/ci-default/vendor/react-email-bridge-*.tgz
-          ls /tmp/ci-default/vendor/react-email-bridge-ui-*.tgz
-          # vtex-full starter
-          node scripts/new-project.mjs /tmp/ci-vtex --template vtex-full --skip-install
+          # generic-hbs (default template)
+          node scripts/new-project.mjs /tmp/ci-generic --template generic-hbs --skip-install
+          test -f /tmp/ci-generic/emails/order-summary.tsx
+          test -f /tmp/ci-generic/package.json
+          test -f /tmp/ci-generic/tsconfig.json
+          test -f /tmp/ci-generic/.npmrc
+          test -f /tmp/ci-generic/react-email-bridge.config.ts
+          test -f /tmp/ci-generic/README.md
+          grep -q '"react-email-bridge": "\^' /tmp/ci-generic/package.json
+          ! test -e /tmp/ci-generic/CHANGELOG.md
+          ! test -e /tmp/ci-generic/vendor
+
+          # vtex-store
+          node scripts/new-project.mjs /tmp/ci-vtex --template vtex-store --skip-install
+          test -f /tmp/ci-vtex/emails/order-confirmed.tsx
+          test -d /tmp/ci-vtex/components
+          test -f /tmp/ci-vtex/tailwind.config.ts
           test -f /tmp/ci-vtex/package.json
-          ls /tmp/ci-vtex/vendor/react-email-bridge-*.tgz
+          grep -q '"tailwindcss"' /tmp/ci-vtex/package.json

@@ -78,8 +78,9 @@ The two published packages:
 - `packages/react-email-bridge/src/core/` — render, hbs sentinels, unescapeMarkers
 - `packages/react-email-bridge/src/hbs/` — sugar components, preview runtime, VTEX helper fakes
 - `packages/react-email-bridge-ui/` — forked `@react-email/ui`
-- `examples/vtex-store/` — real VTEX templates (becomes the rich starter post-v0.2)
-- `starters/default/` — generic scaffold for `new-project --template default`
+- `examples/vtex-store/` — real VTEX templates; also the source for `new-project --template vtex-store` per ADR-0001
+- `examples/generic-hbs/` — minimal example; also the default scaffold (`new-project` → `generic-hbs`)
+- `scripts/new-project.mjs` — copies an example + rewrites for standalone use (see ADR-0001)
 - `refs/` (gitignored) — reference repos for ground-truth validation
 
 ---
