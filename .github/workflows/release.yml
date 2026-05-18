@@ -36,6 +36,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Build all workspace packages in topological order BEFORE publish.
+      # Required because react-email-bridge-ui's `next build` imports from
+      # `react-email-bridge/hbs` and needs that package's dist/ to exist.
+      # Running prepublishOnly per-package would re-trigger the build in
+      # whichever order changesets picks, which can race; doing it at the
+      # workspace root with `pnpm -r` is deterministic.
+      - name: Build packages
+        run: pnpm build
+
       # Opens (or updates) a "Version Packages" PR when pending changesets
       # exist on main. Merging that PR bumps versions + writes CHANGELOG.md.
       # The same step then runs `pnpm changeset publish` which pushes the
