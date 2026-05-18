@@ -14,12 +14,12 @@
           {
             "isActive": true,
             "transactionId": "58B5117B3837489F9212205485FF8939",
-            "merchantName": "R**********",
+            "merchantName": "Loja Exemplo",
             "payments": [
               {
                 "id": "F684A7996407429CAB6198814A43D78C",
                 "paymentSystem": "708",
-                "paymentSystemName": "M**************",
+                "paymentSystemName": "Mastercard",
                 "value": 84200,
                 "installments": 1,
                 "referenceValue": 84200,
@@ -66,15 +66,15 @@
       "invoiceData": null,
       "clientProfileData": {
         "id": "clientProfileData",
-        "email": "0*******************************@c*.v***.c**.b*",
-        "firstName": "M***** D******",
-        "lastName": "G*****",
+        "email": "marina.santos@example.com.br",
+        "firstName": "Marina",
+        "lastName": "Santos",
         "documentType": "dni",
-        "document": "1*******",
-        "phone": "+5***********",
+        "document": "123.456.789-01",
+        "phone": "+5511987654321",
         "corporateName": null,
         "tradeName": null,
-        "corporateDocument": null,
+        "corporateDocument": "12.345.678/0001-90",
         "stateInscription": null,
         "corporatePhone": null,
         "isCorporate": false,
@@ -87,27 +87,30 @@
         "id": "shippingData",
         "address": {
           "addressType": "residential",
-          "receiverName": "a*** T",
+          "receiverName": "Marina Santos",
           "addressId": "0",
           "versionId": null,
           "entityId": null,
-          "postalCode": "1***",
-          "city": "C***** A******* d* B***** A****",
-          "state": "Ciudad Autónoma de Buenos Aires",
-          "country": "ARG",
-          "street": "L*********",
-          "number": "1",
-          "neighborhood": null,
-          "complement": null,
+          "postalCode": "01304-001",
+          "city": "São Paulo",
+          "state": "SP",
+          "country": "BRA",
+          "street": "Rua Augusta",
+          "number": "1234",
+          "neighborhood": "Consolação",
+          "complement": "Apto 502",
           "reference": null,
-          "geoCoordinates": [-51.4779552, -0.0039779]
+          "geoCoordinates": [
+            -51.4779552,
+            -0.0039779
+          ]
         },
         "logisticsInfo": [
           {
             "itemIndex": 0,
             "itemId": "10",
             "selectedDeliveryChannel": "delivery",
-            "selectedSla": "Entrega estándar",
+            "selectedSla": "Entrega padrão",
             "lockTTL": "12d",
             "price": 500,
             "listPrice": 500,
@@ -119,7 +122,7 @@
             "slas": [
               {
                 "id": "Entrega estándar",
-                "name": "E***************",
+                "name": "Tênis Esportivo Run Pro",
                 "shippingEstimate": "5bd",
                 "shippingEstimateDate": "2025-07-25T15:03:51.994284Z",
                 "deliveryWindow": null,
@@ -127,11 +130,11 @@
                 "deliveryIds": [
                   {
                     "courierId": "1",
-                    "courierName": "T**********************",
+                    "courierName": "Correios",
                     "dockId": "1",
                     "quantity": 5,
                     "warehouseId": "1_1",
-                    "accountCarrierName": "r****************",
+                    "accountCarrierName": "Total Express",
                     "kitItemDetails": []
                   }
                 ],
@@ -142,7 +145,7 @@
                   "additionalInfo": null,
                   "address": null,
                   "dockId": null,
-                  "friendlyName": null,
+                  "friendlyName": "Loja Exemplo · Vila Madalena",
                   "isPickupStore": false
                 },
                 "polygonName": "",
@@ -152,15 +155,17 @@
                 "pickupDistance": null
               }
             ],
-            "shipsTo": ["ARG"],
+            "shipsTo": [
+              "ARG"
+            ],
             "deliveryIds": [
               {
                 "courierId": "1",
-                "courierName": "T**********************",
+                "courierName": "Loggi",
                 "dockId": "1",
                 "quantity": 5,
                 "warehouseId": "1_1",
-                "accountCarrierName": "r****************",
+                "accountCarrierName": "Mercado Envios",
                 "kitItemDetails": []
               }
             ],
@@ -175,7 +180,7 @@
               "additionalInfo": null,
               "address": null,
               "dockId": null,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Jardins",
               "isPickupStore": false
             },
             "addressId": "0",
@@ -193,17 +198,20 @@
             "versionId": null,
             "entityId": null,
             "addressType": "residential",
-            "receiverName": "a*** T",
-            "street": "L*********",
-            "number": "1",
-            "complement": null,
-            "neighborhood": null,
-            "postalCode": "1***",
-            "city": "C***** A******* d* B***** A****",
-            "state": "Ciudad Autónoma de Buenos Aires",
-            "country": "ARG",
+            "receiverName": "Marina Santos",
+            "street": "Rua Augusta",
+            "number": "1234",
+            "complement": "Apto 502",
+            "neighborhood": "Consolação",
+            "postalCode": "01304-001",
+            "city": "São Paulo",
+            "state": "SP",
+            "country": "BRA",
             "reference": null,
-            "geoCoordinates": [-51.4779552, -0.0039779]
+            "geoCoordinates": [
+              -51.4779552,
+              -0.0039779
+            ]
           }
         ],
         "availableAddresses": [
@@ -212,17 +220,20 @@
             "versionId": null,
             "entityId": null,
             "addressType": "residential",
-            "receiverName": "a*** T",
-            "street": "L*********",
-            "number": "1",
-            "complement": null,
-            "neighborhood": null,
-            "postalCode": "1***",
-            "city": "C***** A******* d* B***** A****",
-            "state": "Ciudad Autónoma de Buenos Aires",
-            "country": "ARG",
+            "receiverName": "Marina Santos",
+            "street": "Rua Augusta",
+            "number": "1234",
+            "complement": "Apto 502",
+            "neighborhood": "Consolação",
+            "postalCode": "01304-001",
+            "city": "São Paulo",
+            "state": "SP",
+            "country": "BRA",
             "reference": null,
-            "geoCoordinates": [-51.4779552, -0.0039779]
+            "geoCoordinates": [
+              -51.4779552,
+              -0.0039779
+            ]
           }
         ],
         "contactInformation": [],
@@ -243,7 +254,7 @@
               "weight": 1,
               "width": 1
             },
-            "brandName": "N*********",
+            "brandName": "Nike",
             "brandId": "2000003",
             "offeringInfo": null,
             "offeringType": null,
@@ -263,7 +274,7 @@
           "productRefId": "FLFQQ0B",
           "refId": "SJ06DC3",
           "ean": "4174962852",
-          "name": "C*****************************************",
+          "name": "Camiseta Polo Premium",
           "skuName": "S",
           "modalType": null,
           "parentItemIndex": null,
@@ -285,8 +296,10 @@
           },
           "quantity": 5,
           "seller": "reddistributor172",
-          "sellerChain": ["reddistributor172"],
-          "imageUrl": "https://redcloudone.vteximg.com.br/arquivos/ids/155529-55-55/FLFQQ0B.png?v=638634201983470000",
+          "sellerChain": [
+            "reddistributor172"
+          ],
+          "imageUrl": "https://picsum.photos/seed/order-confirmed-1/200/200",
           "detailUrl": "/camiseta-de-manga-corta-de-tejido-pesado/p",
           "components": [],
           "bundleItems": [],
@@ -315,7 +328,7 @@
           "subSellerId": "1",
           "fulfillmentEndpoint": "http://fulfillment.vtexcommerce.com.br/api/fulfillment?an=reddistributor172&affiliateId=RDC&sc=1",
           "id": "reddistributor172",
-          "name": "R**************",
+          "name": "Loja Exemplo",
           "logo": ""
         }
       ],
@@ -331,7 +344,7 @@
       "status": "",
       "callCenterOperator": "bb662fdd-fdd8-406e-b7a7-91a9c348c800",
       "userProfileId": "bb662fdd-fdd8-406e-b7a7-91a9c348c800",
-      "hostName": "r**********",
+      "hostName": "lojaexemplo",
       "creationVersion": null,
       "creationEnvironment": null,
       "lastChangeVersion": null,
@@ -339,7 +352,7 @@
       "marketplacePaymentValue": null,
       "orderId": "1547670500900-02",
       "orderGroup": "1547670500900",
-      "state": "payment-approved",
+      "state": "SP",
       "isCheckedIn": false,
       "sellerOrderId": "RDC-1547670500900-02",
       "storeId": null,
@@ -348,22 +361,22 @@
       "totals": [
         {
           "id": "Items",
-          "name": "T*****************",
+          "name": "Mochila Urbana 25L",
           "value": 5950
         },
         {
           "id": "Discounts",
-          "name": "T******************",
+          "name": "Relógio Inteligente Series 8",
           "value": 0
         },
         {
           "id": "Shipping",
-          "name": "C********************",
+          "name": "Fone de Ouvido Wireless",
           "value": 500
         },
         {
           "id": "Tax",
-          "name": "C*********************",
+          "name": "Jaqueta Corta-Vento",
           "value": 0
         }
       ],
@@ -408,13 +421,13 @@
       "changeData": null,
       "subscriptionData": null,
       "salesChannel": "1",
-      "followUpEmail": "7**********************************.v***.c**.b*",
+      "followUpEmail": "notify+jffc19q0@lojaexemplo.example.com.br",
       "creationDate": "2025-07-18T15:02:45.6878168Z",
       "lastChange": "2025-07-18T15:03:53.612363Z",
       "timeZoneCreationDate": "2025-07-18T12:02:45.6878168",
       "timeZoneLastChange": "2025-07-18T12:03:53.612363",
       "isCompleted": true,
-      "merchantName": null,
+      "merchantName": "Loja Exemplo",
       "userType": "callCenterOperator",
       "roundingError": 0,
       "allowEdition": false,
@@ -436,12 +449,12 @@
           {
             "isActive": true,
             "transactionId": "58B5117B3837489F9212205485FF8939",
-            "merchantName": "R**********",
+            "merchantName": "Loja Exemplo",
             "payments": [
               {
                 "id": "F684A7996407429CAB6198814A43D78C",
                 "paymentSystem": "708",
-                "paymentSystemName": "M**************",
+                "paymentSystemName": "Visa",
                 "value": 84200,
                 "installments": 1,
                 "referenceValue": 84200,
@@ -488,15 +501,15 @@
       "invoiceData": null,
       "clientProfileData": {
         "id": "clientProfileData",
-        "email": "1*******************************@c*.v***.c**.b*",
-        "firstName": "M***** D******",
-        "lastName": "G*****",
+        "email": "marina.santos@example.com.br",
+        "firstName": "Marina",
+        "lastName": "Santos",
         "documentType": "dni",
-        "document": "1*******",
-        "phone": "+5***********",
+        "document": "123.456.789-01",
+        "phone": "+5511987654321",
         "corporateName": null,
         "tradeName": null,
-        "corporateDocument": null,
+        "corporateDocument": "12.345.678/0001-90",
         "stateInscription": null,
         "corporatePhone": null,
         "isCorporate": false,
@@ -509,27 +522,30 @@
         "id": "shippingData",
         "address": {
           "addressType": "residential",
-          "receiverName": "a*** T",
+          "receiverName": "Marina Santos",
           "addressId": "0",
           "versionId": null,
           "entityId": null,
-          "postalCode": "1***",
-          "city": "C***** A******* d* B***** A****",
-          "state": "Ciudad Autónoma de Buenos Aires",
-          "country": "ARG",
-          "street": "L*********",
-          "number": "1",
-          "neighborhood": null,
-          "complement": null,
+          "postalCode": "01304-001",
+          "city": "São Paulo",
+          "state": "SP",
+          "country": "BRA",
+          "street": "Rua Augusta",
+          "number": "1234",
+          "neighborhood": "Consolação",
+          "complement": "Apto 502",
           "reference": null,
-          "geoCoordinates": [-51.4779552, -0.0039779]
+          "geoCoordinates": [
+            -51.4779552,
+            -0.0039779
+          ]
         },
         "logisticsInfo": [
           {
             "itemIndex": 0,
             "itemId": "591",
             "selectedDeliveryChannel": "delivery",
-            "selectedSla": "Entrega estándar",
+            "selectedSla": "Entrega padrão",
             "lockTTL": "12d",
             "price": 24,
             "listPrice": 24,
@@ -545,7 +561,7 @@
             "slas": [
               {
                 "id": "Entrega estándar",
-                "name": "E***************",
+                "name": "Carteira Slim Couro",
                 "shippingEstimate": "4bd",
                 "shippingEstimateDate": "2025-07-24T00:00:00",
                 "deliveryWindow": {
@@ -568,11 +584,11 @@
                 "deliveryIds": [
                   {
                     "courierId": "1",
-                    "courierName": "T**********************",
+                    "courierName": "JadLog",
                     "dockId": "1",
                     "quantity": 3,
                     "warehouseId": "1_1",
-                    "accountCarrierName": "j***********************",
+                    "accountCarrierName": "Sequoia Logística",
                     "kitItemDetails": []
                   }
                 ],
@@ -583,7 +599,7 @@
                   "additionalInfo": null,
                   "address": null,
                   "dockId": null,
-                  "friendlyName": null,
+                  "friendlyName": "Loja Exemplo · Vila Madalena",
                   "isPickupStore": false
                 },
                 "polygonName": "",
@@ -593,15 +609,17 @@
                 "pickupDistance": null
               }
             ],
-            "shipsTo": ["ARG"],
+            "shipsTo": [
+              "ARG"
+            ],
             "deliveryIds": [
               {
                 "courierId": "1",
-                "courierName": "T**********************",
+                "courierName": "Correios",
                 "dockId": "1",
                 "quantity": 3,
                 "warehouseId": "1_1",
-                "accountCarrierName": "j***********************",
+                "accountCarrierName": "Total Express",
                 "kitItemDetails": []
               }
             ],
@@ -616,7 +634,7 @@
               "additionalInfo": null,
               "address": null,
               "dockId": null,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Jardins",
               "isPickupStore": false
             },
             "addressId": "0",
@@ -630,7 +648,7 @@
             "itemIndex": 1,
             "itemId": "65",
             "selectedDeliveryChannel": "delivery",
-            "selectedSla": "Entrega estándar",
+            "selectedSla": "Entrega padrão",
             "lockTTL": "12d",
             "price": 476,
             "listPrice": 476,
@@ -646,7 +664,7 @@
             "slas": [
               {
                 "id": "Entrega estándar",
-                "name": "E***************",
+                "name": "Boné Snapback",
                 "shippingEstimate": "4bd",
                 "shippingEstimateDate": "2025-07-24T00:00:00",
                 "deliveryWindow": {
@@ -669,11 +687,11 @@
                 "deliveryIds": [
                   {
                     "courierId": "1",
-                    "courierName": "T**********************",
+                    "courierName": "Loggi",
                     "dockId": "1",
                     "quantity": 6,
                     "warehouseId": "1_1",
-                    "accountCarrierName": "j***********************",
+                    "accountCarrierName": "Mercado Envios",
                     "kitItemDetails": []
                   }
                 ],
@@ -684,7 +702,7 @@
                   "additionalInfo": null,
                   "address": null,
                   "dockId": null,
-                  "friendlyName": null,
+                  "friendlyName": "Loja Exemplo · Vila Madalena",
                   "isPickupStore": false
                 },
                 "polygonName": "",
@@ -694,15 +712,17 @@
                 "pickupDistance": null
               }
             ],
-            "shipsTo": ["ARG"],
+            "shipsTo": [
+              "ARG"
+            ],
             "deliveryIds": [
               {
                 "courierId": "1",
-                "courierName": "T**********************",
+                "courierName": "JadLog",
                 "dockId": "1",
                 "quantity": 6,
                 "warehouseId": "1_1",
-                "accountCarrierName": "j***********************",
+                "accountCarrierName": "Sequoia Logística",
                 "kitItemDetails": []
               }
             ],
@@ -717,7 +737,7 @@
               "additionalInfo": null,
               "address": null,
               "dockId": null,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Jardins",
               "isPickupStore": false
             },
             "addressId": "0",
@@ -735,17 +755,20 @@
             "versionId": null,
             "entityId": null,
             "addressType": "residential",
-            "receiverName": "a*** T",
-            "street": "L*********",
-            "number": "1",
-            "complement": null,
-            "neighborhood": null,
-            "postalCode": "1***",
-            "city": "C***** A******* d* B***** A****",
-            "state": "Ciudad Autónoma de Buenos Aires",
-            "country": "ARG",
+            "receiverName": "Marina Santos",
+            "street": "Rua Augusta",
+            "number": "1234",
+            "complement": "Apto 502",
+            "neighborhood": "Consolação",
+            "postalCode": "01304-001",
+            "city": "São Paulo",
+            "state": "SP",
+            "country": "BRA",
             "reference": null,
-            "geoCoordinates": [-51.4779552, -0.0039779]
+            "geoCoordinates": [
+              -51.4779552,
+              -0.0039779
+            ]
           }
         ],
         "availableAddresses": [
@@ -754,17 +777,20 @@
             "versionId": null,
             "entityId": null,
             "addressType": "residential",
-            "receiverName": "a*** T",
-            "street": "L*********",
-            "number": "1",
-            "complement": null,
-            "neighborhood": null,
-            "postalCode": "1***",
-            "city": "C***** A******* d* B***** A****",
-            "state": "Ciudad Autónoma de Buenos Aires",
-            "country": "ARG",
+            "receiverName": "Marina Santos",
+            "street": "Rua Augusta",
+            "number": "1234",
+            "complement": "Apto 502",
+            "neighborhood": "Consolação",
+            "postalCode": "01304-001",
+            "city": "São Paulo",
+            "state": "SP",
+            "country": "BRA",
             "reference": null,
-            "geoCoordinates": [-51.4779552, -0.0039779]
+            "geoCoordinates": [
+              -51.4779552,
+              -0.0039779
+            ]
           }
         ],
         "contactInformation": [],
@@ -785,7 +811,7 @@
               "weight": 1,
               "width": 1
             },
-            "brandName": "P***********",
+            "brandName": "Adidas",
             "brandId": "2000010",
             "offeringInfo": null,
             "offeringType": null,
@@ -805,8 +831,8 @@
           "productRefId": "0NUJVWO",
           "refId": "R142GY2",
           "ean": null,
-          "name": "[***********************************************************",
-          "skuName": "1********",
+          "name": "Óculos de Sol Aviador",
+          "skuName": "Tênis Esportivo Run Pro",
           "modalType": null,
           "parentItemIndex": null,
           "parentAssemblyBinding": null,
@@ -827,8 +853,10 @@
           },
           "quantity": 3,
           "seller": "juancitodistribuidora869",
-          "sellerChain": ["juancitodistribuidora869"],
-          "imageUrl": "https://redcloudone.vteximg.com.br/arquivos/ids/156662-55-55/R142GY2.png?v=638719604837530000",
+          "sellerChain": [
+            "juancitodistribuidora869"
+          ],
+          "imageUrl": "https://picsum.photos/seed/order-confirmed-2/200/200",
           "detailUrl": "/medialunas-hesai-integrales-de-masa-madre/p",
           "components": [],
           "bundleItems": [],
@@ -863,7 +891,7 @@
               "weight": 10,
               "width": 20
             },
-            "brandName": "U**",
+            "brandName": "Puma",
             "brandId": "2000008",
             "offeringInfo": null,
             "offeringType": null,
@@ -883,8 +911,8 @@
           "productRefId": null,
           "refId": "1233",
           "ean": "9987",
-          "name": "C*****************",
-          "skuName": "P****",
+          "name": "Tênis Casual Daily",
+          "skuName": "Camiseta Polo Premium",
           "modalType": null,
           "parentItemIndex": null,
           "parentAssemblyBinding": null,
@@ -904,8 +932,10 @@
           },
           "quantity": 6,
           "seller": "juancitodistribuidora869",
-          "sellerChain": ["juancitodistribuidora869"],
-          "imageUrl": "https://redcloudone.vteximg.com.br/arquivos/ids/155714-55-55/image-af8fac6c0b6f41aba870157de2af435e.jpg?v=638725532326530000",
+          "sellerChain": [
+            "juancitodistribuidora869"
+          ],
+          "imageUrl": "https://picsum.photos/seed/order-confirmed-3/200/200",
           "detailUrl": "/cinturon-ufc/p",
           "components": [],
           "bundleItems": [],
@@ -934,7 +964,7 @@
           "subSellerId": "1",
           "fulfillmentEndpoint": "http://fulfillment.vtexcommerce.com.br/api/fulfillment?an=juancitodistribuidora869&affiliateId=RDC&sc=1",
           "id": "juancitodistribuidora869",
-          "name": "J*********************",
+          "name": "Loja Exemplo",
           "logo": ""
         }
       ],
@@ -950,7 +980,7 @@
       "status": "",
       "callCenterOperator": "bb662fdd-fdd8-406e-b7a7-91a9c348c800",
       "userProfileId": "bb662fdd-fdd8-406e-b7a7-91a9c348c800",
-      "hostName": "r**********",
+      "hostName": "lojaexemplo",
       "creationVersion": null,
       "creationEnvironment": null,
       "lastChangeVersion": null,
@@ -958,7 +988,7 @@
       "marketplacePaymentValue": null,
       "orderId": "1547670500900-01",
       "orderGroup": "1547670500900",
-      "state": "payment-pending",
+      "state": "SP",
       "isCheckedIn": false,
       "sellerOrderId": "RDC-1547670500900-01",
       "storeId": null,
@@ -967,22 +997,22 @@
       "totals": [
         {
           "id": "Items",
-          "name": "T*****************",
+          "name": "Tênis Esportivo Run Pro",
           "value": 77250
         },
         {
           "id": "Discounts",
-          "name": "T******************",
+          "name": "Camiseta Polo Premium",
           "value": 0
         },
         {
           "id": "Shipping",
-          "name": "C********************",
+          "name": "Calça Jeans Slim",
           "value": 500
         },
         {
           "id": "Tax",
-          "name": "C*********************",
+          "name": "Mochila Urbana 25L",
           "value": 0
         }
       ],
@@ -1027,13 +1057,13 @@
       "changeData": null,
       "subscriptionData": null,
       "salesChannel": "1",
-      "followUpEmail": "2**********************************.v***.c**.b*",
+      "followUpEmail": "notify+qx5fx5v7@lojaexemplo.example.com.br",
       "creationDate": "2025-07-18T15:02:45.6876172Z",
       "lastChange": "2025-07-18T15:03:49.5634103Z",
       "timeZoneCreationDate": "2025-07-18T12:02:45.6876172",
       "timeZoneLastChange": "2025-07-18T12:03:49.5634103",
       "isCompleted": true,
-      "merchantName": null,
+      "merchantName": "Loja Exemplo",
       "userType": "callCenterOperator",
       "roundingError": 0,
       "allowEdition": false,
@@ -1052,12 +1082,12 @@
   "split": false,
   "totalValue": 84200,
   "callCenterOperatorData": {
-    "email": "m*****.g*****@i********.c**",
-    "userName": "m**************************"
+    "email": "marina.santos@example.com.br",
+    "userName": "marina.santos"
   },
   "_accountInfo": {
-    "MainAccountName": "r**********",
-    "AccountName": "r**********",
+    "MainAccountName": "lojaexemplo",
+    "AccountName": "lojaexemplo",
     "Cnpj": null,
     "Id": "fd31b987-e36b-46fe-8ba6-c138195e1294",
     "AppId": null,
@@ -1065,8 +1095,8 @@
     "IsOperating": false,
     "CreationDate": "2024-08-28T19:01:14.1497321Z",
     "OperationDate": null,
-    "CompanyName": "R****************************",
-    "TradingName": "R*******",
+    "CompanyName": "Loja Exemplo Comércio LTDA",
+    "TradingName": "Loja Exemplo",
     "City": null,
     "Complement": null,
     "Country": null,
@@ -1075,7 +1105,9 @@
     "District": null,
     "Number": null,
     "PostalCode": null,
-    "Licenses": [7],
+    "Licenses": [
+      7
+    ],
     "ParentAccountId": null,
     "ParentAccountName": null,
     "InactivationDate": null,

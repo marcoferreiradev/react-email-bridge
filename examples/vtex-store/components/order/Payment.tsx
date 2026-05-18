@@ -1,54 +1,50 @@
 import { Each, Else, If } from 'react-email-bridge/hbs';
 
 /**
- * Mirrors `partials/payment.hbs`. Used by 01-confirmed, 03-payment-
- * approved, 09-replaced.
+ * Payment block. Used by 01-confirmed, 03-payment-approved, 09-replaced.
+ * Single payment renders prominently; multiple renders as a clean table.
  *
- * Two branches: single-payment renders a friendly block, N-payments
- * renders a table. Both display payment-system name, last digits if
- * available, installments, and the value in R$.
+ * Halo-Tailwind: bigger value emphasis on single, subtle dividers on multi.
  */
 export function Payment() {
   return (
     <>
       <If compare={['payments.length', '==', '1']}>
         <Each path="payments">
-          <div style={{ fontSize: '16px', lineHeight: 1.4 }}>
-            {`{{paymentSystemName}}`}
-            <If path="lastDigits"> final {`{{lastDigits}}`} </If>
-            <br />
-            R$ {`{{formatCurrency value}}`}{' '}
-            <If eq={['installments', '1']}>
-              à vista
-              <Else />
-              em {`{{installments}}`}x
-            </If>
+          <div className="font-15 text-fg m-0 mt-2">
+            <strong>{`{{paymentSystemName}}`}</strong>
+            <If path="lastDigits"> · final {`{{lastDigits}}`} </If>
+          </div>
+          <div className="m-0 mt-1">
+            <span className="font-18 text-fg font-bold">R$ {`{{formatCurrency value}}`}</span>{' '}
+            <span className="font-13 text-fg-2">
+              <If eq={['installments', '1']}>
+                à vista
+                <Else />
+                em {`{{installments}}`}x
+              </If>
+            </span>
           </div>
         </Each>
       </If>
 
       <If compare={['payments.length', '!=', '1']}>
-        <table width="100%" border={0} cellPadding={0} cellSpacing={0}>
+        <table className="w-full mt-2 border-collapse">
           <tbody>
             <Each path="payments">
               <tr>
-                <td style={{ fontSize: '14px', padding: '4px 0', borderBottom: '1px solid #ddd' }}>
+                <td className="font-14 text-fg py-2 border-b border-stroke">
                   {`{{paymentSystemName}}`}
-                  <If path="lastDigits"> final {`{{lastDigits}}`} </If>{' '}
-                  <If eq={['installments', '1']}>
-                    à vista
-                    <Else />
-                    em {`{{installments}}`}x
-                  </If>
+                  <If path="lastDigits"> · final {`{{lastDigits}}`} </If>{' '}
+                  <span className="font-13 text-fg-2">
+                    <If eq={['installments', '1']}>
+                      à vista
+                      <Else />
+                      em {`{{installments}}`}x
+                    </If>
+                  </span>
                 </td>
-                <td
-                  style={{
-                    fontSize: '14px',
-                    padding: '4px 0',
-                    borderBottom: '1px solid #ddd',
-                    textAlign: 'right',
-                  }}
-                >
+                <td className="font-14 text-fg font-semibold py-2 border-b border-stroke text-right">
                   R$ {`{{formatCurrency value}}`}
                 </td>
               </tr>

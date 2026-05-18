@@ -80,7 +80,7 @@
       "handling": false,
       "quantity": 1,
       "seller": "1",
-      "imageUrl": "http://vtexgame1.vteximg.com.br/arquivos/ids/155400-55-55/calcados-online-macboot-killa-1.jpg",
+      "imageUrl": "https://picsum.photos/seed/order-invoiced-cancel-request-1/200/200",
       "detailUrl": "/bota-feminina-macboot-killa-carajas-babacu401023009/p",
       "components": [],
       "bundleItems": [],
@@ -144,7 +144,7 @@
       "handling": false,
       "quantity": 1,
       "seller": "1",
-      "imageUrl": "http://vtexgame1.vteximg.com.br/arquivos/ids/155907-55-55/calcados-online-lupo-676-02-266-1.jpg",
+      "imageUrl": "https://picsum.photos/seed/order-invoiced-cancel-request-2/200/200",
       "detailUrl": "/cueca-lupo-sunga-microfibra-azul-676-002-26601070510081/p",
       "components": [],
       "bundleItems": [],
@@ -167,7 +167,7 @@
       {
         "isActive": true,
         "transactionId": "8243E1FE14264EA9B74FA6A59691AB9E",
-        "merchantName": "VTEXGAME1",
+        "merchantName": "Loja Exemplo",
         "payments": [
           {
             "id": "114DA50CF46C4A6DA3B2133A9630C066",
@@ -215,21 +215,21 @@
   "status": "",
   "callCenterOperator": "",
   "userProfileId": "77ddd0f6-b958-4db3-85db-fb1306c13b5f",
-  "hostName": "vtexgame1",
+  "hostName": "lojaexemplo",
   "creationVersion": null,
   "creationEnvironment": null,
   "lastChangeVersion": null,
   "workflowInstanceId": null,
   "orderId": "628951651545-01",
   "orderGroup": "628951651545",
-  "state": "payment-approved",
+  "state": "SP",
   "isCheckedIn": false,
   "storeId": null,
   "value": 78105,
   "sellers": [
     {
       "id": "1",
-      "name": "VTEX GAME1",
+      "name": "Loja Exemplo",
       "logo": ""
     }
   ],
@@ -257,15 +257,15 @@
   ],
   "clientProfileData": {
     "attachmentId": "clientProfileData",
-    "email": "bnf_info@yahoo.com.br-51b.ct.vtex.com.br",
-    "firstName": "Breno",
-    "lastName": "Nunes",
-    "document": "10287534707",
+    "email": "marina.santos@example.com.br",
+    "firstName": "Marina",
+    "lastName": "Santos",
+    "document": "123.456.789-01",
     "documentType": "cpf",
-    "phone": "+552143535433",
+    "phone": "+5511987654321",
     "corporateName": null,
     "tradeName": null,
-    "corporateDocument": null,
+    "corporateDocument": "12.345.678/0001-90",
     "stateInscription": null,
     "corporatePhone": null,
     "isCorporate": false
@@ -279,23 +279,23 @@
     "attachmentId": "shippingData",
     "address": {
       "addressType": "residential",
-      "receiverName": "b n",
+      "receiverName": "Marina Santos",
       "addressId": "-1462026434628",
-      "postalCode": "22081-041",
-      "city": "Rio de Janeiro",
-      "state": "RJ",
+      "postalCode": "01304-001",
+      "city": "São Paulo",
+      "state": "SP",
       "country": "BRA",
-      "street": "Avenida Rainha Elizabeth da Bélgica",
-      "number": "43",
-      "neighborhood": "Ipanema",
-      "complement": "543",
+      "street": "Rua Augusta",
+      "number": "1234",
+      "neighborhood": "Consolação",
+      "complement": "Apto 502",
       "reference": null,
       "geoCoordinates": []
     },
     "logisticsInfo": [
       {
         "itemIndex": 0,
-        "selectedSla": "Normal",
+        "selectedSla": "Entrega padrão",
         "slas": [
           {
             "id": "Normal",
@@ -340,12 +340,14 @@
             "tax": 0
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "26"
       },
       {
         "itemIndex": 1,
-        "selectedSla": "Normal",
+        "selectedSla": "Entrega padrão",
         "slas": [
           {
             "id": "Normal",
@@ -390,23 +392,25 @@
             "tax": 0
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "365"
       }
     ],
     "availableAddresses": [
       {
         "addressType": "residential",
-        "receiverName": "b n",
+        "receiverName": "Marina Santos",
         "addressId": "-1462026434628",
-        "postalCode": "22081-041",
-        "city": "Rio de Janeiro",
-        "state": "RJ",
+        "postalCode": "01304-001",
+        "city": "São Paulo",
+        "state": "SP",
         "country": "BRA",
-        "street": "Avenida Rainha Elizabeth da Bélgica",
-        "number": "43",
-        "neighborhood": "Ipanema",
-        "complement": "543",
+        "street": "Rua Augusta",
+        "number": "1234",
+        "neighborhood": "Consolação",
+        "complement": "Apto 502",
         "reference": null,
         "geoCoordinates": []
       }
@@ -439,25 +443,25 @@
   "openTextField": null,
   "changeData": null,
   "salesChannel": "1",
-  "followUpEmail": "fcaabb89e7484d4688801ac4748f00aa@ct.vtex.com.br",
+  "followUpEmail": "notify+ggtc6s7i@lojaexemplo.example.com.br",
   "creationDate": "2016-04-30T15:27:50.5371438Z",
   "lastChange": "2016-04-30T15:28:08.4338993Z",
   "timeZoneCreationDate": "2016-04-30T12:27:50.5371438",
   "timeZoneLastChange": "2016-04-30T12:28:08.4338993",
   "isCompleted": true,
-  "merchantName": null,
+  "merchantName": "Loja Exemplo",
   "userType": "",
   "roundingError": 0,
   "_accountInfo": {
     "HostName": "vtexgame1",
-    "MainAccountName": "vtexgame1",
+    "MainAccountName": "lojaexemplo",
     "IsPersisted": true,
     "IsRemoved": false,
     "Id": "e39d05f9-0c54-4469-a626-8bb5cff169f8",
     "Cnpj": "99999999999999",
-    "CompanyName": "VTEX GAME1",
-    "TradingName": "VTEX Developers",
-    "AccountName": "vtexgame1",
+    "CompanyName": "Loja Exemplo Comércio LTDA",
+    "TradingName": "Loja Exemplo",
+    "AccountName": "lojaexemplo",
     "DefaultUrl": null,
     "Address": null,
     "Number": null,

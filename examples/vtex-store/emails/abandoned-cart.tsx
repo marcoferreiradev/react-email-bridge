@@ -1,54 +1,42 @@
 /**
- * Abandoned cart reminder — faithful port of
- * `refs/vtex-email-framework/source/templates/12-abandoned-cart.hbs`.
- *
- * Onda 3 of Bloco 7. Marketing email sent when a customer left items
- * in the cart without checking out. Header + intro + items list +
- * CTA + Regards.
- *
- * Inlines `partials/abandoned-cart-items.hbs` as a local AbandonedCartItems
- * component — single-use partial, stays inline per PORTING.md policy.
- *
- * AbandonedCartItems uses `{{formatCurrency (math sellingPrice '*' 100)}}` —
- * a sub-expression with the math helper. Preserved literally via <Raw>
- * since sugar components don't compose into parens.
+ * Abandoned cart reminder — Halo-Tailwind (Bloco 11).
+ * Intro + items list + primary CTA.
  */
 
-import { Body, Container, Heading, Html, Img, Link, Section, Text } from 'react-email';
+import { Button, Img, Link, Text } from 'react-email';
 import { Each } from 'react-email-bridge/hbs';
 
-import { HtmlHead, Logo, Regards } from '../components/index.js';
-
-const sectionStyle = { padding: '24px' };
-const sectionWithDividerStyle = { ...sectionStyle, borderTop: '1px solid #ddd' };
+import { EmailDivider, EmailLayout, EmailSection } from '../components/index.js';
 
 /**
- * Inlines `partials/abandoned-cart-items.hbs`. Single-use.
- *
- * Each abandoned item: image + name + qty + price. Price uses a math
- * sub-expression to convert cents → reais.
+ * Inlines `partials/abandoned-cart-items.hbs`. Uses math sub-expression
+ * `(math sellingPrice '*' 100)` (source pattern; preserves as-is).
  */
 function AbandonedCartItems() {
   return (
-    <table width="100%" border={0} cellPadding={0} cellSpacing={0}>
+    <table className="w-full border-collapse">
       <tbody>
         <Each path="items">
           <tr>
-            <td style={{ verticalAlign: 'top', padding: '12px 0', borderBottom: '1px solid #ddd' }}>
-              <table border={0} cellPadding={0} cellSpacing={0} width="100%">
+            <td className="align-top py-4 border-b border-stroke">
+              <table className="w-full border-collapse">
                 <tbody>
                   <tr>
-                    <td style={{ verticalAlign: 'top', width: '48px', paddingRight: '16px' }}>
+                    <td className="align-top w-[100px] pr-4">
                       <Link href={`{{link}}`} title={`{{productName}}`}>
-                        <Img src={`{{image}}`} alt={`{{productName}}`} width="100" />
+                        <Img
+                          src={`{{image}}`}
+                          alt={`{{productName}}`}
+                          className="w-[80px] h-auto rounded-md"
+                        />
                       </Link>
                     </td>
-                    <td style={{ verticalAlign: 'top' }}>
-                      <div style={{ fontSize: '15px', lineHeight: 1.3 }}>{`{{productName}}`}</div>
-                      <div style={{ color: '#888' }}>Quantidade: {`{{quantity}}`}</div>
+                    <td className="align-top">
+                      <div className="font-15 text-fg m-0">{`{{productName}}`}</div>
+                      <div className="font-13 text-fg-2 mt-1">Quantidade: {`{{quantity}}`}</div>
                     </td>
-                    <td style={{ verticalAlign: 'top', textAlign: 'right' }}>
-                      <div style={{ fontSize: '15px', lineHeight: 1.3 }}>
+                    <td className="align-top text-right">
+                      <div className="font-15 text-fg font-semibold m-0">
                         R$ {`{{formatCurrency (math sellingPrice '*' 100)}}`}
                       </div>
                     </td>
@@ -65,54 +53,30 @@ function AbandonedCartItems() {
 
 export default function AbandonedCart() {
   return (
-    <Html>
-      <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
-          {/* Header: Logo + h1 */}
-          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
-            <Logo />
-            <Heading as="h1">Você deixou algo no seu carrinho!</Heading>
-          </Section>
+    <EmailLayout title="Você deixou algo no seu carrinho!">
+      <EmailSection>
+        <Text className="font-15 text-fg m-0 mb-4">Olá {`{{additionalFields.firstName}}`},</Text>
+        <Text className="font-15 text-fg m-0">
+          Percebemos que você deixou alguns itens no seu carrinho de compras. Não perca, conclua sua
+          compra agora!
+        </Text>
+      </EmailSection>
 
-          {/* Intro */}
-          <Section style={sectionStyle}>
-            <Text>Olá {`{{additionalFields.firstName}}`},</Text>
-            <Text>
-              Percebemos que você deixou alguns itens no seu carrinho de compras. Não perca, conclua
-              sua compra agora!
-            </Text>
-          </Section>
+      <EmailDivider />
+      <EmailSection>
+        <AbandonedCartItems />
+      </EmailSection>
 
-          {/* Items */}
-          <Section style={sectionWithDividerStyle}>
-            <AbandonedCartItems />
-          </Section>
-
-          {/* CTA */}
-          <Section style={{ padding: '24px', textAlign: 'center' }}>
-            <Link
-              href={`http://www.redcloud.com.ar/checkout/cart/{{addToCartURL}}`}
-              style={{
-                display: 'inline-block',
-                padding: '12px 24px',
-                backgroundColor: '#000',
-                color: '#fff',
-                fontWeight: 700,
-                textDecoration: 'none',
-                borderRadius: '4px',
-              }}
-            >
-              Concluir sua compra
-            </Link>
-          </Section>
-
-          {/* Footer */}
-          <Section style={sectionWithDividerStyle}>
-            <Regards />
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+      <EmailSection tight>
+        <div className="text-center">
+          <Button
+            href={`http://www.redcloud.com.ar/checkout/cart/{{addToCartURL}}`}
+            className="inline-block bg-fg text-bg-2 font-15 font-semibold px-6 py-3 rounded-lg no-underline"
+          >
+            Concluir sua compra
+          </Button>
+        </div>
+      </EmailSection>
+    </EmailLayout>
   );
 }

@@ -6,28 +6,28 @@
         "quantity": 1,
         "price": 161415,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 1,
         "quantity": 1,
         "price": 161415,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 2,
         "quantity": 1,
         "price": 0,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       },
       {
         "itemIndex": 3,
         "quantity": 1,
         "price": 0,
         "description": null,
-        "unitMultiplier": 0.0
+        "unitMultiplier": 0
       }
     ],
     "courier": "Sedex Correios",
@@ -61,10 +61,10 @@
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.1339,
-          "height": 17.0,
+          "height": 17,
           "length": 4.2,
           "weight": 0.19,
-          "width": 9.0
+          "width": 9
         },
         "categoriesIds": "/1/12/",
         "productClusterId": "140,145",
@@ -107,13 +107,15 @@
       "preSaleDate": null,
       "productCategoryIds": "/1/12/",
       "productCategories": {
-        "12": "Motorola",
-        "1": "Smartphone"
+        "1": "Smartphone",
+        "12": "Motorola"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
-      "imageUrl": "http://yellmobile.vteximg.com.br/arquivos/ids/161037-55-55/Celular-Motorola-Moto-One-Zoom-128GB-Titanium-Tela-6-4-Camera-48MP-16MP-8MP-5MP.jpg?v=637063952762530000",
+      "sellerChain": [
+        "1"
+      ],
+      "imageUrl": "https://picsum.photos/seed/order-invoiced-1/200/200",
       "detailUrl": "/celular-motorola-moto-one-zoom-128gb-titanium-tela-64-camera-48mp-16mp-8mp-5mp/p",
       "components": [],
       "bundleItems": [],
@@ -131,17 +133,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     },
     {
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.1339,
-          "height": 17.0,
+          "height": 17,
           "length": 4.2,
           "weight": 0.19,
-          "width": 9.0
+          "width": 9
         },
         "categoriesIds": "/1/12/",
         "productClusterId": "140,145",
@@ -184,13 +186,15 @@
       "preSaleDate": null,
       "productCategoryIds": "/1/12/",
       "productCategories": {
-        "12": "Motorola",
-        "1": "Smartphone"
+        "1": "Smartphone",
+        "12": "Motorola"
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
-      "imageUrl": "http://yellmobile.vteximg.com.br/arquivos/ids/161038-55-55/Celular-Motorola-Moto-One-Zoom-128GB-Violet-Tela-6-4-Camera-48MP-16MP-8MP-5MP.jpg?v=637063953283530000",
+      "sellerChain": [
+        "1"
+      ],
+      "imageUrl": "https://picsum.photos/seed/order-invoiced-2/200/200",
       "detailUrl": "/celular-motorola-moto-one-zoom-128gb-violet-tela-64-camera-48mp-16mp-8mp-5mp/p",
       "components": [],
       "bundleItems": [],
@@ -208,17 +212,17 @@
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     },
     {
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.0625,
-          "height": 10.0,
-          "length": 5.0,
+          "height": 10,
+          "length": 5,
           "weight": 0.05,
-          "width": 6.0
+          "width": 6
         },
         "categoriesIds": "/39/",
         "productClusterId": "",
@@ -265,8 +269,10 @@
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
-      "imageUrl": "http://yellmobile.vteximg.com.br/arquivos/ids/161420-55-55/1.jpg?v=637103758868600000",
+      "sellerChain": [
+        "1"
+      ],
+      "imageUrl": "https://picsum.photos/seed/order-invoiced-3/200/200",
       "detailUrl": "/anel-de-selfie-brinde/p",
       "components": [],
       "bundleItems": [],
@@ -277,24 +283,24 @@
         {
           "name": "DISCOUNT@GIFT",
           "value": 100,
-          "rawValue": 1.0,
+          "rawValue": 1,
           "isPercentual": true,
           "identifier": "6eceb34b-17f6-4195-94f3-256d8e45ea5c"
         }
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     },
     {
       "additionalInfo": {
         "dimension": {
           "cubicweight": 0.0625,
-          "height": 10.0,
-          "length": 5.0,
+          "height": 10,
+          "length": 5,
           "weight": 0.05,
-          "width": 6.0
+          "width": 6
         },
         "categoriesIds": "/39/",
         "productClusterId": "",
@@ -341,8 +347,10 @@
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
-      "imageUrl": "http://yellmobile.vteximg.com.br/arquivos/ids/161420-55-55/1.jpg?v=637103758868600000",
+      "sellerChain": [
+        "1"
+      ],
+      "imageUrl": "https://picsum.photos/seed/order-invoiced-4/200/200",
       "detailUrl": "/anel-de-selfie-brinde/p",
       "components": [],
       "bundleItems": [],
@@ -353,14 +361,14 @@
         {
           "name": "DISCOUNT@GIFT",
           "value": 100,
-          "rawValue": 1.0,
+          "rawValue": 1,
           "isPercentual": true,
           "identifier": "6eceb34b-17f6-4195-94f3-256d8e45ea5c"
         }
       ],
       "availability": "available",
       "measurementUnit": "un",
-      "unitMultiplier": 1.0,
+      "unitMultiplier": 1,
       "manufacturerCode": ""
     }
   ],
@@ -369,7 +377,7 @@
       "subSellerId": "1",
       "fulfillmentEndpoint": "http://fulfillment.vtexcommerce.com.br/api/fulfillment?sc=1&an=yellmobile",
       "id": "1",
-      "name": "Yell Mobile",
+      "name": "Loja Exemplo",
       "logo": ""
     }
   ],
@@ -385,7 +393,7 @@
   "status": "",
   "callCenterOperator": "",
   "userProfileId": "f54de619-d1fd-4a49-b64c-7629fed465fd",
-  "hostName": "yellmobile",
+  "hostName": "lojaexemplo",
   "creationVersion": null,
   "creationEnvironment": null,
   "lastChangeVersion": null,
@@ -393,7 +401,7 @@
   "marketplacePaymentValue": null,
   "orderId": "1010101317375-01",
   "orderGroup": "1010101317375",
-  "state": "invoiced",
+  "state": "SP",
   "isCheckedIn": false,
   "sellerOrderId": "00-1010101317375-01",
   "storeId": null,
@@ -422,15 +430,15 @@
     }
   ],
   "clientProfileData": {
-    "email": "6fc046059cb34deeba6cf7db5c2c9ccb@ct.vtex.com.br",
-    "firstName": "Alexandre",
-    "lastName": "Bellini",
-    "document": "08128935739",
+    "email": "marina.santos@example.com.br",
+    "firstName": "Marina",
+    "lastName": "Santos",
+    "document": "123.456.789-01",
     "documentType": "cpf",
-    "phone": "+5521980565640",
+    "phone": "+5511987654321",
     "corporateName": null,
     "tradeName": null,
-    "corporateDocument": null,
+    "corporateDocument": "12.345.678/0001-90",
     "stateInscription": "",
     "corporatePhone": null,
     "isCorporate": false,
@@ -466,24 +474,27 @@
   "shippingData": {
     "address": {
       "addressType": "residential",
-      "receiverName": "Alexandre Bellini",
+      "receiverName": "Marina Santos",
       "addressId": "92fe14f57ecb46b097e6600635627706",
       "isDisposable": false,
-      "postalCode": "24901-022",
-      "city": "Maricá",
-      "state": "RJ",
+      "postalCode": "01304-001",
+      "city": "São Paulo",
+      "state": "SP",
       "country": "BRA",
-      "street": "Rua A",
-      "number": "196",
-      "neighborhood": "Centro",
-      "complement": "Restaurante beco do chopp",
+      "street": "Rua Augusta",
+      "number": "1234",
+      "neighborhood": "Consolação",
+      "complement": "Apto 502",
       "reference": null,
-      "geoCoordinates": [-42.865016937255859, -22.925510406494141]
+      "geoCoordinates": [
+        -42.86501693725586,
+        -22.92551040649414
+      ]
     },
     "logisticsInfo": [
       {
         "itemIndex": 0,
-        "selectedSla": "Sedex Correios",
+        "selectedSla": "Entrega padrão",
         "selectedDeliveryChannel": "delivery",
         "addressId": "92fe14f57ecb46b097e6600635627706",
         "slas": [
@@ -511,13 +522,13 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": null,
               "additionalInfo": null,
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -545,22 +556,25 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Shopping Nova América",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "novamamerica",
                 "isDisposable": false,
-                "postalCode": "20765-630",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Pastor Martin Luther King Junior",
-                "number": "126",
-                "neighborhood": "Inhauma",
-                "complement": "Quiosque 19 - 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -594,28 +608,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Norte Shopping",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "NorteShopping",
                 "isDisposable": false,
-                "postalCode": "20751-003",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Dom Hélder Câmara",
-                "number": "5474",
-                "neighborhood": "Piedade",
-                "complement": "Lojas: 1º Piso e 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -643,28 +660,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Caxias Shopping",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Caxias",
                 "isDisposable": false,
-                "postalCode": "25085-008",
-                "city": "Duque de Caxias",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Rodovia Washington Luíz",
-                "number": "2895",
-                "neighborhood": "Vila São Luis",
-                "complement": "2° piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -692,33 +712,38 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Madureira Shopping",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Madureira",
                 "isDisposable": false,
-                "postalCode": "21351-060",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Estrada do Portela",
-                "number": "222",
-                "neighborhood": "Madureira",
-                "complement": "Lojas 164 / 165",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301735",
         "deliveryChannels": [
           {
@@ -733,7 +758,7 @@
       },
       {
         "itemIndex": 1,
-        "selectedSla": "Sedex Correios",
+        "selectedSla": "Entrega padrão",
         "selectedDeliveryChannel": "delivery",
         "addressId": "92fe14f57ecb46b097e6600635627706",
         "slas": [
@@ -761,13 +786,13 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": null,
               "additionalInfo": null,
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -795,22 +820,25 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Shopping Nova América",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "novamamerica",
                 "isDisposable": false,
-                "postalCode": "20765-630",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Pastor Martin Luther King Junior",
-                "number": "126",
-                "neighborhood": "Inhauma",
-                "complement": "Quiosque 19 - 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -844,28 +872,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Norte Shopping",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "NorteShopping",
                 "isDisposable": false,
-                "postalCode": "20751-003",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Dom Hélder Câmara",
-                "number": "5474",
-                "neighborhood": "Piedade",
-                "complement": "Lojas: 1º Piso e 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -893,28 +924,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Caxias Shopping",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Caxias",
                 "isDisposable": false,
-                "postalCode": "25085-008",
-                "city": "Duque de Caxias",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Rodovia Washington Luíz",
-                "number": "2895",
-                "neighborhood": "Vila São Luis",
-                "complement": "2° piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -942,33 +976,38 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Madureira Shopping",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Madureira",
                 "isDisposable": false,
-                "postalCode": "21351-060",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Estrada do Portela",
-                "number": "222",
-                "neighborhood": "Madureira",
-                "complement": "Lojas 164 / 165",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301736",
         "deliveryChannels": [
           {
@@ -983,7 +1022,7 @@
       },
       {
         "itemIndex": 2,
-        "selectedSla": "Sedex Correios",
+        "selectedSla": "Entrega padrão",
         "selectedDeliveryChannel": "delivery",
         "addressId": "92fe14f57ecb46b097e6600635627706",
         "slas": [
@@ -1011,13 +1050,13 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": null,
               "additionalInfo": null,
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1045,22 +1084,25 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Shopping Nova América",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "novamamerica",
                 "isDisposable": false,
-                "postalCode": "20765-630",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Pastor Martin Luther King Junior",
-                "number": "126",
-                "neighborhood": "Inhauma",
-                "complement": "Quiosque 19 - 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -1094,28 +1136,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Norte Shopping",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "NorteShopping",
                 "isDisposable": false,
-                "postalCode": "20751-003",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Dom Hélder Câmara",
-                "number": "5474",
-                "neighborhood": "Piedade",
-                "complement": "Lojas: 1º Piso e 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1143,28 +1188,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Caxias Shopping",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Caxias",
                 "isDisposable": false,
-                "postalCode": "25085-008",
-                "city": "Duque de Caxias",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Rodovia Washington Luíz",
-                "number": "2895",
-                "neighborhood": "Vila São Luis",
-                "complement": "2° piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1192,33 +1240,38 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Madureira Shopping",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Madureira",
                 "isDisposable": false,
-                "postalCode": "21351-060",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Estrada do Portela",
-                "number": "222",
-                "neighborhood": "Madureira",
-                "complement": "Lojas 164 / 165",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301809",
         "deliveryChannels": [
           {
@@ -1233,7 +1286,7 @@
       },
       {
         "itemIndex": 3,
-        "selectedSla": "Sedex Correios",
+        "selectedSla": "Entrega padrão",
         "selectedDeliveryChannel": "delivery",
         "addressId": "92fe14f57ecb46b097e6600635627706",
         "slas": [
@@ -1261,13 +1314,13 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": null,
               "additionalInfo": null,
               "dockId": null
             },
             "pickupPointId": null,
-            "pickupDistance": 0.0,
+            "pickupDistance": 0,
             "polygonName": null,
             "transitTime": "3bd"
           },
@@ -1295,22 +1348,25 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Shopping Nova América",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "novamamerica",
                 "isDisposable": false,
-                "postalCode": "20765-630",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Pastor Martin Luther King Junior",
-                "number": "126",
-                "neighborhood": "Inhauma",
-                "complement": "Quiosque 19 - 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.271215600000005, -22.8778881]
+                "geoCoordinates": [
+                  -43.271215600000005,
+                  -22.8778881
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
@@ -1344,28 +1400,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Norte Shopping",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "NorteShopping",
                 "isDisposable": false,
-                "postalCode": "20751-003",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Avenida Dom Hélder Câmara",
-                "number": "5474",
-                "neighborhood": "Piedade",
-                "complement": "Lojas: 1º Piso e 2º Piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.2834982, -22.8864368]
+                "geoCoordinates": [
+                  -43.2834982,
+                  -22.8864368
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_NorteShopping",
-            "pickupDistance": 43.083461761474609,
+            "pickupDistance": 43.08346176147461,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1393,28 +1452,31 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Caxias Shopping",
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Caxias",
                 "isDisposable": false,
-                "postalCode": "25085-008",
-                "city": "Duque de Caxias",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Rodovia Washington Luíz",
-                "number": "2895",
-                "neighborhood": "Vila São Luis",
-                "complement": "2° piso",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.286740300000019, -22.7873054]
+                "geoCoordinates": [
+                  -43.28674030000002,
+                  -22.7873054
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Caxias",
-            "pickupDistance": 45.862655639648438,
+            "pickupDistance": 45.86265563964844,
             "polygonName": null,
             "transitTime": "0bd"
           },
@@ -1442,33 +1504,38 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": true,
-              "friendlyName": "Yell Madureira Shopping",
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": {
                 "addressType": "pickup",
-                "receiverName": null,
+                "receiverName": "Marina Santos",
                 "addressId": "Madureira",
                 "isDisposable": false,
-                "postalCode": "21351-060",
-                "city": "Rio de Janeiro",
-                "state": "RJ",
+                "postalCode": "01304-001",
+                "city": "São Paulo",
+                "state": "SP",
                 "country": "BRA",
-                "street": "Estrada do Portela",
-                "number": "222",
-                "neighborhood": "Madureira",
-                "complement": "Lojas 164 / 165",
+                "street": "Rua Augusta",
+                "number": "1234",
+                "neighborhood": "Consolação",
+                "complement": "Apto 502",
                 "reference": null,
-                "geoCoordinates": [-43.341083099999992, -22.870455]
+                "geoCoordinates": [
+                  -43.34108309999999,
+                  -22.870455
+                ]
               },
               "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
               "dockId": "1"
             },
             "pickupPointId": "1_Madureira",
-            "pickupDistance": 49.147296905517578,
+            "pickupDistance": 49.14729690551758,
             "polygonName": null,
             "transitTime": "0bd"
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "1813301809",
         "deliveryChannels": [
           {
@@ -1485,57 +1552,66 @@
     "selectedAddresses": [
       {
         "addressType": "residential",
-        "receiverName": "Alexandre Bellini",
+        "receiverName": "Marina Santos",
         "addressId": "92fe14f57ecb46b097e6600635627706",
         "isDisposable": false,
-        "postalCode": "24901-022",
-        "city": "Maricá",
-        "state": "RJ",
+        "postalCode": "01304-001",
+        "city": "São Paulo",
+        "state": "SP",
         "country": "BRA",
-        "street": "Rua A",
-        "number": "196",
-        "neighborhood": "Centro",
-        "complement": "Restaurante beco do chopp",
+        "street": "Rua Augusta",
+        "number": "1234",
+        "neighborhood": "Consolação",
+        "complement": "Apto 502",
         "reference": null,
-        "geoCoordinates": [-42.865016937255859, -22.925510406494141]
+        "geoCoordinates": [
+          -42.86501693725586,
+          -22.92551040649414
+        ]
       }
     ],
     "availableAddresses": [
       {
         "addressType": "residential",
-        "receiverName": "Alexandre Bellini",
+        "receiverName": "Marina Santos",
         "addressId": "92fe14f57ecb46b097e6600635627706",
         "isDisposable": false,
-        "postalCode": "24901-022",
-        "city": "Maricá",
-        "state": "RJ",
+        "postalCode": "01304-001",
+        "city": "São Paulo",
+        "state": "SP",
         "country": "BRA",
-        "street": "Rua A",
-        "number": "196",
-        "neighborhood": "Centro",
-        "complement": "Restaurante beco do chopp",
+        "street": "Rua Augusta",
+        "number": "1234",
+        "neighborhood": "Consolação",
+        "complement": "Apto 502",
         "reference": null,
-        "geoCoordinates": [-42.865016937255859, -22.925510406494141]
+        "geoCoordinates": [
+          -42.86501693725586,
+          -22.92551040649414
+        ]
       }
     ],
     "pickupPoints": [
       {
-        "friendlyName": "Yell Shopping Nova América",
+        "friendlyName": "Loja Exemplo · Vila Madalena",
         "address": {
           "addressType": "pickup",
-          "receiverName": null,
+          "receiverName": "Marina Santos",
           "addressId": "novamamerica",
           "isDisposable": false,
-          "postalCode": "20765-630",
-          "city": "Rio de Janeiro",
-          "state": "RJ",
+          "postalCode": "01304-001",
+          "city": "São Paulo",
+          "state": "SP",
           "country": "BRA",
-          "street": "Avenida Pastor Martin Luther King Junior",
-          "number": "126",
-          "neighborhood": "Inhauma",
-          "complement": "Quiosque 19 - 2º Piso",
+          "street": "Rua Augusta",
+          "number": "1234",
+          "neighborhood": "Consolação",
+          "complement": "Apto 502",
           "reference": null,
-          "geoCoordinates": [-43.271215600000005, -22.8778881]
+          "geoCoordinates": [
+            -43.271215600000005,
+            -22.8778881
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_novamamerica",
@@ -1578,22 +1654,25 @@
         ]
       },
       {
-        "friendlyName": "Yell Norte Shopping",
+        "friendlyName": "Loja Exemplo · Jardins",
         "address": {
           "addressType": "pickup",
-          "receiverName": null,
+          "receiverName": "Marina Santos",
           "addressId": "NorteShopping",
           "isDisposable": false,
-          "postalCode": "20751-003",
-          "city": "Rio de Janeiro",
-          "state": "RJ",
+          "postalCode": "01304-001",
+          "city": "São Paulo",
+          "state": "SP",
           "country": "BRA",
-          "street": "Avenida Dom Hélder Câmara",
-          "number": "5474",
-          "neighborhood": "Piedade",
-          "complement": "Lojas: 1º Piso e 2º Piso",
+          "street": "Rua Augusta",
+          "number": "1234",
+          "neighborhood": "Consolação",
+          "complement": "Apto 502",
           "reference": null,
-          "geoCoordinates": [-43.2834982, -22.8864368]
+          "geoCoordinates": [
+            -43.2834982,
+            -22.8864368
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_NorteShopping",
@@ -1636,22 +1715,25 @@
         ]
       },
       {
-        "friendlyName": "Yell Caxias Shopping",
+        "friendlyName": "Loja Exemplo · Vila Madalena",
         "address": {
           "addressType": "pickup",
-          "receiverName": null,
+          "receiverName": "Marina Santos",
           "addressId": "Caxias",
           "isDisposable": false,
-          "postalCode": "25085-008",
-          "city": "Duque de Caxias",
-          "state": "RJ",
+          "postalCode": "01304-001",
+          "city": "São Paulo",
+          "state": "SP",
           "country": "BRA",
-          "street": "Rodovia Washington Luíz",
-          "number": "2895",
-          "neighborhood": "Vila São Luis",
-          "complement": "2° piso",
+          "street": "Rua Augusta",
+          "number": "1234",
+          "neighborhood": "Consolação",
+          "complement": "Apto 502",
           "reference": null,
-          "geoCoordinates": [-43.286740300000019, -22.7873054]
+          "geoCoordinates": [
+            -43.28674030000002,
+            -22.7873054
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_Caxias",
@@ -1694,22 +1776,25 @@
         ]
       },
       {
-        "friendlyName": "Yell Madureira Shopping",
+        "friendlyName": "Loja Exemplo · Jardins",
         "address": {
           "addressType": "pickup",
-          "receiverName": null,
+          "receiverName": "Marina Santos",
           "addressId": "Madureira",
           "isDisposable": false,
-          "postalCode": "21351-060",
-          "city": "Rio de Janeiro",
-          "state": "RJ",
+          "postalCode": "01304-001",
+          "city": "São Paulo",
+          "state": "SP",
           "country": "BRA",
-          "street": "Estrada do Portela",
-          "number": "222",
-          "neighborhood": "Madureira",
-          "complement": "Lojas 164 / 165",
+          "street": "Rua Augusta",
+          "number": "1234",
+          "neighborhood": "Consolação",
+          "complement": "Apto 502",
           "reference": null,
-          "geoCoordinates": [-43.341083099999992, -22.870455]
+          "geoCoordinates": [
+            -43.34108309999999,
+            -22.870455
+          ]
         },
         "additionalInfo": "Retirar seu pedido na loja da Yell Mobile após o recebimento da confirmação do faturamento da Nota Fiscal.",
         "id": "1_Madureira",
@@ -1759,7 +1844,7 @@
       {
         "isActive": true,
         "transactionId": "66BA3500394F4E3688A31087881877FB",
-        "merchantName": "YELLMOBILE",
+        "merchantName": "Loja Exemplo",
         "payments": [
           {
             "id": "451923C4FEBE432787C704865190F4A7",
@@ -1843,13 +1928,13 @@
   "changeData": null,
   "subscriptionData": null,
   "salesChannel": "1",
-  "followUpEmail": "71cf834c46944b518908a78ffab9dd2f@ct.vtex.com.br",
+  "followUpEmail": "notify+lka76xya@lojaexemplo.example.com.br",
   "creationDate": "2020-02-12T02:22:10.1366655Z",
   "lastChange": "2020-02-12T18:36:25.8391777Z",
   "timeZoneCreationDate": "2020-02-11T23:22:10.1366655",
   "timeZoneLastChange": "2020-02-12T15:36:25.8391777",
   "isCompleted": true,
-  "merchantName": null,
+  "merchantName": "Loja Exemplo",
   "userType": "",
   "roundingError": 0,
   "allowEdition": false,
@@ -1858,14 +1943,14 @@
   "allowChangeSeller": false,
   "_accountInfo": {
     "HostName": "vtexgame1",
-    "MainAccountName": "vtexgame1",
+    "MainAccountName": "lojaexemplo",
     "IsPersisted": true,
     "IsRemoved": false,
     "Id": "e39d05f9-0c54-4469-a626-8bb5cff169f8",
     "Cnpj": "99999999999999",
-    "CompanyName": "VTEX GAME1",
-    "TradingName": "VTEX Developers",
-    "AccountName": "vtexgame1",
+    "CompanyName": "Loja Exemplo Comércio LTDA",
+    "TradingName": "Loja Exemplo",
+    "AccountName": "lojaexemplo",
     "DefaultUrl": null,
     "Address": null,
     "Number": null,

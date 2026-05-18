@@ -24,14 +24,14 @@
       "data": [
         {
           "lastChange": "2015-06-24T00:00:00",
-          "city": "Sao Paulo",
+          "city": "São Paulo",
           "state": "SP",
           "description": "A caminho de Curitiba"
         },
         {
           "lastChange": "2015-06-23T00:00:00",
-          "city": "Rio de Janeiro",
-          "state": "RJ",
+          "city": "São Paulo",
+          "state": "SP",
           "description": "Coletado pela transportadora"
         }
       ]
@@ -94,8 +94,10 @@
       },
       "quantity": 1,
       "seller": "1",
-      "sellerChain": ["1"],
-      "imageUrl": "http://vtexgame1.vteximg.com.br/arquivos/ids/155369-55-55/Azul-Talla-S_0.jpg?v=635833511570300000",
+      "sellerChain": [
+        "1"
+      ],
+      "imageUrl": "https://picsum.photos/seed/order-delivered-1/200/200",
       "detailUrl": "/polera-de-futbol-nike-manga-corta-20/p",
       "components": [],
       "bundleItems": [],
@@ -113,7 +115,7 @@
       "subSellerId": "1",
       "fulfillmentEndpoint": "http://fulfillment.vtexcommerce.com.br/api/fulfillment?an=vtexgame1",
       "id": "1",
-      "name": "vtexgame1",
+      "name": "Loja Exemplo",
       "logo": ""
     }
   ],
@@ -127,14 +129,14 @@
   "status": "",
   "callCenterOperator": "",
   "userProfileId": "a8c24a30-cbab-4a16-b53c-b48489975d7e",
-  "hostName": "vtexgame1",
+  "hostName": "lojaexemplo",
   "creationVersion": null,
   "creationEnvironment": null,
   "lastChangeVersion": null,
   "workflowInstanceId": null,
   "orderId": "834081519069-01",
   "orderGroup": "834081519069",
-  "state": "invoiced",
+  "state": "SP",
   "isCheckedIn": false,
   "sellerOrderId": "00-834081519069-01",
   "storeId": null,
@@ -163,15 +165,15 @@
     }
   ],
   "clientProfileData": {
-    "email": "ana.motta@vtex.com.br-35b.ct.vtex.com.br",
-    "firstName": "Ana Luiza",
-    "lastName": "Gomes",
-    "document": "09498512485",
+    "email": "marina.santos@example.com.br",
+    "firstName": "Marina",
+    "lastName": "Santos",
+    "document": "123.456.789-01",
     "documentType": "cpf",
-    "phone": "+5583991119209",
+    "phone": "+5511987654321",
     "corporateName": null,
     "tradeName": null,
-    "corporateDocument": null,
+    "corporateDocument": "12.345.678/0001-90",
     "stateInscription": null,
     "corporatePhone": null,
     "isCorporate": false,
@@ -186,23 +188,23 @@
   "shippingData": {
     "address": {
       "addressType": "residential",
-      "receiverName": "Ana Luiza Gomes",
+      "receiverName": "Marina Santos",
       "addressId": "-4564401032532",
-      "postalCode": "22225-800",
-      "city": "Rio de Janeiro",
-      "state": "RJ",
+      "postalCode": "01304-001",
+      "city": "São Paulo",
+      "state": "SP",
       "country": "BRA",
-      "street": "Praia de Botafogo",
-      "number": "260",
-      "neighborhood": "Botafogo",
-      "complement": null,
+      "street": "Rua Augusta",
+      "number": "1234",
+      "neighborhood": "Consolação",
+      "complement": "Apto 502",
       "reference": null,
       "geoCoordinates": []
     },
     "logisticsInfo": [
       {
         "itemIndex": 0,
-        "selectedSla": "PAC",
+        "selectedSla": "Entrega padrão",
         "selectedDeliveryChannel": "delivery",
         "addressId": "-4564401032532",
         "slas": [
@@ -229,7 +231,7 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": null,
               "additionalInfo": null,
               "dockId": null,
@@ -240,7 +242,9 @@
             "polygonName": null
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "31",
         "deliveryChannels": [
           {
@@ -250,7 +254,7 @@
       },
       {
         "itemIndex": 1,
-        "selectedSla": "Econômica",
+        "selectedSla": "Entrega padrão",
         "selectedDeliveryChannel": "delivery",
         "addressId": "-4564401032532",
         "slas": [
@@ -277,7 +281,7 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Jardins",
               "address": null,
               "additionalInfo": null,
               "dockId": null,
@@ -310,7 +314,7 @@
             "tax": 0,
             "pickupStoreInfo": {
               "isPickupStore": false,
-              "friendlyName": null,
+              "friendlyName": "Loja Exemplo · Vila Madalena",
               "address": null,
               "additionalInfo": null,
               "dockId": null,
@@ -321,7 +325,9 @@
             "polygonName": null
           }
         ],
-        "shipsTo": ["BRA"],
+        "shipsTo": [
+          "BRA"
+        ],
         "itemId": "33",
         "deliveryChannels": [
           {
@@ -333,16 +339,16 @@
     "selectedAddresses": [
       {
         "addressType": "residential",
-        "receiverName": "Ana Luiza Gomes",
+        "receiverName": "Marina Santos",
         "addressId": "-4564401032532",
-        "postalCode": "22225-800",
-        "city": "Rio de Janeiro",
-        "state": "RJ",
+        "postalCode": "01304-001",
+        "city": "São Paulo",
+        "state": "SP",
         "country": "BRA",
-        "street": "Praia de Botafogo",
-        "number": "260",
-        "neighborhood": "Botafogo",
-        "complement": null,
+        "street": "Rua Augusta",
+        "number": "1234",
+        "neighborhood": "Consolação",
+        "complement": "Apto 502",
         "reference": null,
         "geoCoordinates": []
       }
@@ -350,16 +356,16 @@
     "availableAddresses": [
       {
         "addressType": "residential",
-        "receiverName": "Ana Luiza Gomes",
+        "receiverName": "Marina Santos",
         "addressId": "-4564401032532",
-        "postalCode": "22225-800",
-        "city": "Rio de Janeiro",
-        "state": "RJ",
+        "postalCode": "01304-001",
+        "city": "São Paulo",
+        "state": "SP",
         "country": "BRA",
-        "street": "Praia de Botafogo",
-        "number": "260",
-        "neighborhood": "Botafogo",
-        "complement": null,
+        "street": "Rua Augusta",
+        "number": "1234",
+        "neighborhood": "Consolação",
+        "complement": "Apto 502",
         "reference": null,
         "geoCoordinates": []
       }
@@ -372,7 +378,7 @@
       {
         "isActive": true,
         "transactionId": "C84FAB684A44487CA716C49A18A6C5B6",
-        "merchantName": "VTEXGAME1",
+        "merchantName": "Loja Exemplo",
         "payments": [
           {
             "id": "DD838CC148374CB48F745077A0EB405A",
@@ -438,13 +444,13 @@
   "changeData": null,
   "subscriptionData": null,
   "salesChannel": "1",
-  "followUpEmail": "14fb1186974c4f379123fae55cbff4db@ct.vtex.com.br",
+  "followUpEmail": "notify+k5wblzr2@lojaexemplo.example.com.br",
   "creationDate": "2018-05-23T00:26:05.7454162Z",
   "lastChange": "2018-07-27T14:05:43.8509746Z",
   "timeZoneCreationDate": "2018-05-22T21:26:05.7454162",
   "timeZoneLastChange": "2018-07-27T11:05:43.8509746",
   "isCompleted": true,
-  "merchantName": null,
+  "merchantName": "Loja Exemplo",
   "userType": "",
   "roundingError": 0,
   "allowEdition": false,
@@ -453,14 +459,14 @@
   "allowChangeSeller": false,
   "_accountInfo": {
     "HostName": "vtexgame1",
-    "MainAccountName": "vtexgame1",
+    "MainAccountName": "lojaexemplo",
     "IsPersisted": true,
     "IsRemoved": false,
     "Id": "b1ecd33c-1b85-430c-bedd-44d3f3919393",
     "Cnpj": "99999999999999",
-    "CompanyName": "VTEX GAME1",
-    "TradingName": "VTEX GAME1",
-    "AccountName": "vtexgame1",
+    "CompanyName": "Loja Exemplo Comércio LTDA",
+    "TradingName": "Loja Exemplo",
+    "AccountName": "lojaexemplo",
     "DefaultUrl": null,
     "Address": null,
     "Number": null,

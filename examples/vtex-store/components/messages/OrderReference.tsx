@@ -1,13 +1,12 @@
 import { Text } from 'react-email';
 
 /**
- * Mirrors `partials/messages/order-reference.hbs`. Single-line note with
- * the order id, used as a sub-header in 8 of the 13 templates.
+ * Sub-header showing the order id (used by 8 templates). Halo-Tailwind.
  */
 export function OrderReference() {
   return (
-    <Text style={{ marginTop: '8px', color: '#888' }}>
-      Referente ao Pedido <strong>#{`{{orderId}}`}</strong>
+    <Text className="font-13 text-fg-2 m-0 mt-1 text-center">
+      Pedido <strong className="text-fg-2">#{`{{orderId}}`}</strong>
     </Text>
   );
 }

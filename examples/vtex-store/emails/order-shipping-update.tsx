@@ -1,146 +1,105 @@
 /**
- * VTEX `order-shipping-update` template — faithful port of
- * `refs/vtex-email-framework/source/templates/08-shipping-update.hbs`.
- *
- * Onda 2 of Bloco 7. Structurally distinct from the other shipping
- * variants: single h1, courier status block (latest event highlighted +
- * full history table), tracking link, and a per-group package section.
- *
- * Differences from 06-shipped:
- *   - No 4-way headline. Single h1 "Sua entrega foi atualizada."
- *   - Adds courier-status block from `package.courierStatus.data[0]`
- *     (highlighted lastChange + description + city/state).
- *   - Intro: Hi + trackDelivery (when history.length > 1) or
- *     deliveryDetails (when only 1 event).
- *   - Carrier + tracking number + history link.
- *   - Full event history table (only when history.length > 1).
- *   - Order info groups by `selectedSla` (not `packageId`) and uses
- *     `<Package />` for every package, no pickup/delivery branch.
- *   - No business hours, no per-package heading.
+ * VTEX `order-shipping-update` — Halo-Tailwind (Bloco 11).
+ * Title + courier-status block (headerExtra) + tracking + history table.
  */
 
-import { Body, Container, Heading, Html, Link, Section, Text } from 'react-email';
+import { Button, Text } from 'react-email';
 import { Each, Else, If, Raw } from 'react-email-bridge/hbs';
 
 import {
   AddressDeliveryNoTitle,
   AddressPickupNoTitle,
+  EmailDivider,
+  EmailLayout,
+  EmailSection,
   Hi,
-  HtmlHead,
-  Logo,
-  OrderReference,
   Package,
-  Regards,
 } from '../components/index.js';
 
-const sectionStyle = { padding: '24px' };
-const sectionWithDividerStyle = { ...sectionStyle, borderTop: '1px solid #ddd' };
+const courierStatusCard = (
+  <If path="package.courierStatus.data.0.lastChange">
+    <div className="bg-bg-3 rounded-lg p-5 text-left">
+      <div className="font-13 text-fg-2 font-semibold">
+        {`{{formatDateTime package.courierStatus.data.0.lastChange}}`}
+      </div>
+      <div className="font-22 text-fg font-semibold mt-1">
+        {`{{package.courierStatus.data.0.description}}`}
+      </div>
+      <If path="package.courierStatus.data.0.city">
+        <div className="font-13 text-fg-2 mt-1">
+          {`{{package.courierStatus.data.0.city}}`}
+          <If path="package.courierStatus.data.0.state">
+            {' '}
+            — {`{{package.courierStatus.data.0.state}}`}
+          </If>
+        </div>
+      </If>
+    </div>
+  </If>
+);
 
 export default function OrderShippingUpdate() {
   return (
-    <Html>
-      <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
-          {/* Header: Logo + h1 + OrderRef + courier latest status (when present) */}
-          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
-            <Logo />
-            <Heading as="h1">Sua entrega foi atualizada.</Heading>
-            <OrderReference />
+    <EmailLayout title="Sua entrega foi atualizada." orderReference headerExtra={courierStatusCard}>
+      <EmailSection>
+        <Text className="font-15 text-fg m-0 mb-4">
+          <Hi />{' '}
+          <If compare={['package.courierStatus.data.length', '>', '1']}>
+            Acompanhe o andamento da sua entrega:
+            <Else />
+            Seguem os detalhes da sua entrega:
+          </If>
+        </Text>
 
-            <If path="package.courierStatus.data.0.lastChange">
-              <Section
-                style={{
-                  backgroundColor: '#f4f4f4',
-                  padding: '8px 16px',
-                  marginTop: '16px',
-                  fontWeight: 500,
-                  lineHeight: 1.4,
-                }}
-              >
-                <div style={{ marginBottom: '4px', fontWeight: 700, color: '#888' }}>
-                  {`{{formatDateTime package.courierStatus.data.0.lastChange}}`}
-                </div>
-                <div style={{ fontSize: '16px', fontWeight: 700, lineHeight: 1.3 }}>
-                  {`{{package.courierStatus.data.0.description}}`}
-                </div>
-                <If path="package.courierStatus.data.0.city">
-                  <div style={{ fontSize: '16px' }}>
-                    {`{{package.courierStatus.data.0.city}}`}
-                    <If path="package.courierStatus.data.0.state">
-                      {' '}
-                      - {`{{package.courierStatus.data.0.state}}`}
-                    </If>
+        <div className="mb-6">
+          <If path="package.courier">
+            <div className="font-15 text-fg">
+              <strong>Transporte via {`{{package.courier}}`}</strong>
+            </div>
+          </If>
+          <div className="font-15 text-fg-2">Rastreio #{`{{package.trackingNumber}}`}</div>
+          <div className="mt-4">
+            <Button
+              href={`{{package.trackingUrl}}`}
+              className="inline-block bg-fg text-bg-2 font-15 font-semibold px-6 py-3 rounded-lg no-underline"
+            >
+              Ver histórico detalhado
+            </Button>
+          </div>
+        </div>
+
+        <If compare={['package.courierStatus.data.length', '>', '1']}>
+          <div className="border-t border-stroke">
+            <Each path="package.courierStatus.data">
+              <div className="py-3 border-b border-stroke">
+                <div className="font-13 text-fg-2">{`{{formatDateTime lastChange}}`}</div>
+                <div className="font-15 text-fg">{`{{description}}`}</div>
+                <If path="city">
+                  <div className="font-13 text-fg-2">
+                    {`{{city}}`}
+                    <If path="state"> — {`{{state}}`}</If>
                   </div>
                 </If>
-              </Section>
-            </If>
-          </Section>
-
-          {/* Intro: Hi + tracking text (history-length-aware) + carrier + tracking number + history */}
-          <Section style={sectionStyle}>
-            <Text style={{ marginTop: '16px' }}>
-              <Hi />{' '}
-              <If compare={['package.courierStatus.data.length', '>', '1']}>
-                Acompanhe o andamento sua entrega:
-                <Else />
-                Seguem os detalhes da sua entrega:
-              </If>
-            </Text>
-
-            <div style={{ paddingBottom: '12px' }}>
-              <If path="package.courier">
-                <div style={{ fontWeight: 700 }}>Transporte via {`{{package.courier}}`}</div>
-              </If>
-              <div>
-                Rastreio #{`{{package.trackingNumber}}`} —{' '}
-                <Link href={`{{package.trackingUrl}}`}>ver histórico detalhado</Link>
               </div>
-            </div>
+            </Each>
+          </div>
+        </If>
+      </EmailSection>
 
-            {/* Full history table (only when > 1 event) */}
-            <If compare={['package.courierStatus.data.length', '>', '1']}>
-              <Each path="package.courierStatus.data">
-                <div style={{ marginBottom: '8px' }}>
-                  <div style={{ fontSize: '13px', color: '#888' }}>
-                    {`{{formatDateTime lastChange}}`}
-                  </div>
-                  <div>{`{{description}}`}</div>
-                  <If path="city">
-                    <div>
-                      {`{{city}}`}
-                      <If path="state"> - {`{{state}}`}</If>
-                    </div>
-                  </If>
-                </div>
-              </Each>
-            </If>
-          </Section>
-
-          {/* Order info: package per logistics + addresses */}
-          <Section style={sectionWithDividerStyle}>
-            <Raw>{`{{#richShippingData shippingData}}`}</Raw>
-            <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-            <div>
-              <Heading as="h3" style={{ margin: '0 0 8px' }}>
-                Pacote
-              </Heading>
-              <AddressDeliveryNoTitle />
-              <AddressPickupNoTitle />
-              <Raw>{`{{#group items by="selectedSla"}}`}</Raw>
-              <Package />
-              <Raw>{`{{/group}}`}</Raw>
-            </div>
-            <Raw>{`{{/group}}`}</Raw>
-            <Raw>{`{{/richShippingData}}`}</Raw>
-          </Section>
-
-          {/* Footer */}
-          <Section style={sectionWithDividerStyle}>
-            <Regards />
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+      <EmailDivider />
+      <EmailSection label="Pacote">
+        <Raw>{`{{#richShippingData shippingData}}`}</Raw>
+        <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
+        <div>
+          <AddressDeliveryNoTitle />
+          <AddressPickupNoTitle />
+          <Raw>{`{{#group items by="selectedSla"}}`}</Raw>
+          <Package />
+          <Raw>{`{{/group}}`}</Raw>
+        </div>
+        <Raw>{`{{/group}}`}</Raw>
+        <Raw>{`{{/richShippingData}}`}</Raw>
+      </EmailSection>
+    </EmailLayout>
   );
 }

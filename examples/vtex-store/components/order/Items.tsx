@@ -2,52 +2,61 @@ import { Img } from 'react-email';
 import { Each, Else, If } from 'react-email-bridge/hbs';
 
 /**
- * Mirrors `partials/items.hbs`. Used by 02-cancelled, 05-invoiced-cancel-
- * request, 06-shipped, 07-shipped-cancel-request, 10-delivered.
+ * Items table. Used by 5 templates. Deep `../../../../items` parent-path
+ * traversal preserved (regression test in tests/render-pipeline.test.tsx).
  *
- * The deep `../../../../items` parent-path traversal is intentional — it
- * climbs from the inner `#each items` (per-shippingInfo) back up through
- * the package context to the original order items list. Regression test
- * for the parent-path pattern is in tests/render-pipeline.test.tsx.
+ * Halo-Tailwind: rounded thumbnails + body/caption type.
  */
 export function Items() {
   return (
-    <table width="100%" border={0} cellPadding={0} cellSpacing={0}>
+    <table className="w-full border-collapse">
       <tbody>
         <Each path="items">
           <Each path="../../../../items">
             <If eq={['@index', '../itemIndex']}>
               <tr>
-                <td style={{ verticalAlign: 'top', padding: '8px 8px 8px 0', width: '48px' }}>
-                  <Img alt="" src={`{{imageUrl}}`} />
+                <td className="align-top py-3 pr-4 w-[72px]">
+                  <Img
+                    alt=""
+                    src={`{{imageUrl}}`}
+                    className="w-[56px] h-[56px] rounded-md object-cover"
+                  />
                 </td>
-                <td style={{ verticalAlign: 'top', padding: '8px 0' }}>
-                  <div style={{ fontSize: '15px', lineHeight: 1.3 }}>{`{{name}}`}</div>
-                  <div style={{ color: '#888' }}>
+                <td className="align-top py-3">
+                  <div className="font-15 text-fg m-0">{`{{name}}`}</div>
+                  <div className="font-13 text-fg-2 mt-1">
                     {`{{quantity}}`} un.{' '}
-                    <If path="sellingPrice">
-                      R$ {`{{formatCurrency sellingPrice}}`}
-                      <Else />
-                      Grátis
-                    </If>
+                    <span className="text-fg font-semibold">
+                      <If path="sellingPrice">
+                        R$ {`{{formatCurrency sellingPrice}}`}
+                        <Else />
+                        Grátis
+                      </If>
+                    </span>
                   </div>
                 </td>
               </tr>
               <Each path="bundleItems">
                 <If path="name">
                   <tr>
-                    <td style={{ verticalAlign: 'top', padding: '8px 8px 8px 0', width: '48px' }}>
-                      <Img alt="" src={`{{imageUrl}}`} />
+                    <td className="align-top py-3 pr-4 w-[72px]">
+                      <Img
+                        alt=""
+                        src={`{{imageUrl}}`}
+                        className="w-[56px] h-[56px] rounded-md object-cover"
+                      />
                     </td>
-                    <td style={{ verticalAlign: 'top', padding: '8px 0' }}>
-                      <div style={{ fontSize: '15px', lineHeight: 1.3 }}>{`{{name}}`}</div>
-                      <div style={{ color: '#888' }}>
+                    <td className="align-top py-3">
+                      <div className="font-15 text-fg m-0">{`{{name}}`}</div>
+                      <div className="font-13 text-fg-2 mt-1">
                         {`{{quantity}}`} un.{' '}
-                        <If path="price">
-                          R$ {`{{formatCurrency price}}`}
-                          <Else />
-                          Grátis
-                        </If>
+                        <span className="text-fg font-semibold">
+                          <If path="price">
+                            R$ {`{{formatCurrency price}}`}
+                            <Else />
+                            Grátis
+                          </If>
+                        </span>
                       </div>
                     </td>
                   </tr>

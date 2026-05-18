@@ -45,11 +45,14 @@ describe('VTEX fake helpers', () => {
   });
 
   describe('formatDate', () => {
-    it('formats ISO to YYYY-MM-DD', () => {
-      expect(run('{{formatDate "2024-03-15T10:00:00Z"}}')).toBe('2024-03-15');
+    it('formats ISO to PT-BR DD/MM/YYYY', () => {
+      expect(run('{{formatDate "2024-03-15T10:00:00Z"}}')).toBe('15/03/2024');
     });
     it('empty for null', () => {
       expect(run('{{formatDate v}}', { v: null })).toBe('');
+    });
+    it('falls back to original string for unparseable input', () => {
+      expect(run('{{formatDate "not-a-date"}}')).toBe('not-a-date');
     });
   });
 

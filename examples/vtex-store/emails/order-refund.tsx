@@ -1,78 +1,63 @@
 /**
- * VTEX `order-refund` template — faithful port of
- * `refs/vtex-email-framework/source/templates/13-refund.hbs`.
- *
- * Onda 3 of Bloco 7. Sent when a refund is processed. Header + intro +
- * refunded items table + refund amount + Regards.
- *
- * Source uses `{{#each ... }}` over `package.restitutions.Refund.items`
- * with an inner `{{#with (lookup ../items @index)}}` — sub-expression
- * with the `lookup` helper to correlate refund-item-index with the
- * original order item. Both `#each` and `#with` are emitted via sugar
- * components except for the `lookup` sub-expression which is preserved
- * via `<Raw>` around the `#with` open/close.
+ * VTEX `order-refund` — Halo-Tailwind (Bloco 11).
+ * Intro + refunded items table (uses {{#with (lookup ../items @index)}}) + amount.
  */
 
-import { Body, Container, Heading, Html, Img, Section, Text } from 'react-email';
+import { Img, Text } from 'react-email';
 import { Each, Else, If, Raw } from 'react-email-bridge/hbs';
 
-import { HtmlHead, Logo, Regards } from '../components/index.js';
-
-const sectionStyle = { padding: '24px' };
-const sectionWithDividerStyle = { ...sectionStyle, borderTop: '1px solid #ddd' };
+import { EmailDivider, EmailLayout, EmailSection } from '../components/index.js';
 
 export default function OrderRefund() {
   return (
-    <Html>
-      <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
-          {/* Header: Logo + h1 with orderId */}
-          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
-            <Logo />
-            <Heading as="h1">Seu Reembolso Foi Processado {`{{orderId}}`}</Heading>
-          </Section>
+    <EmailLayout title={<>Reembolso processado · #{`{{orderId}}`}</>}>
+      <EmailDivider />
+      <EmailSection>
+        <Text className="font-15 text-fg m-0 mb-6">
+          Processamos um reembolso para sua compra recente. Detalhes abaixo:
+        </Text>
 
-          {/* Body: intro + refunded items + refund amount */}
-          <Section style={sectionWithDividerStyle}>
-            <Text>Processamos um reembolso para sua compra recente. Detalhes abaixo:</Text>
+        <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mb-4">
+          Itens reembolsados
+        </div>
+        <table className="w-full border-collapse">
+          <tbody>
+            <Each path="package.restitutions.Refund.items">
+              <Raw>{`{{#with (lookup ../items @index)}}`}</Raw>
+              <tr>
+                <td className="align-top py-3 pr-4 w-[72px]">
+                  <Img
+                    alt=""
+                    src={`{{imageUrl}}`}
+                    className="w-[56px] h-[56px] rounded-md object-cover"
+                  />
+                </td>
+                <td className="align-top py-3">
+                  <div className="font-15 text-fg m-0">{`{{name}}`}</div>
+                  <div className="font-13 text-fg-2 mt-1">
+                    {`{{../quantity}}`} un.{' '}
+                    <span className="text-fg font-semibold">
+                      <If path="../price">
+                        R$ {`{{formatCurrency ../price}}`}
+                        <Else />
+                        Grátis
+                      </If>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <Raw>{`{{/with}}`}</Raw>
+            </Each>
+          </tbody>
+        </table>
 
-            <Heading as="h3">Itens Reembolsados</Heading>
-            <table width="100%" border={0} cellPadding={0} cellSpacing={0}>
-              <tbody>
-                <Each path="package.restitutions.Refund.items">
-                  <Raw>{`{{#with (lookup ../items @index)}}`}</Raw>
-                  <tr>
-                    <td style={{ verticalAlign: 'top', padding: '8px 8px 8px 0', width: '48px' }}>
-                      <Img alt="" src={`{{imageUrl}}`} />
-                    </td>
-                    <td style={{ verticalAlign: 'top', padding: '8px 0' }}>
-                      <div style={{ fontSize: '15px', lineHeight: 1.3 }}>{`{{name}}`}</div>
-                      <div style={{ color: '#888' }}>
-                        {`{{../quantity}}`} un.{' '}
-                        <If path="../price">
-                          R$ {`{{formatCurrency ../price}}`}
-                          <Else />
-                          Grátis
-                        </If>
-                      </div>
-                    </td>
-                  </tr>
-                  <Raw>{`{{/with}}`}</Raw>
-                </Each>
-              </tbody>
-            </table>
-
-            <Heading as="h3">Valor do Reembolso</Heading>
-            <Text>R$ {`{{formatCurrency package.restitutions.Refund.value}}`}</Text>
-          </Section>
-
-          {/* Footer */}
-          <Section style={sectionWithDividerStyle}>
-            <Regards />
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+        <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mt-8 mb-2">
+          Valor do reembolso
+        </div>
+        <Text className="font-22 font-geist text-fg font-bold m-0">
+          R$ {`{{formatCurrency package.restitutions.Refund.value}}`}
+        </Text>
+      </EmailSection>
+    </EmailLayout>
   );
 }

@@ -3,16 +3,14 @@ import { Else, If } from 'react-email-bridge/hbs';
 import { Hi } from './Hi.js';
 
 /**
- * Mirrors `partials/messages/pickup.hbs`. Used by 06-shipped, 07-shipped-
- * cancel-request, 10-delivered. Two paragraphs gated by whether all
- * items ship in the same package or got split — each paragraph then
- * branches on whether it's one product or many.
+ * Pickup intro (used by 06-shipped, 07-shipped-cancel-request,
+ * 10-delivered). 4 branches: all-vs-split × one/many. Halo-Tailwind.
  */
 export function Pickup() {
   return (
     <>
       <If compare={['items.length', '==', 'shippingData.logisticsInfo.length']}>
-        <Text style={{ marginTop: '16px' }}>
+        <Text className="font-15 text-fg m-0 mt-4">
           <Hi />{' '}
           <If compare={['items.length', '==', '1']}>
             Você já pode retirar seu produto. Confira as instruções:
@@ -22,7 +20,7 @@ export function Pickup() {
         </Text>
       </If>
       <If compare={['items.length', '!=', 'shippingData.logisticsInfo.length']}>
-        <Text style={{ marginTop: '16px' }}>
+        <Text className="font-15 text-fg m-0 mt-4">
           <Hi />{' '}
           <If compare={['items.length', '==', '1']}>
             Você já pode retirar um dos seus produtos. Confira as instruções:

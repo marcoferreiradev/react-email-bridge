@@ -1,105 +1,74 @@
 /**
- * VTEX `order-invoiced-cancel-request` template — faithful port of
- * `refs/vtex-email-framework/source/templates/05-invoiced-cancel-request.hbs`.
- *
- * Onda 2 of Bloco 7. Variant of `order-invoiced`:
- *   - Adds `<CantCancel />` overlay after `<OrderReference />` in the
- *     header section.
- *   - Adds a static cancelation-instructions paragraph at the end of the
- *     intro section.
- *   - Everything else mirrors 04-invoiced.
+ * VTEX `order-invoiced-cancel-request` — Halo-Tailwind (Bloco 11).
+ * Variant of order-invoiced + CantCancel pill in headerExtra.
  */
 
-import { Body, Container, Heading, Html, Section, Text } from 'react-email';
+import { Text } from 'react-email';
 import { Else, If, Raw } from 'react-email-bridge/hbs';
 
 import {
   CantCancel,
+  EmailDivider,
+  EmailLayout,
+  EmailSection,
   Handling,
   Hi,
-  HtmlHead,
   Items,
-  Logo,
-  OrderReference,
-  Regards,
 } from '../components/index.js';
-
-const sectionStyle = { padding: '24px' };
-const sectionWithDividerStyle = { ...sectionStyle, borderTop: '1px solid #ddd' };
 
 export default function OrderInvoicedCancelRequest() {
   return (
-    <Html>
-      <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
-          {/* Header: Logo + headline + OrderRef + CantCancel + many-invoices alert */}
-          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
-            <Logo />
-            <Heading as="h1">Sua Nota Fiscal foi emitida.</Heading>
-            <OrderReference />
-            <CantCancel />
-
-            <If compare={['items.length', '!=', 'shippingData.logisticsInfo.length']}>
-              <Section
-                style={{
-                  backgroundColor: '#f4f4f4',
-                  padding: '12px 16px',
-                  marginTop: '16px',
-                  fontWeight: 700,
-                  lineHeight: 1.4,
-                }}
-              >
-                <div>Seu pedido possui mais de uma Nota Fiscal.</div>
-                <div>Avisaremos sobre a emissão de cada uma delas.</div>
-              </Section>
-            </If>
-          </Section>
-
-          {/* Intro: Hi + Handling (non-anonymous only) + cancelation instructions */}
-          <Section style={sectionStyle}>
-            <If path="clientProfileData.firstName">
-              <If compare={['clientProfileData.firstName', '!=', "'isAnonymous'"]}>
-                <p>
-                  <Hi /> <Handling />
-                </p>
-              </If>
-            </If>
-
-            <Text>
-              Caso queria seguir com o cancelamento, você poderá recusar a entrega e posteriormente
-              seu pagamento será estornado.
-            </Text>
-          </Section>
-
-          {/* Per-group invoice items */}
-          <Section style={sectionStyle}>
-            <Raw>{`{{#richShippingData shippingData}}`}</Raw>
-            <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-            <div>
-              <If compare={['items.length', '>', '1']}>
-                <Heading as="h3" style={{ margin: 0 }}>
-                  Produtos na Nota Fiscal
-                </Heading>
-                <Else />
-                <Heading as="h3" style={{ margin: 0 }}>
-                  Produto na Nota Fiscal
-                </Heading>
-              </If>
-              <Raw>{`{{#group items by="packageId"}}`}</Raw>
-              <Items />
-              <Raw>{`{{/group}}`}</Raw>
+    <EmailLayout
+      title="Sua Nota Fiscal foi emitida."
+      orderReference
+      headerExtra={
+        <>
+          <CantCancel />
+          <If compare={['items.length', '!=', 'shippingData.logisticsInfo.length']}>
+            <div className="mt-3">
+              <span className="bg-status-warning-bg text-status-warning-fg font-13 font-semibold px-3 py-1 rounded-full inline-block">
+                Mais de uma Nota Fiscal · avisaremos sobre cada uma
+              </span>
             </div>
-            <Raw>{`{{/group}}`}</Raw>
-            <Raw>{`{{/richShippingData}}`}</Raw>
-          </Section>
+          </If>
+        </>
+      }
+    >
+      <EmailSection>
+        <If path="clientProfileData.firstName">
+          <If compare={['clientProfileData.firstName', '!=', "'isAnonymous'"]}>
+            <p className="font-15 text-fg m-0 mb-4">
+              <Hi /> <Handling />
+            </p>
+          </If>
+        </If>
+        <Text className="font-14 text-fg-2 m-0">
+          Caso queira seguir com o cancelamento, você poderá recusar a entrega e posteriormente seu
+          pagamento será estornado.
+        </Text>
+      </EmailSection>
 
-          {/* Footer */}
-          <Section style={sectionWithDividerStyle}>
-            <Regards />
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+      <EmailDivider />
+      <EmailSection>
+        <Raw>{`{{#richShippingData shippingData}}`}</Raw>
+        <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
+        <div>
+          <If compare={['items.length', '>', '1']}>
+            <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mb-4">
+              Produtos na Nota Fiscal
+            </div>
+            <Else />
+            <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mb-4">
+              Produto na Nota Fiscal
+            </div>
+          </If>
+          <Raw>{`{{#group items by="packageId"}}`}</Raw>
+          <Items />
+          <Raw>{`{{/group}}`}</Raw>
+        </div>
+        <Raw>{`{{/group}}`}</Raw>
+        <Raw>{`{{/richShippingData}}`}</Raw>
+      </EmailSection>
+    </EmailLayout>
   );
 }
