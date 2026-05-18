@@ -4,11 +4,15 @@ node_modules/
 .env
 .env.local
 
-# Local-only author notes (see docs/adr/0002-docs-taxonomy.md, ratified
-# in PR #15). These files MAY exist in the working tree as dev snapshots
-# but are not part of the public repo.
+# Local-only author / workflow notes (see docs/adr/0002-docs-taxonomy.md).
+# These files MAY exist in the working tree as dev scratch but are not
+# part of the public repo.
 STATUS.md
 ROADMAP.md
+QUESTIONS.md
+IMPLEMENTATION_NOTES.md
+VERIFICATION.md
+RELEASE_READINESS.md
 
 dist/
 build/
