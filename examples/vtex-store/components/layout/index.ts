@@ -1,4 +1,4 @@
-export { EmailDivider, EmailLayout, EmailSection } from './EmailLayout.js';
-export { Fonts } from './Fonts.js';
-export { HtmlHead } from './HtmlHead.js';
-export { Logo } from './Logo.js';
+export { EmailDivider, EmailLayout, EmailSection } from './EmailLayout';
+export { Fonts } from './Fonts';
+export { HtmlHead } from './HtmlHead';
+export { Logo } from './Logo';

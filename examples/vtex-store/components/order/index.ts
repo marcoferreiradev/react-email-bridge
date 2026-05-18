@@ -1,5 +1,5 @@
-export { Items } from './Items.js';
-export { Package } from './Package.js';
-export { Payment } from './Payment.js';
-export { ShippingEstimateRangeTime } from './ShippingEstimate.js';
-export { Totals } from './Totals.js';
+export { Items } from './Items';
+export { Package } from './Package';
+export { Payment } from './Payment';
+export { ShippingEstimateRangeTime } from './ShippingEstimate';
+export { Totals } from './Totals';

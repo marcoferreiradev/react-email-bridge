@@ -8,13 +8,13 @@ export {
   Else,
   Raw,
   type RawProps,
-} from './components/index.js';
+} from './components/index';
 
 export {
   buildPreviewRuntime,
   previewWithFixture,
   type PreviewRuntimeOptions,
   type PreviewResult,
-} from './preview-runtime.js';
+} from './preview-runtime';
 
-export { hbsPreset } from './preset.js';
+export { hbsPreset } from './preset';

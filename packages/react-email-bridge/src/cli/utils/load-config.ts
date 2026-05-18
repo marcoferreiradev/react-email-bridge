@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createJiti } from 'jiti';
-import type { BridgeConfig } from '../../core/types.js';
+import type { BridgeConfig } from '../../core/types';
 
 const CONFIG_CANDIDATES = [
   'react-email-bridge.config.ts',

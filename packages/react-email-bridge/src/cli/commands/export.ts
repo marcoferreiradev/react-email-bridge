@@ -5,8 +5,8 @@ import { build } from 'esbuild';
 import type { ReactElement } from 'react';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
-import { render } from '../../core/render.js';
-import { loadConfig } from '../utils/load-config.js';
+import { render } from '../../core/render';
+import { loadConfig } from '../utils/load-config';
 
 interface Args {
   dir: string;

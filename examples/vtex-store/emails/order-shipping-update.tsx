@@ -14,7 +14,7 @@ import {
   EmailSection,
   Hi,
   Package,
-} from '../components/index.js';
+} from '../components/index';
 
 const courierStatusCard = (
   <If path="package.courierStatus.data.0.lastChange">

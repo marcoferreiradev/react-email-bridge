@@ -14,7 +14,7 @@ import {
   Handling,
   Hi,
   Items,
-} from '../components/index.js';
+} from '../components/index';
 
 export default function OrderInvoicedCancelRequest() {
   return (

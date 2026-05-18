@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { render, hbs, unescapeMarkers, substituteSentinels } from '../src/core/index.js';
-import { Each, If, Unless, Else, Raw } from '../src/hbs/components/index.js';
+import { render, hbs, unescapeMarkers, substituteSentinels } from '../src/core/index';
+import { Each, If, Unless, Else, Raw } from '../src/hbs/components/index';
 
 /**
  * Integration tests for the full `render()` pipeline (sentinels → unescape →

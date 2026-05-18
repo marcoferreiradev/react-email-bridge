@@ -1,5 +1,5 @@
 import { Head } from 'react-email';
-import { Fonts } from './Fonts.js';
+import { Fonts } from './Fonts';
 
 /**
  * Standard email <head>. Loads Inter + Geist via `<Fonts />` (used by

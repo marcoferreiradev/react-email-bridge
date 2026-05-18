@@ -1,6 +1,6 @@
 import { Section } from 'react-email';
 import { If } from 'react-email-bridge/hbs';
-import { AddressPickupInfo } from './AddressPickupInfo.js';
+import { AddressPickupInfo } from './AddressPickupInfo';
 
 /**
  * Pickup store info card (no heading). Gated by

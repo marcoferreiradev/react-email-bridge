@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 import handlebarsHelpers from 'handlebars-helpers';
-import { vtexFakeHelpers } from './preview-helpers.js';
+import { vtexFakeHelpers } from './preview-helpers';
 
 export interface PreviewRuntimeOptions {
   /**

@@ -1,6 +1,6 @@
 import { Text } from 'react-email';
 import { Else, If } from 'react-email-bridge/hbs';
-import { Hi } from './Hi.js';
+import { Hi } from './Hi';
 
 /**
  * Pickup intro (used by 06-shipped, 07-shipped-cancel-request,

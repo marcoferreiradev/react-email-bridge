@@ -1,9 +1,9 @@
-export { render, renderPlainText, type RenderOptions } from './render.js';
+export { render, renderPlainText, type RenderOptions } from './render';
 export {
   hbs,
   substituteSentinels,
   unescapeMarkers,
-} from './hbs-sentinels.js';
+} from './hbs-sentinels';
 export {
   defineConfig,
   type Preset,
@@ -11,4 +11,4 @@ export {
   type PreviewHelper,
   type PreviewInlineHelper,
   type PreviewBlockHelper,
-} from './types.js';
+} from './types';

@@ -1,5 +1,5 @@
-import type { Preset } from '../core/types.js';
-import { previewWithFixture } from './preview-runtime.js';
+import type { Preset } from '../core/types';
+import { previewWithFixture } from './preview-runtime';
 
 /**
  * Handlebars preset. v0.1 is the only preset shipped.

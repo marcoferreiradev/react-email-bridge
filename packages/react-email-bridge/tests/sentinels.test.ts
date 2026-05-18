@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { hbs, substituteSentinels, unescapeMarkers } from '../src/core/hbs-sentinels.js';
+import { hbs, substituteSentinels, unescapeMarkers } from '../src/core/hbs-sentinels';
 
 describe('hbs() sentinel + substitution', () => {
   it('produces a CSS-safe identifier (no special chars)', () => {

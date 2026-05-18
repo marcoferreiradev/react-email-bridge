@@ -18,7 +18,7 @@ import {
   Payment,
   ShippingEstimateRangeTime,
   Totals,
-} from '../components/index.js';
+} from '../components/index';
 
 const labelClass = 'font-13 text-fg-2 uppercase tracking-wider m-0 mb-4';
 const pillClass =
