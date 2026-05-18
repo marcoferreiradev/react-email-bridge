@@ -1,63 +1,55 @@
 /**
- * Back-in-stock notification — faithful port of
- * `refs/vtex-email-framework/source/templates/11-let-me-know.hbs`.
+ * Back-in-stock notification — Halo-Tailwind redesign (Bloco 11).
  *
- * Onda 3 of Bloco 7. Marketing email (not order-related) sent when a
- * product the customer asked to be notified about comes back in stock.
- * Simplest template in the framework: just logo + body + regards.
+ * Simplest template in the set: header + body + signoff. Used as the
+ * smoke test for the Tailwind pipeline before redesigning the
+ * remaining 12 templates.
  *
- * Source uses literal Portuguese strings (not i18n keys) — copy is
- * hard-coded in the original template and we preserve verbatim.
- *
- * Note the `{{{productDescription}}}` triple-brace — Handlebars syntax
- * for "do not HTML-escape this value". VTEX may pass HTML in the
- * description; preserving triple-brace keeps the original semantics.
- * Our render pipeline preserves it through unescapeMarkers correctly
- * (the trailing `}` falls outside the marker boundary regex but ends
- * up adjacent in the output string).
+ * - `{{{productDescription}}}` triple-brace preserved verbatim (VTEX
+ *   may send HTML in the description; triple-brace tells Handlebars not
+ *   to escape).
+ * - Hard-coded Portuguese strings come from the source verbatim (no
+ *   i18n.* keys in 11-let-me-know.hbs).
  */
 
-import { Body, Container, Html, Link, Section, Text } from 'react-email';
+import { Body, Container, Html, Link, Section, Tailwind, Text } from 'react-email';
 
 import { HtmlHead, Logo, Regards } from '../components/index.js';
-
-const sectionStyle = { padding: '24px' };
-const sectionWithDividerStyle = { ...sectionStyle, borderTop: '1px solid #ddd' };
+import { vtexStoreTailwindConfig } from '../tailwind.config.js';
 
 export default function BackInStock() {
   return (
-    <Html>
-      <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
-          {/* Header: just the logo (no h1 in source) */}
-          <Section
-            style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #moon-gray' }}
-          >
-            <Logo />
-          </Section>
+    <Tailwind config={vtexStoreTailwindConfig}>
+      <Html>
+        <HtmlHead />
+        <Body className="bg-bg m-0 py-8 font-sans">
+          <Container className="bg-bg-2 mx-auto max-w-[600px] rounded-lg overflow-hidden">
+            <Section className="px-6 pt-2">
+              <Logo />
+            </Section>
 
-          {/* Body: notice + product link + description (HTML-preserving) */}
-          <Section style={sectionStyle}>
-            <Text>
-              Conforme a sua solicitação, informamos que o produto abaixo encontra-se disponível
-              para compra:
-              <br />
-              <Link href={`{{productLink}}`}>{`{{productName}}`}</Link>
-              <br />
-              <br />
-              Informações sobre o produto:
-              <br />
-              {`{{{productDescription}}}`}
-            </Text>
-          </Section>
+            <Section className="px-6 pb-6">
+              <Text className="font-15 text-fg m-0 mb-4">
+                Conforme a sua solicitação, informamos que o produto abaixo encontra-se disponível
+                para compra:
+              </Text>
+              <Text className="font-18 text-fg m-0 mb-4">
+                <Link href={`{{productLink}}`} className="text-fg underline underline-offset-2">
+                  {`{{productName}}`}
+                </Link>
+              </Text>
+              <Text className="font-14 text-fg-2 m-0 mb-2">Informações sobre o produto:</Text>
+              <Text className="font-14 text-fg-2 m-0">{`{{{productDescription}}}`}</Text>
+            </Section>
 
-          {/* Footer */}
-          <Section style={sectionWithDividerStyle}>
-            <Regards />
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+            <hr className="border-stroke m-0" />
+
+            <Section className="px-6 py-6">
+              <Regards />
+            </Section>
+          </Container>
+        </Body>
+      </Html>
+    </Tailwind>
   );
 }

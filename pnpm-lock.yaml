@@ -102,6 +102,10 @@ importers:
       react-email-bridge:
         specifier: workspace:*
         version: link:../../packages/react-email-bridge
+    devDependencies:
+      tailwindcss:
+        specifier: ^4.3.0
+        version: 4.3.0
 
   packages/react-email-bridge:
     dependencies:
