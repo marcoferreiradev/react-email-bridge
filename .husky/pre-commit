@@ -1,1 +1,12 @@
+#
+# Block obvious sensitive files from entering the public repo.
+# Whitelist additions: .env*, .pem, .key in newly-staged ADDED files only
+# (not modifications to existing files — those already passed before).
+if git diff --cached --name-only --diff-filter=A | grep -qE '(^|/)\.env(\.|$)|\.pem$|\.key$'; then
+  echo "❌ Sensitive file detected in staged additions:"
+  git diff --cached --name-only --diff-filter=A | grep -E '(^|/)\.env(\.|$)|\.pem$|\.key$' | sed 's/^/   /'
+  echo "If this is intentional, bypass with: git commit --no-verify"
+  exit 1
+fi
+
 pnpm exec lint-staged

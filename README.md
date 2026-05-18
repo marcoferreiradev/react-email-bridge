@@ -2,9 +2,9 @@
 
 > Write transactional emails in **React Email**, export to **HTML + template markers** (Handlebars). Live preview against real data — paste straight into VTEX, Mandrill, Mailchimp, or any platform that interprets `{{variable}}` syntax.
 
-![status: pre-release v0.1](https://img.shields.io/badge/status-pre--release%20v0.1-orange)
-![license: MIT](https://img.shields.io/badge/license-MIT-blue)
-![tests: 93/93](https://img.shields.io/badge/tests-93%2F93-green)
+[![npm](https://img.shields.io/npm/v/react-email-bridge.svg)](https://npmjs.com/package/react-email-bridge)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![tests: 111](https://img.shields.io/badge/tests-111-green)](#tests)
 
 ---
 
@@ -16,7 +16,7 @@ The pain: writing and maintaining that HTML by hand is **brutal**.
 
 - Tables for layout (Outlook compat).
 - CSS inlining (Gmail strips `<style>` tags).
-- Helper soup (`{{formatCurrency value}}`, `{{#compare a '==' b}}`, `{{#group items by="addessId"}}`).
+- Helper soup (`{{formatCurrency value}}`, `{{#compare a '==' b}}`, `{{#group items by="addressId"}}`).
 - No componentization. No type safety. No live preview against your real data shape.
 
 **[React Email](https://react.email)** solves authoring brilliantly — you write components, get auto inlined CSS, get table layout for free. But it has **no story for template markers**: its render either produces final HTML or breaks on `{{` characters.
@@ -51,76 +51,53 @@ The pain: writing and maintaining that HTML by hand is **brutal**.
 
 ---
 
-## Quickstart — start a test template in <2 minutes
-
-Until `react-email-bridge` is published to npm, the workflow uses **local tarballs** produced once from this repo. After that, the `new-project` script bootstraps an isolated project in a single command.
-
-### Step 1 — Clone and build the tarballs (one time)
+## Install
 
 ```bash
-git clone <this-repo> react-email-bridge
-cd react-email-bridge
-pnpm install
-pnpm pack-all
+npm install react-email-bridge
+# or
+pnpm add react-email-bridge
 ```
 
-`pack-all` builds both packages, writes them to `dist-tarballs/`, **and copies them into `starters/*/vendor/`** so the starter is ready to use.
+The CLI is bundled. The live preview server (`react-email-bridge-ui`) is fetched on-demand the first time you run `dev` — you don't need to install it explicitly.
 
-### Step 2 — Bootstrap a new email project (one command)
+---
+
+## Quickstart — minimal project in <60 seconds
 
 ```bash
-pnpm -w run new-project ../my-emails
+npx react-email-bridge init my-emails
+cd my-emails
+npm install
+npm run dev          # http://localhost:3737
 ```
 
-This:
+`init` writes:
 
-1. Copies `starters/default/` to `../my-emails` (relative to repo, anywhere you want).
-2. Runs `pnpm install` inside it. The starter's `package.json` resolves `react-email-bridge` and `react-email-bridge-ui` from `./vendor/*.tgz`.
-3. Runs `git init` + initial commit so `git status` works out of the box.
-
-Pick a different starter with `--template`:
-
-```bash
-pnpm -w run new-project ../my-vtex-emails --template vtex-full
+```
+my-emails/
+├── emails/
+│   ├── welcome.tsx          # your template
+│   └── welcome.json         # fixture used for preview only
+├── react-email-bridge.config.ts
+├── tsconfig.json
+└── package.json
 ```
 
-Starters available today:
+Open the URL the dev server prints. You'll see:
 
-| Name | What's inside |
-|---|---|
-| `default` (default if you omit `--template`) | One `welcome.tsx` template + fixture + config + tsconfig. Generic. |
-| `vtex-full` | VTEX-tuned package.json + config; empty `emails/`. Pre-ported VTEX templates incoming — see [ROADMAP.md](./ROADMAP.md). |
+- **Left sidebar** — list of your `.tsx` templates (auto-discovered from `emails/`).
+- **Center iframe** — live preview with Handlebars + fixture data interpolated.
+- **Bottom tabs** — Compatibility check, Linter, Spam score, Resend send.
+- **Top toggle** — switch to code view (React / HTML / Plain Text / Data).
+- **Right edge** — drag to resize for desktop/mobile.
 
-Use `--skip-install` if you want to inspect first:
+Edit `emails/welcome.tsx` or `emails/welcome.json` — the iframe reloads automatically.
 
-```bash
-pnpm -w run new-project ../my-emails --skip-install
-cd ../my-emails && pnpm install
-```
-
-### Step 3 — Start the preview server
+### Export
 
 ```bash
-cd ../my-emails
-pnpm dev
-```
-
-Open the URL it prints (default http://localhost:3737). You'll see:
-
-- **Left sidebar**: list of your `.tsx` templates (auto-discovered from `emails/`).
-- **Center iframe**: live preview with Handlebars + fixture data interpolated.
-- **Bottom tabs**: Compatibility check, Linter, Spam score, Resend send.
-- **Top toggle**: switch to code view (React / HTML / Plain Text / Data).
-- **Right side**: drag to resize for desktop/mobile.
-
-Edit `emails/welcome.tsx` or `emails/welcome.json` — the iframe reloads automatically (server-side render + socket.io push).
-
-If you delete `emails/welcome.json`, you'll see a banner with a one-click "Create empty fixture" button.
-
-### Step 4 — Export to paste in VTEX (or Mandrill, etc.)
-
-```bash
-pnpm export
+npm run export
 ```
 
 Writes `dist/welcome.hbs`:
@@ -141,7 +118,20 @@ Writes `dist/welcome.hbs`:
 …
 ```
 
-Copy-paste into VTEX Message Center's HTML field. VTEX will fill the markers per-order. Done.
+Copy-paste into VTEX Message Center's HTML field. VTEX fills the markers per send. Done.
+
+### Want a richer starting point?
+
+If you're starting fresh from VTEX templates, clone the repo and bootstrap from the populated example instead:
+
+```bash
+git clone https://github.com/marcoferreiradev/react-email-bridge.git
+cd react-email-bridge
+pnpm install
+pnpm -w run new-project ../my-vtex-emails --template vtex-store
+```
+
+That copies `examples/vtex-store/` (13 pre-ported VTEX transactional templates + shared partials + Tailwind config) into `../my-vtex-emails`, rewrites the package.json for standalone use, and runs `pnpm install`. See [CONTRIBUTING.md](./CONTRIBUTING.md#scaffolding-from-a-populated-example) for the full flow.
 
 ---
 
@@ -279,14 +269,14 @@ export default defineConfig({
 
 | Command | What it does |
 |---|---|
-| `react-email-bridge init` | Scaffold `emails/` with one example template + fixture + config |
+| `react-email-bridge init [dir]` | Scaffold `emails/` with one example template + fixture + config |
 | `react-email-bridge dev` | Start the live preview server (default port 3737) |
 | `react-email-bridge export <name>` | Build one template to `dist/<name>.hbs` |
 | `react-email-bridge export --all` | Build every template |
 
 ---
 
-## Migration from `vtex-emails` / `oficina` Handlebars
+## Migration from `vtex-emails` Handlebars
 
 If you have an existing Handlebars-based VTEX email project (e.g. forked from [vtex-email-framework](https://github.com/vtex/vtex-emails)), porting is mechanical:
 
@@ -304,7 +294,7 @@ If you have an existing Handlebars-based VTEX email project (e.g. forked from [v
 | `data/*.json` fixture per template | `emails/<basename>.json` (1:1 same shape) |
 | `yarn dist` to produce final HTML | `react-email-bridge export --all` |
 
-See `examples/vtex-store/` for a real-world VTEX template port using the densest patterns: `#each orders`, `#richShippingData`, `#group by addressId`, `#group by packageId`, `#math index '+' 1`, `(math @index "%" 2)` sub-expressions.
+See `examples/vtex-store/` in this repo for a real-world VTEX template port using the densest patterns: `#each orders`, `#richShippingData`, `#group by addressId`, `#group by packageId`, `#math index '+' 1`, `(math @index "%" 2)` sub-expressions.
 
 ---
 
@@ -312,8 +302,10 @@ See `examples/vtex-store/` for a real-world VTEX template port using the densest
 
 | Folder | Demonstrates |
 |---|---|
-| `examples/generic-hbs/` | Agnostic baseline — all sugar components, helpers, sub-expressions |
-| `examples/vtex-store/` | Real VTEX fixture (1119 lines from `vtex-email-framework`), templates use full helper stack |
+| `examples/generic-hbs/` | Agnostic baseline — all sugar components, helpers, sub-expressions. Also the source for the default `npx react-email-bridge init` scaffold. |
+| `examples/vtex-store/` | 13 real VTEX transactional templates, Tailwind-styled with the Halo design system, shared partials. Also the source for `new-project --template vtex-store`. |
+
+Examples are workspace-bound (`workspace:*` dep on the core) and run as part of CI smoke tests. The same directory tree is what gets copied into a user project when scaffolding — see [ADR-0001](./docs/adr/0001-examples-as-starter-source.md).
 
 ---
 
@@ -324,12 +316,16 @@ See `examples/vtex-store/` for a real-world VTEX template port using the densest
 ```
 react-email-bridge/                  # this repo
 ├── packages/
-│   ├── react-email-bridge/          # CLI + core + HBS preset  (~30KB built)
+│   ├── react-email-bridge/          # CLI + core + HBS preset  (~38KB built)
 │   └── react-email-bridge-ui/       # Next.js preview server (forked @react-email/ui, MIT)
 ├── examples/
-├── starters/                        # bootstrap scaffolds (default, vtex-full, ...)
-├── validation/
-└── DECISIONS.md                     # 16 design decisions rationale
+│   ├── generic-hbs/                 # minimal — also the default scaffold
+│   └── vtex-store/                  # 13 VTEX templates — also the vtex-store scaffold
+├── scripts/new-project.mjs          # copies an example, rewrites for standalone use
+├── validation/                      # P0 end-to-end stress test (28 asserts)
+└── docs/
+    ├── adr/                         # architectural decisions
+    └── internal/                    # contributor-only docs (DECISIONS, CONTEXT, PATCHES, …)
 ```
 
 **Pipeline:**
@@ -345,20 +341,9 @@ unescape markers (Plano B)   →  juice CSS inline  →  unescape again
                        iframe in editor
 ```
 
-Read [DECISIONS.md](./docs/internal/DECISIONS.md) for the 16 design choices and the reasoning behind each one (sentinel format, strict mode default, helper registration strategy, etc.).
+Read [docs/internal/DECISIONS.md](./docs/internal/DECISIONS.md) for the 16 frozen v0.1 design choices (sentinel format, strict mode default, helper registration strategy, …) and [docs/adr/](./docs/adr/) for decisions from v0.2 onwards.
 
 ---
-
-## Repo scripts
-
-| Command | What it does |
-|---|---|
-| `pnpm install` | Install workspace deps. |
-| `pnpm build` | Build both packages (`react-email-bridge` + `react-email-bridge-ui`). |
-| `pnpm test` | Run the full vitest suite. |
-| `pnpm validate` | End-to-end stress test of the render pipeline (validation/test-pipeline.tsx). |
-| `pnpm pack-all` | Build + pack both packages into `dist-tarballs/` and copy into `starters/*/vendor/`. |
-| `pnpm -w run new-project <dir> [--template <name>] [--skip-install]` | Bootstrap a new email project from a starter (default: `default`). |
 
 ## Tests
 
@@ -366,18 +351,24 @@ Read [DECISIONS.md](./docs/internal/DECISIONS.md) for the 16 design choices and 
 pnpm test
 ```
 
-**93 vitest tests** across 7 files covering:
+**111 vitest tests** across 8 files covering:
 
 - Sugar components (`Each`, `If`, `Unless`, `Else`, `Raw`) — output strings.
 - Sentinel substitution + marker unescape (Plano B for React entity escaping).
-- All 16 VTEX-flavored fake helpers (`formatCurrency`, `formatDate`, `math`, `group`, `eval`, `richShippingData`, etc) — input/output pairs.
+- VTEX-flavored fake helpers (`formatCurrency`, `formatDate`, `math`, `group`, `eval`, `richShippingData`, etc) — input/output pairs.
 - `helperMissing` semantics (variable lookup vs unknown helper).
 - Preview runtime with config-supplied helper overrides.
 - Full `render()` pipeline against every marker context (text, attr, style, sub-expressions, nested blocks).
 - CLI commands (`init`, `export`, `export --all`, error paths, config-driven extension).
 - End-to-end fixture interpolation (Handlebars + `.json`).
 
-Plus `pnpm validate` runs a stress-test template through the export pipeline with 28 assertions (covering every marker context).
+Plus `pnpm validate` runs a stress-test template through the export pipeline with 28 assertions covering every marker context.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for local setup, the git-hook gates, the changesets release flow, and the scaffolding workflow for working on the library itself.
 
 ---
 
@@ -385,7 +376,7 @@ Plus `pnpm validate` runs a stress-test template through the export pipeline wit
 
 - [`@react-email/ui`](https://github.com/resend/react-email) — the preview editor (sidebar, code view, compatibility/spam tabs, dark mode, resizable iframe) is a fork of `@react-email/ui` (MIT). All the heavy UI lift is theirs; we patched the rendering pipeline to add Handlebars interpolation against `.json` fixtures.
 - [`handlebars-helpers`](https://github.com/helpers/handlebars-helpers) — covers ~150 of the helpers VTEX templates use in the wild.
-- [`vtex/vtex-emails`](https://github.com/vtex/vtex-emails) — the reference oficial framework whose template patterns we cover end-to-end.
+- [`vtex/vtex-emails`](https://github.com/vtex/vtex-emails) — the reference official framework whose template patterns we cover end-to-end.
 
 ---
 

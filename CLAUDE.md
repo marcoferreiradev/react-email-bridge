@@ -98,8 +98,3 @@ The two published packages:
 - `scripts/new-project.mjs` — copies an example + rewrites for standalone use (see ADR-0001)
 - `refs/` (gitignored) — reference repos for ground-truth validation
 
----
-
-## About the author
-
-Marco Ferreira, VTEX developer at Oficina Reserva. Prefers to understand the "why" before applying changes. Corrects assumptions when the library deviates from real VTEX environment behavior. Prefers direct and succinct bug descriptions, with solution options explicitly listed before commit.
