@@ -1,0 +1,50 @@
+name: Bug report
+description: Something broke or rendered wrong
+labels: ["needs-triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: A clear description of the bug.
+      placeholder: When I run `…` I expected `…` but got `…`.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: |
+        Smallest possible template + fixture + command that triggers the bug.
+        Linking to a public repo or a gist is great; pasting inline is fine for tiny cases.
+      placeholder: |
+        ```tsx
+        // emails/repro.tsx
+        ```
+        ```json
+        // emails/repro.json
+        ```
+        ```sh
+        npx react-email-bridge export repro
+        ```
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: react-email-bridge version
+      placeholder: "0.2.0"
+    validations:
+      required: true
+  - type: input
+    id: node-version
+    attributes:
+      label: Node + package manager
+      placeholder: "Node 22, pnpm 10"
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Logs, stack traces, env quirks, related issues, screenshots.
