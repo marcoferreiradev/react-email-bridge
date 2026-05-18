@@ -3,6 +3,13 @@ node_modules/
 .DS_Store
 .env
 .env.local
+
+# Local-only author notes (see docs/adr/0002-docs-taxonomy.md, ratified
+# in PR #15). These files MAY exist in the working tree as dev snapshots
+# but are not part of the public repo.
+STATUS.md
+ROADMAP.md
+
 dist/
 build/
 *.tsbuildinfo
