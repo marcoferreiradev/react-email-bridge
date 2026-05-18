@@ -119,8 +119,8 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
       debounce:
-        specifier: ^2.0.0
-        version: 2.2.0
+        specifier: ^3.0.0
+        version: 3.0.0
       esbuild:
         specifier: ^0.28.0
         version: 0.28.0
@@ -2596,6 +2596,10 @@ packages:
   debounce@2.2.0:
     resolution: {integrity: sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==}
     engines: {node: '>=18'}
+
+  debounce@3.0.0:
+    resolution: {integrity: sha512-64byRbF0/AirwbuHqB3/ZpMG9/nckDa6ZA0yd6UnaQNwbbemCOwvz2sL5sjXLHhZHADyiwLm0M5qMhltUUx+TA==}
+    engines: {node: '>=20'}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -6731,6 +6735,8 @@ snapshots:
       mimic-function: 5.0.1
 
   debounce@2.2.0: {}
+
+  debounce@3.0.0: {}
 
   debug@2.6.9:
     dependencies:
