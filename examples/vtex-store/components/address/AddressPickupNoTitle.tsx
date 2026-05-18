@@ -3,21 +3,13 @@ import { If } from 'react-email-bridge/hbs';
 import { AddressPickupInfo } from './AddressPickupInfo.js';
 
 /**
- * Mirrors `partials/address-pickup-no-title.hbs`. Single branch — gated
- * by `selectedDeliveryChannel == "pickup-in-point"`. The wrapped box
- * is rendered only for pickup channels.
+ * Pickup store info card (no heading). Gated by
+ * `selectedDeliveryChannel == "pickup-in-point"`. Halo-Tailwind.
  */
 export function AddressPickupNoTitle() {
   return (
     <If eq={['items.0.selectedDeliveryChannel', '"pickup-in-point"']}>
-      <Section
-        style={{
-          backgroundColor: '#f4f4f4',
-          padding: '12px 16px',
-          marginBottom: '12px',
-          maxWidth: '440px',
-        }}
-      >
+      <Section className="bg-bg-3 rounded-lg p-4 mb-3 max-w-[440px] font-15 text-fg">
         <AddressPickupInfo />
       </Section>
     </If>

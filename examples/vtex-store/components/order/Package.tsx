@@ -8,15 +8,9 @@ import {
 } from './ShippingEstimate.js';
 
 /**
- * Mirrors `partials/package.hbs`. Used by 01, 06, 07, 08, 09, 10.
+ * Per-package SLA strip + items. Used by 01, 06, 07, 08, 09, 10.
  *
- * Renders the per-package SLA info (delivery channel, ETA) once at the
- * top of each package, then transitively includes the `items.hbs`
- * partial for the items in that package.
- *
- * The triple-branch for ETA format (scheduled vs range vs date) maps
- * directly to the three `shipping-estimate-*.hbs` source partials,
- * kept inline here as ShippingEstimate{Scheduled,Range,Date}.
+ * Halo-Tailwind: minimal strip on top of items table.
  */
 export function Package() {
   return (
@@ -25,31 +19,25 @@ export function Package() {
         <If compare={['@index', '==', '0']}>
           <Each path="../../../../items">
             <If eq={['id', '../itemId']}>
-              <Section
-                style={{
-                  backgroundColor: '#f4f4f4',
-                  padding: '8px 16px',
-                  margin: '12px 0',
-                  fontWeight: 500,
-                }}
-              >
+              <Section className="mt-4 py-2 border-t border-stroke">
                 <If compare={['../selectedDeliveryChannel', '!=', '"pickup-in-point"']}>
                   <If path="../deliveryWindow">
-                    <div style={{ fontSize: '13px', color: '#888' }}>Agendada para</div>
+                    <div className="font-13 text-fg-2 font-semibold">Agendada para</div>
                     <Else />
-                    <div style={{ fontSize: '13px', color: '#888' }}>{`{{../selectedSla}}`}</div>
+                    <div className="font-13 text-fg-2 font-semibold">{`{{../selectedSla}}`}</div>
                   </If>
                 </If>
-
-                <If path="../deliveryWindow">
-                  <ShippingEstimateScheduled />
-                  <Else />
-                  <Unless path="../shippingEstimateDate">
-                    <ShippingEstimateRange />
+                <div className="font-13 text-fg-2">
+                  <If path="../deliveryWindow">
+                    <ShippingEstimateScheduled />
                     <Else />
-                    <ShippingEstimateDate />
-                  </Unless>
-                </If>
+                    <Unless path="../shippingEstimateDate">
+                      <ShippingEstimateRange />
+                      <Else />
+                      <ShippingEstimateDate />
+                    </Unless>
+                  </If>
+                </div>
               </Section>
             </If>
           </Each>

@@ -1,54 +1,42 @@
-import { Heading, Section } from 'react-email';
 import { Each, If } from 'react-email-bridge/hbs';
 
 /**
- * Mirrors `partials/totals.hbs`. Used by 01-confirmed, 02-cancelled,
+ * Order totals breakdown + grand total. Used by 01-confirmed, 02-cancelled,
  * 09-replaced.
  *
- * Iterates `totals` (a VTEX-shaped list of named amounts) and renders
- * one row per non-zero entry. The id→label mapping is hard-coded for
- * the four canonical ids (Items / Shipping / Discounts / Tax) — matches
- * what the source does. A grand total row is appended when `value` is
- * present (the bare `{{value}}` outside the loop refers to the parent
- * order's total).
+ * Halo-Tailwind: subtle row dividers + emphasized grand total.
  */
 export function Totals() {
+  const cellClass = 'font-15 text-fg py-2 border-b border-stroke';
+  const cellRightClass = `${cellClass} text-right`;
   return (
-    <Section style={{ paddingBottom: '12px', width: '100%' }}>
-      <Heading as="h3">Resumo</Heading>
-      <table width="100%" border={0} cellPadding={0} cellSpacing={0}>
+    <div>
+      <div className="font-13 text-fg-2 uppercase tracking-wider m-0 mb-2">Resumo</div>
+      <table className="w-full border-collapse">
         <tbody>
           <Each path="totals">
             <If path="value">
               <tr>
-                <td style={{ padding: '4px 0', borderBottom: '1px solid #ddd' }}>
+                <td className={cellClass}>
                   <If eq={['id', '"Items"']}>Itens</If>
                   <If eq={['id', '"Shipping"']}>Entrega</If>
                   <If eq={['id', '"Discounts"']}>Descontos</If>
                   <If eq={['id', '"Tax"']}>Taxas</If>
                 </td>
-                <td
-                  style={{
-                    padding: '4px 0',
-                    borderBottom: '1px solid #ddd',
-                    textAlign: 'right',
-                  }}
-                >
-                  R$ {`{{formatCurrency value}}`}
-                </td>
+                <td className={cellRightClass}>R$ {`{{formatCurrency value}}`}</td>
               </tr>
             </If>
           </Each>
           <If path="value">
             <tr>
-              <td style={{ padding: '4px 0', fontWeight: 500 }}>Total</td>
-              <td style={{ padding: '4px 0', fontWeight: 500, textAlign: 'right' }}>
+              <td className="font-16 text-fg font-bold pt-4">Total</td>
+              <td className="font-16 text-fg font-bold pt-4 text-right">
                 R$ {`{{formatCurrency value}}`}
               </td>
             </tr>
           </If>
         </tbody>
       </table>
-    </Section>
+    </div>
   );
 }

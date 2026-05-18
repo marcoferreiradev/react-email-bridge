@@ -1,30 +1,24 @@
-import { Heading, Section } from 'react-email';
+import { Section } from 'react-email';
 import { If } from 'react-email-bridge/hbs';
 import { AddressDeliveryInfo } from './AddressDeliveryInfo.js';
 
-const boxStyle = {
-  backgroundColor: '#f4f4f4',
-  padding: '12px 16px',
-  marginBottom: '12px',
-};
-
 /**
- * Mirrors `partials/address-delivery-title.hbs`. Adds an "Entrega" heading
- * on top of the same address-info shown by `AddressDeliveryNoTitle`.
- * Duplicate branches preserved for the same reason as the no-title variant.
+ * Delivery address card with an "Entrega" sub-heading. Halo-Tailwind.
  */
 export function AddressDeliveryTitle() {
+  const boxClass = 'bg-bg-3 rounded-lg p-5 mb-3 font-15 text-fg';
+  const labelClass = 'font-13 text-fg-2 uppercase tracking-wider m-0 mb-2';
   return (
     <>
       <If compare={['items.0.selectedDeliveryChannel', '==', 'null']}>
-        <Section style={boxStyle}>
-          <Heading as="h4">Entrega</Heading>
+        <Section className={boxClass}>
+          <div className={labelClass}>Entrega</div>
           <AddressDeliveryInfo />
         </Section>
       </If>
       <If eq={['items.0.selectedDeliveryChannel', '"delivery"']}>
-        <Section style={boxStyle}>
-          <Heading as="h4">Entrega</Heading>
+        <Section className={boxClass}>
+          <div className={labelClass}>Entrega</div>
           <AddressDeliveryInfo />
         </Section>
       </If>

@@ -2,32 +2,24 @@ import { Section } from 'react-email';
 import { If } from 'react-email-bridge/hbs';
 import { AddressDeliveryInfo } from './AddressDeliveryInfo.js';
 
-const boxStyle = {
-  backgroundColor: '#f4f4f4',
-  padding: '12px 16px',
-  marginBottom: '12px',
-  maxWidth: '440px',
-};
-
 /**
- * Mirrors `partials/address-delivery-no-title.hbs`. Two parallel branches:
- *   - `selectedDeliveryChannel == null` (still being assigned)
- *   - `selectedDeliveryChannel == "delivery"` (committed delivery)
+ * Delivery address card. Two parallel branches for
+ * `selectedDeliveryChannel == null` and `== "delivery"` — source
+ * duplicates the markup, we preserve.
  *
- * Both render the same address-info block — the source duplicates the
- * markup, we preserve the duplication so the export .hbs matches what
- * VTEX Message Center expects to see.
+ * Halo-Tailwind: subtle card surface.
  */
 export function AddressDeliveryNoTitle() {
+  const boxClass = 'bg-bg-3 rounded-lg p-4 mb-3 max-w-[440px] font-15 text-fg';
   return (
     <>
       <If compare={['items.0.selectedDeliveryChannel', '==', 'null']}>
-        <Section style={boxStyle}>
+        <Section className={boxClass}>
           <AddressDeliveryInfo />
         </Section>
       </If>
       <If eq={['items.0.selectedDeliveryChannel', '"delivery"']}>
-        <Section style={boxStyle}>
+        <Section className={boxClass}>
           <AddressDeliveryInfo />
         </Section>
       </If>

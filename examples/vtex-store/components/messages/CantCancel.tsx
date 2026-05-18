@@ -1,24 +1,13 @@
-import { Text } from 'react-email';
+import { Section } from 'react-email';
 
 /**
- * Mirrors `partials/messages/cant-cancel.hbs`. Static warning shown on
- * cancel-request templates (05, 07) when the order can't actually be
- * cancelled because it already shipped or was invoiced.
+ * Soft warning shown on cancel-request templates (05, 07). Halo-Tailwind
+ * pill: soft amber background, dark amber text, rounded.
  */
 export function CantCancel() {
   return (
-    <Text
-      style={{
-        backgroundColor: '#fff2f1',
-        color: '#666',
-        padding: '12px 16px',
-        marginTop: '24px',
-        fontWeight: 700,
-        textAlign: 'center',
-        lineHeight: 1.5,
-      }}
-    >
+    <Section className="bg-status-warning-bg text-status-warning-fg font-14 font-semibold text-center py-3 px-5 mt-4 mx-auto max-w-[440px] rounded-lg">
       Não foi possível cancelar seu pedido.
-    </Text>
+    </Section>
   );
 }
