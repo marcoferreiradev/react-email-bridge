@@ -1,23 +1,26 @@
-import { Img, Link, Section } from 'react-email';
+import { Img, Section } from 'react-email';
+import { placeholder, space } from '../../theme.js';
 
 /**
- * Mirrors `refs/vtex-email-framework/source/templates/partials/logo.hbs`.
+ * Storefront logo. Uses the centralized `placeholder.logo` URL by default
+ * (a placehold.co with "YOUR LOGO" text) so the starter is obviously
+ * generic — real consumers replace with their brand asset.
  *
- * Hard-coded brand asset URL and target link are the same as the source
- * (this is example storefront code — real consumers swap in their own
- * brand). Alt text uses the `{{_accountInfo.TradingName}}` marker so VTEX
- * fills in the store name at send time.
+ * Alt text uses the `{{_accountInfo.TradingName}}` marker so VTEX fills
+ * in the store name at send time.
+ *
+ * Modernized in Bloco 11 — original mirrored `partials/logo.hbs`'s
+ * hard-coded RedCloud URL; placeholder URL is now centralized in
+ * `theme.ts` for easy swap.
  */
 export function Logo() {
   return (
-    <Section style={{ margin: '32px auto 24px', width: '128px', textAlign: 'center' }}>
-      <Link href="http://redcloud.com.ar">
-        <Img
-          alt={`{{_accountInfo.TradingName}}`}
-          src="https://redcloudone.vtexassets.com/assets/vtex.file-manager-graphql/images/5fa40cfb-0742-44e7-a5f9-361eacce8e65___1f019fb496cbfcc135c518f9dfa9894a.png"
-          style={{ maxHeight: '80px', border: 0, width: 'auto' }}
-        />
-      </Link>
+    <Section style={{ padding: `${space.md} 0`, textAlign: 'center' }}>
+      <Img
+        alt={`{{_accountInfo.TradingName}}`}
+        src={placeholder.logo}
+        style={{ height: '40px', width: 'auto', border: 0, margin: '0 auto' }}
+      />
     </Section>
   );
 }

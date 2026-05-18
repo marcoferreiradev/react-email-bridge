@@ -1,31 +1,19 @@
 /**
- * VTEX `order-confirmed` template — faithful port of
- * `refs/vtex-email-framework/source/templates/01-confirmed.hbs`.
+ * VTEX `order-confirmed` template — Halo-inspired modernization
+ * (Bloco 11). Same functional structure as the faithful port of
+ * `01-confirmed.hbs` (Bloco 7 PR B.5) — every Handlebars marker and
+ * source section preserved — but redesigned with theme tokens for
+ * clean typography, generous whitespace, card-based shipping summary,
+ * and a primary-button CTA.
  *
- * Bloco 7 PR B.5 — rewrites the v0.1 freeform demo to match the source.
- * Composes from PR A's shared components, plus inlines the 4 single-use
- * partials that aren't worth extracting (used only by this template per
- * PORTING.md's frequency table):
- *   - messages/intro          → see <IntroBlock /> below
- *   - messages/order-link     → inline inside <IntroBlock />
- *   - shipping-summary        → see <ShippingSummary /> below
- *   - shipping-summary-estimate-{scheduled,date,range} → inline inside
- *     <ShippingSummary />
+ * Pilot template for Bloco 11. The shared components (Logo, Regards)
+ * were also updated in this PR; other shared components (Payment,
+ * Totals, AddressDeliveryTitle, etc.) still render with their original
+ * faithful-port styling and will be modernized in PR M.2.
  *
- * Section map (matches source line ranges):
- *  - HtmlHead                                  src:3
- *  - Header: Logo + h1 "Obrigado..."           src:11–17
- *  - Intro message (boleto branch included)    src:19–22
- *  - Shipping summary (per logistics package)  src:23–30
- *  - Payment when not split                    src:32–43
- *  - Per-order section (#each orders):         src:46–85
- *      h2 + seller + split-payment + Totals +
- *      richShippingData + group by addr +
- *      AddressDeliveryTitle + AddressPickupTitle +
- *      group by package + per-package heading +
- *      Package
- *  - Shipping estimate note                    src:88–93
- *  - Regards                                   src:95–98
+ * Inlines (single-use partials from source):
+ *   - messages/intro + order-link → <IntroBlock /> below
+ *   - shipping-summary + 3 estimate sub-partials → <ShippingSummary /> below
  */
 
 import { Body, Container, Heading, Html, Link, Section, Text } from 'react-email';
@@ -43,39 +31,37 @@ import {
   ShippingEstimateRangeTime,
   Totals,
 } from '../components/index.js';
-
-const sectionStyle = { padding: '24px' };
-const sectionWithTopDividerStyle = {
-  ...sectionStyle,
-  borderTop: '1px solid #ddd',
-};
+import { button, card, color, heading, layout, pill, space, text } from '../theme.js';
 
 /**
- * Inlines `partials/messages/intro.hbs`. Used by 01-confirmed only.
- * Sequence: Hi + introMessage paragraph, then order-link (inline), then
- * the boleto-bancário branch that surfaces a payment-link CTA when the
- * customer chose Boleto.
+ * Inlines `partials/messages/intro.hbs`. Hi + intro paragraph, then the
+ * order-tracking CTA (Halo-style primary button), then the boleto-
+ * bancário branch.
  */
 function IntroBlock() {
   return (
     <>
-      <Text>
+      <Text style={text.body}>
         <Hi /> Estamos aguardando a aprovação do pagamento para dar andamento ao seu pedido.
       </Text>
-      <Text>
-        Você pode <Link href={`{{ordersUrl}}`}>acompanhar este pedido no nosso site</Link>.
-      </Text>
+
+      <div style={{ margin: `${space.md} 0` }}>
+        <Link href={`{{ordersUrl}}`} style={button.primary}>
+          Acompanhar pedido
+        </Link>
+      </div>
+
       <Each path="orders.0.paymentData.transactions">
         <Each path="payments">
           <If eq={['paymentSystemName', "'Boleto Bancário'"]}>
-            <Text>
+            <Text style={text.bodyMuted}>
               Não se esqueça de fazer o pagamento do boleto bancário, caso ainda não o tenha feito.
             </Text>
-            <Text>
-              <Link href={`{{replace url '{Installment}' installments}}`}>
+            <div style={{ margin: `${space.sm} 0 ${space.md}` }}>
+              <Link href={`{{replace url '{Installment}' installments}}`} style={button.secondary}>
                 Abrir boleto bancário
               </Link>
-            </Text>
+            </div>
           </If>
         </Each>
       </Each>
@@ -84,14 +70,9 @@ function IntroBlock() {
 }
 
 /**
- * Inlines `partials/shipping-summary.hbs` (and its 3 transitive estimate
- * sub-partials). Used by 01-confirmed only.
- *
- * For each package in the order's logistics info, emit a card showing:
- *   - Heading ("Receber" or "Retirar" depending on delivery channel)
- *   - Either the single product's name (if 1 item) or "{N} itens"
- *   - The ETA in one of three formats (scheduled date+time / fixed date / range)
- *   - The pickup-store name or the delivery address summary
+ * Inlines `partials/shipping-summary.hbs` and its 3 estimate sub-partials.
+ * One card per logistics package: heading (Receber/Retirar) + items count
+ * + ETA + address/pickup-store. Halo card style.
  */
 function ShippingSummary() {
   return (
@@ -100,86 +81,66 @@ function ShippingSummary() {
       <Raw>{`{{#group logisticsInfo by="packageId"}}`}</Raw>
       <Each path="items">
         <If compare={['@index', '==', '0']}>
-          <Section
-            style={{
-              maxWidth: '440px',
-              padding: '12px 16px',
-              margin: '12px 0',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-            }}
-          >
-            {/* Heading */}
+          <Section style={card.base}>
+            {/* Method label */}
             <If eq={['selectedDeliveryChannel', '"pickup-in-point"']}>
-              <Heading as="h4" style={{ marginBottom: '8px' }}>
-                Retirar
-              </Heading>
+              <div style={heading.h4}>Retirar</div>
               <Else />
-              <Heading as="h4" style={{ marginBottom: '8px' }}>
-                Receber
-              </Heading>
+              <div style={heading.h4}>Receber</div>
             </If>
 
-            {/* Single product name OR "{N} itens" */}
-            <If eq={['../items.length', '1']}>
-              <Each path="../../../items">
-                <If compare={['id', '==', '../../items.0.itemId']}>
-                  <div style={{ fontWeight: 700, width: '80%' }}>{`{{name}}`}</div>
-                </If>
-              </Each>
-              <Else />
-              {`{{../items.length}}`} itens
-            </If>
+            {/* Contents: single product name OR "{N} itens" */}
+            <div style={{ ...text.body, margin: `${space.xs} 0 ${space.sm}` }}>
+              <If eq={['../items.length', '1']}>
+                <Each path="../../../items">
+                  <If compare={['id', '==', '../../items.0.itemId']}>
+                    <strong>{`{{name}}`}</strong>
+                  </If>
+                </Each>
+                <Else />
+                <strong>{`{{../items.length}}`} itens</strong>
+              </If>
+            </div>
 
-            {/* ETA — three branches inlined from shipping-summary-estimate-* */}
-            <If path="deliveryWindow">
-              {/* shipping-summary-estimate-scheduled.hbs */}
-              <>
-                em
-                <div
-                  style={{ fontWeight: 700 }}
-                >{`{{formatDate deliveryWindow.startDateUtc}}`}</div>
-                <div>
-                  entre {`{{formatTime deliveryWindow.startDateUtc}}`} e{' '}
-                  {`{{formatTime deliveryWindow.endDateUtc}}`}
-                </div>
-              </>
-              <Else />
-              <If path="shippingEstimateDate">
-                {/* shipping-summary-estimate-date.hbs */}
+            {/* ETA */}
+            <div style={text.caption}>
+              <If path="deliveryWindow">
                 <>
-                  <If eq={['deliveryChannel', '"pickup-in-point"']}>
-                    a partir de
-                    <Else />
-                    até
-                  </If>{' '}
-                  {`{{formatDate shippingEstimateDate}}`}
+                  Em {`{{formatDate deliveryWindow.startDateUtc}}`}, entre{' '}
+                  {`{{formatTime deliveryWindow.startDateUtc}}`} e{' '}
+                  {`{{formatTime deliveryWindow.endDateUtc}}`}
                 </>
                 <Else />
-                {/* shipping-summary-estimate-range.hbs */}
-                <If eq={['shippingEstimateDays', '"0"']}>
-                  <div style={{ marginTop: '8px', paddingBottom: '12px' }}>
+                <If path="shippingEstimateDate">
+                  <>
+                    <If eq={['deliveryChannel', '"pickup-in-point"']}>
+                      a partir de
+                      <Else />
+                      até
+                    </If>{' '}
+                    {`{{formatDate shippingEstimateDate}}`}
+                  </>
+                  <Else />
+                  <If eq={['shippingEstimateDays', '"0"']}>
                     <If eq={['selectedDeliveryChannel', '"pickup-in-point"']}>
                       a partir de hoje
                       <Else />
                       hoje
                     </If>
-                  </div>
-                  <Else />
-                  <If eq={['selectedDeliveryChannel', '"pickup-in-point"']}>
-                    a partir de
                     <Else />
-                    em até
-                  </If>
-                  <div style={{ marginTop: '8px', paddingBottom: '12px' }}>
+                    <If eq={['selectedDeliveryChannel', '"pickup-in-point"']}>
+                      a partir de
+                      <Else />
+                      em até
+                    </If>{' '}
                     <ShippingEstimateRangeTime />
-                  </div>
+                  </If>
                 </If>
               </If>
-            </If>
+            </div>
 
-            {/* Pickup store name OR delivery address summary */}
-            <div style={{ paddingTop: '8px', borderTop: '1px solid #ccc' }}>
+            {/* Address / pickup store */}
+            <div style={{ ...text.caption, marginTop: space.sm }}>
               <If eq={['selectedDeliveryChannel', '"pickup-in-point"']}>
                 <Each path="slas">
                   <If
@@ -211,23 +172,27 @@ export default function OrderConfirmed() {
   return (
     <Html>
       <HtmlHead />
-      <Body style={{ backgroundColor: '#f4f4f4', fontFamily: 'Arial, sans-serif' }}>
-        <Container style={{ backgroundColor: '#fff', maxWidth: '600px' }}>
+      <Body style={layout.bodyStyle}>
+        <Container style={layout.containerStyle}>
           {/* Header */}
-          <Section style={{ padding: '24px', textAlign: 'center', borderBottom: '1px solid #ddd' }}>
+          <Section style={{ padding: `${space.lg} ${space.md} 0` }}>
             <Logo />
-            <Heading as="h1">Obrigado pelo seu pedido.</Heading>
+            <Heading as="h1" style={{ ...heading.h1, textAlign: 'center' }}>
+              Obrigado pelo seu pedido.
+            </Heading>
           </Section>
 
-          {/* Intro: hi + intro message + order-link + boleto branch */}
-          <Section style={sectionStyle}>
+          {/* Intro */}
+          <Section style={layout.sectionPad}>
             <IntroBlock />
           </Section>
 
-          {/* Shipping Summary card stack */}
-          <Section style={sectionWithTopDividerStyle}>
-            <Heading as="h3" style={{ marginTop: 0 }}>
-              Resumo de seu(s) pacote(s)
+          <hr style={layout.divider} />
+
+          {/* Shipping summary */}
+          <Section style={layout.sectionPad}>
+            <Heading as="h3" style={heading.h3}>
+              Resumo do envio
             </Heading>
             <Each path="orders">
               <ShippingSummary />
@@ -236,22 +201,15 @@ export default function OrderConfirmed() {
 
           {/* Payment — when NOT split */}
           <If compare={['split', '!=', 'true']}>
-            <Section style={sectionWithTopDividerStyle}>
-              <Heading as="h3" style={{ margin: 0 }}>
+            <hr style={layout.divider} />
+            <Section style={layout.sectionPad}>
+              <Heading as="h3" style={heading.h3}>
                 Pagamento
               </Heading>
               <Each path="orders.0.paymentData.transactions">
                 <Payment />
-                <div
-                  style={{
-                    display: 'inline-block',
-                    marginTop: '8px',
-                    padding: '4px 8px',
-                    backgroundColor: '#ccc',
-                    fontSize: '12px',
-                  }}
-                >
-                  Aguardando aprovação
+                <div style={{ marginTop: space.xs }}>
+                  <span style={pill.warning}>Aguardando aprovação</span>
                 </div>
               </Each>
             </Section>
@@ -259,47 +217,42 @@ export default function OrderConfirmed() {
 
           {/* Per-order section */}
           <Each path="orders">
-            <Section style={sectionWithTopDividerStyle}>
-              <Heading as="h2">
-                Pedido <span style={{ fontWeight: 500 }}>#{`{{orderId}}`}</span>
+            <hr style={layout.divider} />
+            <Section style={layout.sectionPad}>
+              <Heading as="h2" style={heading.h2}>
+                Pedido #{`{{orderId}}`}
               </Heading>
-              <Text style={{ marginTop: '4px', marginBottom: '8px', color: '#aaa' }}>
-                Fornecido e entregue por {`{{sellers.0.name}}`}
-              </Text>
+              <Text style={text.caption}>Fornecido e entregue por {`{{sellers.0.name}}`}</Text>
 
               {/* Payment when split */}
               <If compare={['split', '==', 'true']}>
-                <div style={{ float: 'left', width: '100%', paddingBottom: '12px' }}>
-                  <Heading as="h3">Pagamento</Heading>
+                <div style={{ marginTop: space.md }}>
+                  <Heading as="h3" style={heading.h3}>
+                    Pagamento
+                  </Heading>
                   <Each path="paymentData.transactions">
                     <Payment />
-                    <div
-                      style={{
-                        display: 'inline-block',
-                        marginTop: '8px',
-                        padding: '4px 8px',
-                        backgroundColor: '#ccc',
-                        fontSize: '12px',
-                      }}
-                    >
-                      Aguardando aprovação
+                    <div style={{ marginTop: space.xs }}>
+                      <span style={pill.warning}>Aguardando aprovação</span>
                     </div>
                   </Each>
                 </div>
               </If>
 
-              <Totals />
+              <div style={{ marginTop: space.md }}>
+                <Totals />
+              </div>
 
-              {/* Address blocks + packages */}
+              {/* Addresses + packages */}
               <Raw>{`{{#richShippingData shippingData}}`}</Raw>
               <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-              <div style={{ clear: 'both', paddingTop: '12px' }}>
+              <div style={{ marginTop: space.md }}>
                 <AddressDeliveryTitle />
                 <AddressPickupTitle />
 
                 <Raw>{`{{#group items by="packageId"}}`}</Raw>
                 <If compare={['item.length', '>', '1']}>
-                  <Heading as="h3" style={{ marginBottom: '8px' }}>
+                  <Heading as="h3" style={{ ...heading.h3, marginTop: space.md }}>
                     Pacote <Raw>{`{{#math index '+' 1}}{{/math}}`}</Raw>
                   </Heading>
                 </If>
@@ -311,15 +264,19 @@ export default function OrderConfirmed() {
             </Section>
           </Each>
 
+          <hr style={layout.divider} />
+
           {/* Shipping estimate note */}
-          <Section style={sectionWithTopDividerStyle}>
-            <Text>
+          <Section style={layout.sectionPadTight}>
+            <Text style={text.caption}>
               O prazo dos pacotes deverá ser considerado somente após a confirmação do pagamento.
             </Text>
           </Section>
 
+          <hr style={layout.divider} />
+
           {/* Footer */}
-          <Section style={sectionWithTopDividerStyle}>
+          <Section style={layout.sectionPad}>
             <Regards />
           </Section>
         </Container>
