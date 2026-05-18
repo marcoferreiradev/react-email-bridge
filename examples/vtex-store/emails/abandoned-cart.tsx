@@ -1,28 +1,16 @@
 /**
  * Abandoned cart reminder — Halo-Tailwind (Bloco 11).
- * Header + intro + items list + primary CTA + Regards.
+ * Intro + items list + primary CTA.
  */
 
-import {
-  Body,
-  Button,
-  Container,
-  Heading,
-  Html,
-  Img,
-  Link,
-  Section,
-  Tailwind,
-  Text,
-} from 'react-email';
+import { Button, Img, Link, Text } from 'react-email';
 import { Each } from 'react-email-bridge/hbs';
 
-import { HtmlHead, Logo, Regards } from '../components/index.js';
-import { vtexStoreTailwindConfig } from '../tailwind.config.js';
+import { EmailDivider, EmailLayout, EmailSection } from '../components/index.js';
 
 /**
- * Inlines `partials/abandoned-cart-items.hbs`. Single-use. Uses math
- * sub-expression `(math sellingPrice '*' 100)` to convert cents → reais.
+ * Inlines `partials/abandoned-cart-items.hbs`. Uses math sub-expression
+ * `(math sellingPrice '*' 100)` (source pattern; preserves as-is).
  */
 function AbandonedCartItems() {
   return (
@@ -65,51 +53,30 @@ function AbandonedCartItems() {
 
 export default function AbandonedCart() {
   return (
-    <Tailwind config={vtexStoreTailwindConfig}>
-      <Html>
-        <HtmlHead />
-        <Body className="bg-bg m-0 py-8 font-sans">
-          <Container className="bg-bg-2 mx-auto max-w-[600px] rounded-lg overflow-hidden">
-            <Section className="px-6 pt-2 text-center">
-              <Logo />
-              <Heading className="font-32 font-geist text-fg m-0 mb-2">
-                Você deixou algo no seu carrinho!
-              </Heading>
-            </Section>
+    <EmailLayout title="Você deixou algo no seu carrinho!">
+      <EmailSection>
+        <Text className="font-15 text-fg m-0 mb-4">Olá {`{{additionalFields.firstName}}`},</Text>
+        <Text className="font-15 text-fg m-0">
+          Percebemos que você deixou alguns itens no seu carrinho de compras. Não perca, conclua sua
+          compra agora!
+        </Text>
+      </EmailSection>
 
-            <Section className="px-6 py-6">
-              <Text className="font-15 text-fg m-0 mb-3">
-                Olá {`{{additionalFields.firstName}}`},
-              </Text>
-              <Text className="font-15 text-fg m-0">
-                Percebemos que você deixou alguns itens no seu carrinho de compras. Não perca,
-                conclua sua compra agora!
-              </Text>
-            </Section>
+      <EmailDivider />
+      <EmailSection>
+        <AbandonedCartItems />
+      </EmailSection>
 
-            <hr className="border-stroke m-0" />
-
-            <Section className="px-6 py-6">
-              <AbandonedCartItems />
-            </Section>
-
-            <Section className="px-6 py-4 text-center">
-              <Button
-                href={`http://www.redcloud.com.ar/checkout/cart/{{addToCartURL}}`}
-                className="inline-block bg-fg text-bg-2 font-15 font-semibold px-6 py-3 rounded-lg no-underline"
-              >
-                Concluir sua compra
-              </Button>
-            </Section>
-
-            <hr className="border-stroke m-0" />
-
-            <Section className="px-6 py-6">
-              <Regards />
-            </Section>
-          </Container>
-        </Body>
-      </Html>
-    </Tailwind>
+      <EmailSection tight>
+        <div className="text-center">
+          <Button
+            href={`http://www.redcloud.com.ar/checkout/cart/{{addToCartURL}}`}
+            className="inline-block bg-fg text-bg-2 font-15 font-semibold px-6 py-3 rounded-lg no-underline"
+          >
+            Concluir sua compra
+          </Button>
+        </div>
+      </EmailSection>
+    </EmailLayout>
   );
 }

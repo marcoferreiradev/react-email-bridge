@@ -1,30 +1,26 @@
 /**
  * VTEX `order-confirmed` — Halo-Tailwind (Bloco 11).
- *
- * Full faithful structure of 01-confirmed.hbs, restyled with Tailwind.
- * Inlines `messages/intro` (with order-link + boleto branch) and
- * `shipping-summary` (with its 3 estimate sub-partials) as local
- * `IntroBlock` + `ShippingSummary` components within this file.
+ * Most complex template. Composes IntroBlock + ShippingSummary cards +
+ * per-order section (Payment + Totals + addresses + Package).
  */
 
-import { Body, Button, Container, Heading, Html, Link, Section, Tailwind, Text } from 'react-email';
+import { Button, Heading, Link, Section, Text } from 'react-email';
 import { Each, Else, If, Raw } from 'react-email-bridge/hbs';
 
 import {
   AddressDeliveryTitle,
   AddressPickupTitle,
+  EmailDivider,
+  EmailLayout,
+  EmailSection,
   Hi,
-  HtmlHead,
-  Logo,
   Package,
   Payment,
-  Regards,
   ShippingEstimateRangeTime,
   Totals,
 } from '../components/index.js';
-import { vtexStoreTailwindConfig } from '../tailwind.config.js';
 
-const labelClass = 'font-13 text-fg-2 uppercase tracking-wider m-0 mb-3';
+const labelClass = 'font-13 text-fg-2 uppercase tracking-wider m-0 mb-4';
 const pillClass =
   'bg-status-warning-bg text-status-warning-fg font-13 font-semibold px-3 py-1 rounded-full inline-block';
 
@@ -157,104 +153,80 @@ function ShippingSummary() {
 
 export default function OrderConfirmed() {
   return (
-    <Tailwind config={vtexStoreTailwindConfig}>
-      <Html>
-        <HtmlHead />
-        <Body className="bg-bg m-0 py-8 font-sans">
-          <Container className="bg-bg-2 mx-auto max-w-[600px] rounded-lg overflow-hidden">
-            <Section className="px-6 pt-2 text-center">
-              <Logo />
-              <Heading className="font-40 font-geist text-fg m-0 mb-2">
-                Obrigado pelo seu pedido.
-              </Heading>
-            </Section>
+    <EmailLayout title="Obrigado pelo seu pedido.">
+      <EmailSection>
+        <IntroBlock />
+      </EmailSection>
 
-            <Section className="px-6 py-6">
-              <IntroBlock />
-            </Section>
+      <EmailDivider />
+      <EmailSection label="Resumo do envio">
+        <Each path="orders">
+          <ShippingSummary />
+        </Each>
+      </EmailSection>
 
-            <hr className="border-stroke m-0" />
+      <If compare={['split', '!=', 'true']}>
+        <EmailDivider />
+        <EmailSection label="Pagamento">
+          <Each path="orders.0.paymentData.transactions">
+            <Payment />
+            <div className="mt-2">
+              <span className={pillClass}>Aguardando aprovação</span>
+            </div>
+          </Each>
+        </EmailSection>
+      </If>
 
-            <Section className="px-6 py-6">
-              <div className={labelClass}>Resumo do envio</div>
-              <Each path="orders">
-                <ShippingSummary />
+      <Each path="orders">
+        <EmailDivider />
+        <EmailSection>
+          <Heading className="font-22 text-fg m-0">Pedido #{`{{orderId}}`}</Heading>
+          <Text className="font-13 text-fg-2 m-0 mt-1 mb-4">
+            Fornecido e entregue por {`{{sellers.0.name}}`}
+          </Text>
+
+          <If compare={['split', '==', 'true']}>
+            <div className="mt-4">
+              <div className={labelClass}>Pagamento</div>
+              <Each path="paymentData.transactions">
+                <Payment />
+                <div className="mt-2">
+                  <span className={pillClass}>Aguardando aprovação</span>
+                </div>
               </Each>
-            </Section>
+            </div>
+          </If>
 
-            <If compare={['split', '!=', 'true']}>
-              <hr className="border-stroke m-0" />
-              <Section className="px-6 py-6">
-                <div className={labelClass}>Pagamento</div>
-                <Each path="orders.0.paymentData.transactions">
-                  <Payment />
-                  <div className="mt-2">
-                    <span className={pillClass}>Aguardando aprovação</span>
-                  </div>
-                </Each>
-              </Section>
+          <div className="mt-6">
+            <Totals />
+          </div>
+
+          <Raw>{`{{#richShippingData shippingData}}`}</Raw>
+          <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
+          <div className="mt-6">
+            <AddressDeliveryTitle />
+            <AddressPickupTitle />
+
+            <Raw>{`{{#group items by="packageId"}}`}</Raw>
+            <If compare={['item.length', '>', '1']}>
+              <Heading className="font-18 text-fg mt-6 mb-2">
+                Pacote <Raw>{`{{#math index '+' 1}}{{/math}}`}</Raw>
+              </Heading>
             </If>
+            <Package />
+            <Raw>{`{{/group}}`}</Raw>
+          </div>
+          <Raw>{`{{/group}}`}</Raw>
+          <Raw>{`{{/richShippingData}}`}</Raw>
+        </EmailSection>
+      </Each>
 
-            <Each path="orders">
-              <hr className="border-stroke m-0" />
-              <Section className="px-6 py-6">
-                <Heading className="font-22 text-fg m-0">Pedido #{`{{orderId}}`}</Heading>
-                <Text className="font-13 text-fg-2 m-0 mt-1 mb-4">
-                  Fornecido e entregue por {`{{sellers.0.name}}`}
-                </Text>
-
-                <If compare={['split', '==', 'true']}>
-                  <div className="mt-4">
-                    <div className={labelClass}>Pagamento</div>
-                    <Each path="paymentData.transactions">
-                      <Payment />
-                      <div className="mt-2">
-                        <span className={pillClass}>Aguardando aprovação</span>
-                      </div>
-                    </Each>
-                  </div>
-                </If>
-
-                <div className="mt-6">
-                  <Totals />
-                </div>
-
-                <Raw>{`{{#richShippingData shippingData}}`}</Raw>
-                <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-                <div className="mt-6">
-                  <AddressDeliveryTitle />
-                  <AddressPickupTitle />
-
-                  <Raw>{`{{#group items by="packageId"}}`}</Raw>
-                  <If compare={['item.length', '>', '1']}>
-                    <Heading className="font-18 text-fg mt-6 mb-2">
-                      Pacote <Raw>{`{{#math index '+' 1}}{{/math}}`}</Raw>
-                    </Heading>
-                  </If>
-                  <Package />
-                  <Raw>{`{{/group}}`}</Raw>
-                </div>
-                <Raw>{`{{/group}}`}</Raw>
-                <Raw>{`{{/richShippingData}}`}</Raw>
-              </Section>
-            </Each>
-
-            <hr className="border-stroke m-0" />
-
-            <Section className="px-6 py-6">
-              <Text className="font-13 text-fg-2 m-0">
-                O prazo dos pacotes deverá ser considerado somente após a confirmação do pagamento.
-              </Text>
-            </Section>
-
-            <hr className="border-stroke m-0" />
-
-            <Section className="px-6 py-6">
-              <Regards />
-            </Section>
-          </Container>
-        </Body>
-      </Html>
-    </Tailwind>
+      <EmailDivider />
+      <EmailSection tight>
+        <Text className="font-13 text-fg-2 m-0">
+          O prazo dos pacotes deverá ser considerado somente após a confirmação do pagamento.
+        </Text>
+      </EmailSection>
+    </EmailLayout>
   );
 }

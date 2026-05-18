@@ -4,23 +4,22 @@
  * guard + no shipping-summary section.
  */
 
-import { Body, Button, Container, Heading, Html, Link, Section, Tailwind, Text } from 'react-email';
+import { Button, Heading, Link, Text } from 'react-email';
 import { Each, If, Raw } from 'react-email-bridge/hbs';
 
 import {
   AddressDeliveryTitle,
   AddressPickupTitle,
+  EmailDivider,
+  EmailLayout,
+  EmailSection,
   Hi,
-  HtmlHead,
-  Logo,
   Package,
   Payment,
-  Regards,
   Totals,
 } from '../components/index.js';
-import { vtexStoreTailwindConfig } from '../tailwind.config.js';
 
-const labelClass = 'font-13 text-fg-2 uppercase tracking-wider m-0 mb-3';
+const labelClass = 'font-13 text-fg-2 uppercase tracking-wider m-0 mb-4';
 
 function IntroReplaced() {
   return (
@@ -60,93 +59,71 @@ function IntroReplaced() {
 
 export default function OrderReplaced() {
   return (
-    <Tailwind config={vtexStoreTailwindConfig}>
-      <Html>
-        <HtmlHead />
-        <Body className="bg-bg m-0 py-8 font-sans">
-          <Container className="bg-bg-2 mx-auto max-w-[600px] rounded-lg overflow-hidden">
-            <Section className="px-6 pt-2 text-center">
-              <Logo />
-              <Heading className="font-40 font-geist text-fg m-0 mb-2">
-                Seu pedido foi substituído.
-              </Heading>
-            </Section>
+    <EmailLayout title="Seu pedido foi substituído.">
+      <EmailSection>
+        <IntroReplaced />
+      </EmailSection>
 
-            <Section className="px-6 py-6">
-              <IntroReplaced />
-            </Section>
-
-            <If compare={['split', '!=', 'true']}>
-              <If compare={['orders.0.paymentData.transactions.payments.length', '>', '0']}>
-                <hr className="border-stroke m-0" />
-                <Section className="px-6 py-6">
-                  <div className={labelClass}>Pagamento</div>
-                  <Each path="orders.0.paymentData.transactions">
-                    <Payment />
-                  </Each>
-                </Section>
-              </If>
-            </If>
-
-            <Each path="orders">
-              <hr className="border-stroke m-0" />
-              <Section className="px-6 py-6">
-                <Heading className="font-22 text-fg m-0">Pedido #{`{{orderId}}`}</Heading>
-                <Text className="font-13 text-fg-2 m-0 mt-1 mb-4">
-                  Fornecido e entregue por {`{{sellers.0.name}}`}
-                </Text>
-
-                <If compare={['split', '==', 'true']}>
-                  <If compare={['paymentData.transactions.payments.length', '>', '0']}>
-                    <div className="mt-4">
-                      <div className={labelClass}>Pagamento</div>
-                      <Each path="paymentData.transactions">
-                        <Payment />
-                      </Each>
-                    </div>
-                  </If>
-                </If>
-
-                <div className="mt-6">
-                  <Totals />
-                </div>
-
-                <Raw>{`{{#richShippingData shippingData}}`}</Raw>
-                <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
-                <div className="mt-6">
-                  <AddressDeliveryTitle />
-                  <AddressPickupTitle />
-
-                  <Raw>{`{{#group items by="packageId"}}`}</Raw>
-                  <If compare={['item.length', '>', '1']}>
-                    <Heading className="font-18 text-fg mt-6 mb-2">
-                      Pacote <Raw>{`{{#math index '+' 1}}{{/math}}`}</Raw>
-                    </Heading>
-                  </If>
-                  <Package />
-                  <Raw>{`{{/group}}`}</Raw>
-                </div>
-                <Raw>{`{{/group}}`}</Raw>
-                <Raw>{`{{/richShippingData}}`}</Raw>
-              </Section>
+      <If compare={['split', '!=', 'true']}>
+        <If compare={['orders.0.paymentData.transactions.payments.length', '>', '0']}>
+          <EmailDivider />
+          <EmailSection label="Pagamento">
+            <Each path="orders.0.paymentData.transactions">
+              <Payment />
             </Each>
+          </EmailSection>
+        </If>
+      </If>
 
-            <hr className="border-stroke m-0" />
+      <Each path="orders">
+        <EmailDivider />
+        <EmailSection>
+          <Heading className="font-22 text-fg m-0">Pedido #{`{{orderId}}`}</Heading>
+          <Text className="font-13 text-fg-2 m-0 mt-1 mb-4">
+            Fornecido e entregue por {`{{sellers.0.name}}`}
+          </Text>
 
-            <Section className="px-6 py-6">
-              <Text className="font-13 text-fg-2 m-0">
-                O prazo dos pacotes deverá ser considerado somente após a confirmação do pagamento.
-              </Text>
-            </Section>
+          <If compare={['split', '==', 'true']}>
+            <If compare={['paymentData.transactions.payments.length', '>', '0']}>
+              <div className="mt-4">
+                <div className={labelClass}>Pagamento</div>
+                <Each path="paymentData.transactions">
+                  <Payment />
+                </Each>
+              </div>
+            </If>
+          </If>
 
-            <hr className="border-stroke m-0" />
+          <div className="mt-6">
+            <Totals />
+          </div>
 
-            <Section className="px-6 py-6">
-              <Regards />
-            </Section>
-          </Container>
-        </Body>
-      </Html>
-    </Tailwind>
+          <Raw>{`{{#richShippingData shippingData}}`}</Raw>
+          <Raw>{`{{#group logisticsInfo by="addessId"}}`}</Raw>
+          <div className="mt-6">
+            <AddressDeliveryTitle />
+            <AddressPickupTitle />
+
+            <Raw>{`{{#group items by="packageId"}}`}</Raw>
+            <If compare={['item.length', '>', '1']}>
+              <Heading className="font-18 text-fg mt-6 mb-2">
+                Pacote <Raw>{`{{#math index '+' 1}}{{/math}}`}</Raw>
+              </Heading>
+            </If>
+            <Package />
+            <Raw>{`{{/group}}`}</Raw>
+          </div>
+          <Raw>{`{{/group}}`}</Raw>
+          <Raw>{`{{/richShippingData}}`}</Raw>
+        </EmailSection>
+      </Each>
+
+      <EmailDivider />
+      <EmailSection tight>
+        <Text className="font-13 text-fg-2 m-0">
+          O prazo dos pacotes deverá ser considerado somente após a confirmação do pagamento.
+        </Text>
+      </EmailSection>
+    </EmailLayout>
   );
 }
