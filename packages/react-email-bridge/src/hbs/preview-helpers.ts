@@ -29,10 +29,34 @@ export const vtexFakeHelpers: Record<string, Handlebars.HelperDelegate> = {
   },
   multiplyCurrency: (a: unknown, b: unknown) => (Number(a) * Number(b)).toFixed(2),
 
-  formatDate: (d: unknown) => (d ? new Date(d as string).toISOString().slice(0, 10) : ''),
-  formatTime: (d: unknown) => (d ? new Date(d as string).toISOString().slice(11, 16) : ''),
-  formatDateTime: (d: unknown) =>
-    d ? new Date(d as string).toISOString().replace('T', ' ').slice(0, 19) : '',
+  // PT-BR locale-aware formatting for preview. The real VTEX runtime
+  // uses store-locale; pt-BR is the realistic default for the storefront
+  // we ship (Loja Exemplo / São Paulo persona). Falls back gracefully on
+  // unparseable input.
+  formatDate: (d: unknown) => {
+    if (!d) return '';
+    const date = new Date(d as string);
+    if (Number.isNaN(date.getTime())) return String(d);
+    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  },
+  formatTime: (d: unknown) => {
+    if (!d) return '';
+    const date = new Date(d as string);
+    if (Number.isNaN(date.getTime())) return String(d);
+    return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  },
+  formatDateTime: (d: unknown) => {
+    if (!d) return '';
+    const date = new Date(d as string);
+    if (Number.isNaN(date.getTime())) return String(d);
+    return date.toLocaleString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  },
   formatUSDate: (d: unknown) => (d ? new Date(d as string).toLocaleDateString('en-US') : ''),
   formatUSDateTime: (d: unknown) => (d ? new Date(d as string).toLocaleString('en-US') : ''),
   formatDateUtc: (d: unknown) => (d ? new Date(d as string).toUTCString() : ''),

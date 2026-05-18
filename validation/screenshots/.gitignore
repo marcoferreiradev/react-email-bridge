@@ -1,0 +1,4 @@
+# Validation screenshots (chrome-devtools captures from Bloco 11 review)
+# Gitignored — too large for the repo, regenerable from the dev server.
+*
+!.gitignore
