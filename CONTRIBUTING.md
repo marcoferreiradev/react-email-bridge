@@ -111,3 +111,42 @@ pnpm format   # check + apply safe fixes
   `ready-for-human`, `wontfix`. See `docs/internal/agents/triage-labels.md`.
 - PRs should reference an issue when one exists.
 - One topic per PR. Mixed-scope PRs are hard to review and hard to revert.
+
+## Scaffolding from a populated example
+
+Users get the canonical scaffold via `npx react-email-bridge init` (in the
+README). When working on the library itself, you sometimes want to scaffold
+the full `vtex-store` template instead — to manually exercise the
+copy-rewrite path, or to bootstrap a local test project against your
+in-development build.
+
+```bash
+# Scaffold the VTEX-store example into a sibling directory
+pnpm -w run new-project ../my-vtex-emails --template vtex-store
+
+# Or the minimal generic-hbs (matches the default scaffold)
+pnpm -w run new-project ../my-generic-emails
+```
+
+`new-project.mjs` copies `examples/<template>/` and rewrites the
+`package.json` so the destination depends on the published
+`react-email-bridge` from the npm registry (rather than the workspace
+ref). For pre-publish testing, pass `--skip-install` to inspect the
+output before npm install would fail.
+
+See [ADR-0001](./docs/adr/0001-examples-as-starter-source.md) for the
+rationale behind the examples-doubling-as-starters layout.
+
+## Tarball smoke (internal)
+
+`pnpm pack-all` builds both packages and writes tarballs to
+`dist-tarballs/`. Not part of the user-facing flow (users install from
+npm); kept as an internal sanity check for the tarball structure and as
+the input to ad-hoc testing if you need to install the built package
+into another project locally:
+
+```bash
+pnpm pack-all
+cd /tmp/some-test-project
+npm install /path/to/react-email-bridge/dist-tarballs/react-email-bridge-X.tgz
+```

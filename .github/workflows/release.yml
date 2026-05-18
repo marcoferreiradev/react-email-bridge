@@ -19,16 +19,16 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # Full history so changesets can compute the right bump.
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 10
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: pnpm
@@ -36,18 +36,27 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Build all workspace packages in topological order BEFORE publish.
+      # Required because react-email-bridge-ui's `next build` imports from
+      # `react-email-bridge/hbs` and needs that package's dist/ to exist.
+      # Running prepublishOnly per-package would re-trigger the build in
+      # whichever order changesets picks, which can race; doing it at the
+      # workspace root with `pnpm -r` is deterministic.
+      - name: Build packages
+        run: pnpm build
+
       # Opens (or updates) a "Version Packages" PR when pending changesets
       # exist on main. Merging that PR bumps versions + writes CHANGELOG.md.
-      #
-      # Publishing to npm is intentionally NOT wired up yet. When ready
-      # (Bloco 10), add:
-      #   publish: pnpm changeset publish
-      #   env:    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Create Version Packages PR
+      # The same step then runs `pnpm changeset publish` which pushes the
+      # newly-versioned packages to npm using NPM_TOKEN (set in repo Secrets;
+      # see SECURITY.md / CONTRIBUTING.md).
+      - name: Create Version Packages PR / publish
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
+          publish: pnpm changeset publish
           commit: 'chore: version packages'
           title: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
