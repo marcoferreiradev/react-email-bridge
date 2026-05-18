@@ -27,3 +27,8 @@ validation/test-helpers.*
 dist-tarballs/
 validation/test-tsimport.mjs
 packages/react-email-bridge/tests/.tmp/
+
+# Synced from root README.md by packages/react-email-bridge's prepack
+# script so the npm tarball includes it. Authoritative source is the
+# root README; do not edit this copy.
+packages/react-email-bridge/README.md
