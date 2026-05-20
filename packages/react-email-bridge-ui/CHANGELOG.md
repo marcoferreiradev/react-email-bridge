@@ -1,5 +1,12 @@
 # @react-email/ui
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [940e9f0]
+  - react-email-bridge@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes
