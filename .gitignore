@@ -32,3 +32,4 @@ packages/react-email-bridge/tests/.tmp/
 # script so the npm tarball includes it. Authoritative source is the
 # root README; do not edit this copy.
 packages/react-email-bridge/README.md
+/.tmp-screenshots/

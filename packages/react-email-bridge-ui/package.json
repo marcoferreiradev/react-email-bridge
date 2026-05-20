@@ -41,7 +41,8 @@
     "esbuild": "0.28.0",
     "next": "16.2.6",
     "react-email": "^6.1.4",
-    "react-email-bridge": "workspace:*"
+    "react-email-bridge": "workspace:*",
+    "react-resizable-panels": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "7.29.0",
