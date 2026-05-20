@@ -6,7 +6,9 @@ import { flushSync } from 'react-dom';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { Toaster } from 'sonner';
 import { useDebouncedCallback } from 'use-debounce';
+import type { CompatibilityCheckingResult } from '../../../actions/email-validation/check-compatibility';
 import { Topbar } from '../../../components';
+import { IconDock } from '../../../components/icons/icon-dock';
 import { MissingFixtureBanner } from '../../../components/missing-fixture-banner';
 import {
   makeIframeDocumentBubbleEvents,
@@ -19,20 +21,33 @@ import {
   parseSourceParam,
   serializeSourceParam,
 } from '../../../components/source-area';
-import { useToolbarState } from '../../../components/toolbar';
+import { Toolbar, useToolbarState } from '../../../components/toolbar';
+import type { LintingRow } from '../../../components/toolbar/linter';
+import type { SpamCheckingResult } from '../../../components/toolbar/spam-assassin';
 import { EmulatedDarkModeToggle } from '../../../components/topbar/emulated-dark-mode-toggle';
 import { ViewSizeControls } from '../../../components/topbar/view-size-controls';
 import { usePreviewContext } from '../../../contexts/preview';
 import { useClampedState } from '../../../hooks/use-clamped-state';
+import { useInspectionDock } from '../../../hooks/use-inspection-dock';
 import { cn } from '../../../utils';
 import { EmailFrame } from './email-frame';
 import { ErrorOverlay } from './error-overlay';
 
 interface PreviewProps extends React.ComponentProps<'div'> {
   emailTitle: string;
+  serverLintingRows: LintingRow[] | undefined;
+  serverSpamCheckingResult: SpamCheckingResult | undefined;
+  serverCompatibilityResults: CompatibilityCheckingResult[] | undefined;
 }
 
-const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
+const Preview = ({
+  emailTitle,
+  className,
+  serverLintingRows,
+  serverSpamCheckingResult,
+  serverCompatibilityResults,
+  ...props
+}: PreviewProps) => {
   const { renderingResult, renderedEmailMetadata, emailPath } =
     usePreviewContext();
   const fixtureMissing =
@@ -95,12 +110,41 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
   }, 300);
 
   const { toggled: toolbarToggled } = useToolbarState();
+  const [dockPosition, setDockPosition] = useInspectionDock();
 
-  // Multi-pane layout (ADR-0004 / UI-1): Source(React) + Preview side-by-side,
-  // both always visible. The previous ?view=preview|source toggle is gone;
-  // the chip strip in UI-2 will replace `?lang` with `?source=` for selecting
-  // which Source variants are open. For UI-1, the Source pane shows whichever
-  // single lang the existing CodeContainer is on.
+  // Multi-pane layout (ADR-0004). Source Area (chip-driven panes) and Preview
+  // live in a horizontal PanelGroup. The Inspection panel (Linter, Compatibility,
+  // Spam, Resend) can dock to bottom (default, absolute-positioned overlay),
+  // right, left, or be hidden — see useInspectionDock + InspectionDockMenu.
+
+  const inspectionAtSide =
+    dockPosition === 'right' || dockPosition === 'left';
+  const inspectionPanel = (
+    <Panel
+      id={`inspection-${dockPosition}`}
+      order={dockPosition === 'left' ? 0 : 3}
+      defaultSize={25}
+      minSize={15}
+    >
+      <div className="h-full w-full border-slate-6 border-x">
+        <Toolbar
+          serverLintingRows={serverLintingRows}
+          serverSpamCheckingResult={serverSpamCheckingResult}
+          serverCompatibilityResults={serverCompatibilityResults}
+          dockPosition={dockPosition}
+          onDockChange={setDockPosition}
+        />
+      </div>
+    </Panel>
+  );
+  const inspectionResizeHandle = (
+    <PanelResizeHandle
+      key="handle-inspect"
+      className="group relative w-1.5 bg-slate-6 hover:bg-slate-8 transition-colors data-[resize-handle-state=drag]:bg-cyan-9"
+    >
+      <div className="absolute inset-y-0 -left-1 -right-1" />
+    </PanelResizeHandle>
+  );
 
   return (
     <>
@@ -127,6 +171,16 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
           minWidth={minWidth}
           minHeight={minHeight}
         />
+        {dockPosition === 'hidden' ? (
+          <button
+            type="button"
+            onClick={() => setDockPosition('bottom')}
+            className="flex items-center gap-1.5 px-2.5 h-7 rounded-md text-xs font-medium text-slate-11 hover:text-slate-12 hover:bg-slate-4 transition-colors outline-none"
+          >
+            <IconDock position="bottom" size={12} />
+            Show inspection
+          </button>
+        ) : null}
         {hasRenderingMetadata ? (
           <div className="flex justify-end">
             <Send markup={renderedEmailMetadata.markup} />
@@ -137,8 +191,12 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
       <div
         {...props}
         className={cn(
-          'h-[calc(100%-3.5rem-2.375rem)] will-change-[height] flex transition-[height] duration-300 relative',
-          toolbarToggled && 'h-[calc(100%-3.5rem-13rem)]',
+          'will-change-[height] flex transition-[height] duration-300 relative',
+          dockPosition === 'bottom'
+            ? toolbarToggled
+              ? 'h-[calc(100%-3.5rem-13rem)]'
+              : 'h-[calc(100%-3.5rem-2.375rem)]'
+            : 'h-[calc(100%-3.5rem)]',
           className,
         )}
       >
@@ -147,9 +205,12 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
         {hasRenderingMetadata ? (
           <PanelGroup
             direction="horizontal"
-            autoSaveId="reb-source-preview-split"
+            autoSaveId={`reb-main-split-${dockPosition}`}
             className="w-full h-full"
           >
+            {dockPosition === 'left' ? inspectionPanel : null}
+            {dockPosition === 'left' ? inspectionResizeHandle : null}
+
             <Panel id="source" defaultSize={50} minSize={20} order={1}>
               <SourceArea
                 active={activeSources}
@@ -239,11 +300,24 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
                 </ResizableWrapper>
               </div>
             </Panel>
+
+            {dockPosition === 'right' ? inspectionResizeHandle : null}
+            {dockPosition === 'right' ? inspectionPanel : null}
           </PanelGroup>
         ) : null}
 
         <Toaster />
       </div>
+
+      {dockPosition === 'bottom' ? (
+        <Toolbar
+          serverLintingRows={serverLintingRows}
+          serverSpamCheckingResult={serverSpamCheckingResult}
+          serverCompatibilityResults={serverCompatibilityResults}
+          dockPosition="bottom"
+          onDockChange={setDockPosition}
+        />
+      ) : null}
     </>
   );
 };
