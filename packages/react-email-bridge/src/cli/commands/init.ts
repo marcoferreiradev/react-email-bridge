@@ -1,146 +1,141 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import url from 'node:url';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
-
-const SAMPLE_TEMPLATE = `import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Heading,
-  Text,
-  Link,
-} from 'react-email';
-import { hbs } from 'react-email-bridge';
-import { Each, If, Else } from 'react-email-bridge/hbs';
-
-export default function Welcome() {
-  return (
-    <Html>
-      <Head />
-      <Body style={{ backgroundColor: '#fff', fontFamily: 'Arial' }}>
-        <Container style={{ padding: '24px', maxWidth: '600px' }}>
-          <Heading style={{ color: hbs('theme.primaryColor') }}>
-            Welcome, {\`{{customer.firstName}}\`}!
-          </Heading>
-
-          <Text>
-            Your order <strong>#{\`{{orderId}}\`}</strong> is confirmed.
-          </Text>
-
-          <Each path="items">
-            <Text>
-              • {\`{{name}}\`} × {\`{{quantity}}\`}
-            </Text>
-          </Each>
-
-          <If path="trackingUrl">
-            <Text>
-              <Link href={\`{{trackingUrl}}\`}>Track your order</Link>
-            </Text>
-            <Else />
-            <Text>Tracking will be available soon.</Text>
-          </If>
-        </Container>
-      </Body>
-    </Html>
-  );
-}
-`;
-
-const SAMPLE_FIXTURE = JSON.stringify(
-  {
-    theme: { primaryColor: '#4f46e5' },
-    customer: { firstName: 'Marco' },
-    orderId: '12345',
-    items: [
-      { name: 'Black helmet', quantity: 1 },
-      { name: 'Leather gloves', quantity: 2 },
-    ],
-    trackingUrl: 'https://example.com/track/12345',
-  },
-  null,
-  2
-);
-
-const SAMPLE_CONFIG = `import { defineConfig } from 'react-email-bridge';
-
-export default defineConfig({
-  // outputExtension: '.html',
-  // strict: true,
-  // previewHelpers: {
-  //   myCustomHelper: (value) => String(value).toUpperCase(),
-  // },
-});
-`;
-
-const TSCONFIG = `{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "jsx": "react-jsx",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
-  },
-  "include": ["emails/**/*", "react-email-bridge.config.ts"]
-}
-`;
+import { detectPackageManager } from '../utils/package-manager';
+import { type ScaffoldLogger, ScaffoldError, scaffold } from '../utils/scaffold';
+import { resolveTemplateSource } from '../utils/template-source';
 
 interface Args {
-  dir: string;
+  template?: string;
+  skipInstall?: boolean;
+  skipGit?: boolean;
 }
 
-export async function init({ dir }: Args) {
-  const cwd = process.cwd();
-  const emailsDir = path.resolve(cwd, dir);
+const DEFAULT_TEMPLATE = 'generic-hbs';
 
+export async function init(dir: string | undefined, opts: Args) {
   p.intro(pc.bgCyan(pc.black(' react-email-bridge init ')));
 
-  const created: string[] = [];
-  const skipped: string[] = [];
+  if (!dir) {
+    p.cancel('Missing required argument: <dir>. See `react-email-bridge init --help`.');
+    process.exit(1);
+  }
 
-  function writeIfMissing(filePath: string, content: string) {
-    const rel = path.relative(cwd, filePath) || filePath;
-    if (fs.existsSync(filePath)) {
-      skipped.push(rel);
-      return;
+  const dest = path.resolve(process.cwd(), dir);
+  const templateName = opts.template ?? DEFAULT_TEMPLATE;
+  const projectName = path.basename(dest);
+
+  if (fs.existsSync(dest)) {
+    const entries = fs.readdirSync(dest);
+    if (entries.length > 0) {
+      p.cancel(
+        `Destination not empty: ${pc.cyan(dest)}\n  Pick a different directory or empty it first.`
+      );
+      process.exit(1);
     }
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, content, 'utf-8');
-    created.push(rel);
   }
 
-  if (!fs.existsSync(emailsDir)) {
-    fs.mkdirSync(emailsDir, { recursive: true });
-    created.push(`${path.relative(cwd, emailsDir)}/`);
-  }
+  const cliVersion = readCliVersion();
+  const source = resolveTemplateSource(templateName, cliVersion);
+  const packageManager = detectPackageManager();
 
-  writeIfMissing(path.join(emailsDir, 'welcome.tsx'), SAMPLE_TEMPLATE);
-  writeIfMissing(path.join(emailsDir, 'welcome.json'), SAMPLE_FIXTURE);
-  writeIfMissing(path.resolve(cwd, 'react-email-bridge.config.ts'), SAMPLE_CONFIG);
-  writeIfMissing(path.resolve(cwd, 'tsconfig.json'), TSCONFIG);
+  p.log.step(`Template:    ${pc.cyan(templateName)}`);
+  p.log.step(`Destination: ${pc.cyan(displayPath(dest))}`);
+  p.log.step(
+    `Source:      ${
+      source.kind === 'local'
+        ? pc.dim(`local (${displayPath(source.path)})`)
+        : pc.dim(`giget (${source.specifier})`)
+    }`
+  );
 
-  if (created.length > 0) {
-    p.log.step(`Created:\n${created.map((f) => `  ${pc.green('+')} ${f}`).join('\n')}`);
-  }
-  if (skipped.length > 0) {
-    p.log.step(
-      pc.dim(`Already present:\n${skipped.map((f) => `  ${pc.dim('·')} ${f}`).join('\n')}`)
-    );
-  }
+  type Spinner = ReturnType<typeof p.spinner>;
+  const spinnerRef: { current: Spinner | null } = { current: null };
+  const logger: ScaffoldLogger = {
+    step: (msg) => p.log.step(msg),
+    warn: (msg) => p.log.warn(msg),
+    start: (msg) => {
+      const s = p.spinner();
+      spinnerRef.current = s;
+      s.start(msg);
+    },
+    stop: (msg, ok) => {
+      const s = spinnerRef.current;
+      if (!s) return;
+      if (ok) s.stop(msg);
+      else s.error(pc.red(msg));
+      spinnerRef.current = null;
+    },
+  };
 
-  p.outro(
-    `${pc.green('✓ Done')}
+  const t0 = Date.now();
+  try {
+    const result = await scaffold({
+      source,
+      dest,
+      projectName,
+      templateName,
+      cliVersion,
+      install: !opts.skipInstall,
+      git: !opts.skipGit,
+      packageManager,
+      logger,
+    });
+
+    const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+
+    const nextCmd = result.installRan
+      ? `${packageManager} run dev`
+      : `${packageManager} install && ${packageManager} run dev`;
+
+    p.outro(
+      `${pc.green('✓ Ready')} ${pc.dim(`in ${elapsed}s`)}
 
   ${pc.dim('Next:')}
-    ${pc.cyan('pnpm react-email-bridge dev')}
-    ${pc.dim('Preview at http://localhost:3737')}
+    ${pc.cyan(`cd ${displayPath(dest)}`)}
+    ${pc.cyan(nextCmd)}
 `
-  );
+    );
+  } catch (err) {
+    spinnerRef.current?.error(pc.red('failed'));
+    if (err instanceof ScaffoldError) {
+      p.cancel(err.message);
+    } else {
+      p.cancel(`Unexpected error: ${err instanceof Error ? err.message : String(err)}`);
+    }
+    process.exit(1);
+  }
+}
+
+function readCliVersion(): string {
+  try {
+    const here = path.dirname(url.fileURLToPath(import.meta.url));
+    let dir = here;
+    const root = path.parse(dir).root;
+    while (dir !== root) {
+      const pkgPath = path.join(dir, 'package.json');
+      if (fs.existsSync(pkgPath)) {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as {
+          name?: string;
+          version?: string;
+        };
+        if (pkg.name === 'react-email-bridge' && pkg.version) {
+          return pkg.version;
+        }
+      }
+      dir = path.dirname(dir);
+    }
+  } catch {
+    // fall through
+  }
+  return '0.0.0';
+}
+
+function displayPath(abs: string): string {
+  const home = process.env.HOME ?? process.env.USERPROFILE ?? '';
+  const rel = path.relative(process.cwd(), abs);
+  const tilde = home && abs.startsWith(home) ? `~${abs.slice(home.length)}` : abs;
+  return [rel, tilde, abs].sort((a, b) => a.length - b.length)[0] ?? abs;
 }

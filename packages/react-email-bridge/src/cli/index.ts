@@ -31,9 +31,16 @@ if (!hasRequiredFlags) {
 
   program
     .command('init')
-    .description('Scaffold an emails/ folder with one example template')
-    .option('-d, --dir <path>', 'Directory to create email templates in', './emails')
-    .action(init);
+    .description('Scaffold a new react-email-bridge project in <dir>')
+    .argument('<dir>', 'Directory to create the new project in (must be empty or not exist)')
+    .option(
+      '-t, --template <name>',
+      'Template to use (e.g. generic-hbs, vtex-store)',
+      'generic-hbs'
+    )
+    .option('--skip-install', 'Do not run package manager install', false)
+    .option('--skip-git', 'Do not initialise a git repository', false)
+    .action((dir, opts) => init(dir, opts));
 
   program
     .command('dev')
