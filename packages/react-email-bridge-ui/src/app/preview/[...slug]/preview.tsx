@@ -190,10 +190,34 @@ const Preview = ({
         ) : null}
       </Topbar>
 
+      {/* Mobile fallback (M1, ADR-0004): below lg the multi-pane layout
+          collapses to Preview-only with a hint about desktop. The
+          authoring loop is desktop-first; mobile is read-only glance. */}
+      {hasRenderingMetadata ? (
+        <div
+          className={cn(
+            'lg:hidden flex flex-col items-center gap-3 p-4 overflow-auto',
+            'h-[calc(100%-3.5rem)]',
+            isDarkModeEnabled ? 'bg-gray-400' : 'bg-gray-200',
+          )}
+        >
+          <div className="w-full max-w-[800px] px-3 py-2 rounded-md bg-slate-3 border border-slate-6 text-xs text-slate-11 text-center">
+            Multi-pane authoring is desktop-only. Open this URL on a wider
+            display to see Source, Preview and Inspection side-by-side.
+          </div>
+          <iframe
+            srcDoc={renderedEmailMetadata.markup}
+            title={emailTitle}
+            className="w-full max-w-[600px] flex-1 min-h-[400px] rounded-lg bg-white"
+          />
+        </div>
+      ) : null}
+
       <div
         {...props}
         className={cn(
-          'will-change-[height] flex transition-[height] duration-300 relative',
+          'hidden lg:flex',
+          'will-change-[height] transition-[height] duration-300 relative',
           dockPosition === 'bottom'
             ? toolbarToggled
               ? 'h-[calc(100%-3.5rem-13rem)]'
@@ -311,14 +335,17 @@ const Preview = ({
         <Toaster />
       </div>
 
+      {/* Toolbar is desktop-only — mobile fallback hides Inspection too. */}
       {dockPosition === 'bottom' ? (
-        <Toolbar
-          serverLintingRows={serverLintingRows}
-          serverSpamCheckingResult={serverSpamCheckingResult}
-          serverCompatibilityResults={serverCompatibilityResults}
-          dockPosition="bottom"
-          onDockChange={setDockPosition}
-        />
+        <div className="hidden lg:contents">
+          <Toolbar
+            serverLintingRows={serverLintingRows}
+            serverSpamCheckingResult={serverSpamCheckingResult}
+            serverCompatibilityResults={serverCompatibilityResults}
+            dockPosition="bottom"
+            onDockChange={setDockPosition}
+          />
+        </div>
       ) : null}
     </>
   );
