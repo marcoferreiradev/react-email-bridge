@@ -139,13 +139,20 @@ export const Code: React.FC<Readonly<CodeProps>> = ({
                       {i + 1}
                     </Link>
 
-                    {/* Code content cell */}
+                    {/* Code content cell — soft-wrap (whitespace-pre-wrap)
+                        wraps at spaces; overflow-wrap:anywhere breaks
+                        long unbroken strings like URLs / base64 / class
+                        names. Line numbers stay aligned to the first
+                        visual line of each row via grid-cols-[auto_1fr]. */}
                     <div
                       {...lineProps}
-                      className={cn('whitespace-pre transition-colors', {
-                        "before:mr-2 before:text-slate-11 before:content-['$']":
-                          language === 'bash' && tokens.length === 1,
-                      })}
+                      className={cn(
+                        'whitespace-pre-wrap [overflow-wrap:anywhere] min-w-0 transition-colors',
+                        {
+                          "before:mr-2 before:text-slate-11 before:content-['$']":
+                            language === 'bash' && tokens.length === 1,
+                        },
+                      )}
                     >
                       {line.map((token, key) => {
                         const tokenProps = getTokenProps({

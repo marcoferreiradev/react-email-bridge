@@ -10,10 +10,7 @@ import type { CompatibilityCheckingResult } from '../../../actions/email-validat
 import { Topbar } from '../../../components';
 import { IconDock } from '../../../components/icons/icon-dock';
 import { MissingFixtureBanner } from '../../../components/missing-fixture-banner';
-import {
-  makeIframeDocumentBubbleEvents,
-  ResizableWrapper,
-} from '../../../components/resizable-wrapper';
+import { makeIframeDocumentBubbleEvents } from '../../../components/resizable-wrapper';
 import { Send } from '../../../components/send';
 import {
   SourceArea,
@@ -291,39 +288,26 @@ const Preview = ({
                   </div>
                 ) : null}
 
-                <ResizableWrapper
-                  minHeight={minHeight}
-                  minWidth={minWidth}
-                  maxHeight={maxHeight}
-                  maxWidth={maxWidth}
-                  height={height}
-                  onResizeEnd={() => {
-                    handleSaveViewSize();
-                  }}
-                  onResize={(value, direction) => {
-                    const isHorizontal =
-                      direction === 'east' || direction === 'west';
-                    if (isHorizontal) {
-                      setWidth(Math.round(value));
-                    } else {
-                      setHeight(Math.round(value));
-                    }
-                  }}
-                  width={width}
-                >
+                {/* UI v2: drop ResizableWrapper drag handles — they
+                    conflicted with the pane resize handle. The Topbar
+                    ViewSizeControls (Desktop / Mobile / custom width+height)
+                    still drive the iframe size via `width`/`height` state;
+                    we clamp to the pane size so Desktop (1024) fills a
+                    narrower pane instead of overflowing. */}
+                <div className="w-full h-full flex items-center justify-center overflow-hidden">
                   <EmailFrame
-                    className="max-h-full rounded-lg bg-white [color-scheme:auto]"
+                    className="rounded-lg bg-white [color-scheme:auto] shadow-lg"
                     darkMode={isDarkModeEnabled}
                     markup={renderedEmailMetadata.markup}
-                    width={width}
-                    height={height}
+                    width={Math.min(width, maxWidth)}
+                    height={Math.min(height, maxHeight)}
                     title={emailTitle}
                     ref={(iframe) => {
                       if (!iframe) return;
                       return makeIframeDocumentBubbleEvents(iframe);
                     }}
                   />
-                </ResizableWrapper>
+                </div>
               </div>
             </Panel>
 

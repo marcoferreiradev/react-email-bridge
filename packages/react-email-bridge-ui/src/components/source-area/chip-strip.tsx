@@ -11,7 +11,7 @@ interface ChipStripProps {
 export function ChipStrip({ active, onToggle }: ChipStripProps) {
   const activeSet = new Set(active);
   return (
-    <div className="flex items-center gap-1.5 px-3 h-9 border-b border-slate-6 shrink-0">
+    <div className="flex items-center gap-1 px-3 h-9 border-b border-slate-6 shrink-0">
       {SOURCE_KINDS.map((kind) => {
         const isActive = activeSet.has(kind);
         return (
@@ -22,19 +22,12 @@ export function ChipStrip({ active, onToggle }: ChipStripProps) {
             aria-pressed={isActive}
             onClick={() => onToggle(kind)}
             className={cn(
-              'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors',
+              'inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium transition-colors outline-none',
               isActive
-                ? 'bg-slate-12 text-slate-1 border-slate-12 hover:bg-slate-11 hover:border-slate-11'
-                : 'bg-transparent text-slate-11 border-slate-6 hover:text-slate-12 hover:border-slate-8',
+                ? 'text-slate-12 border border-slate-8 bg-slate-3 hover:bg-slate-4'
+                : 'text-slate-10 border border-transparent hover:text-slate-12 hover:bg-slate-3',
             )}
           >
-            <span
-              className={cn(
-                'inline-block w-1.5 h-1.5 rounded-full',
-                isActive ? 'bg-green-500' : 'bg-slate-7',
-              )}
-              aria-hidden="true"
-            />
             {SOURCE_LABELS[kind]}
           </button>
         );
