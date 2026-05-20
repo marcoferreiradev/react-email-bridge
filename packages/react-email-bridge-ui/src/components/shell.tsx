@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useSidebarCollapsed } from '../hooks/use-sidebar-collapsed';
 import { cn } from '../utils';
 import { Logo } from './logo';
 import { Sidebar } from './sidebar';
@@ -20,7 +21,18 @@ export const ShellContext = React.createContext<ShellContextValue | undefined>(
 );
 
 export const Shell = ({ children, currentEmailOpenSlug }: ShellProps) => {
-  const [sidebarToggled, setSidebarToggled] = React.useState(true);
+  // UI-4 (ADR-0004): sidebar collapsed state persists across reloads.
+  // The hook returns `collapsed` (semantically clearer); shell continues
+  // exposing `sidebarToggled` (legacy name) where `toggled === !collapsed`.
+  const [collapsed, setCollapsed] = useSidebarCollapsed();
+  const sidebarToggled = !collapsed;
+  const setSidebarToggled = (next: boolean | ((v: boolean) => boolean)) => {
+    if (typeof next === 'function') {
+      setCollapsed(!next(sidebarToggled));
+    } else {
+      setCollapsed(!next);
+    }
+  };
 
   return (
     <ShellContext.Provider
