@@ -176,6 +176,52 @@ fork is documented in PATCHES.md. The rebase process is in VENDORING.md.
 
 The two passes of `unescapeMarkers` in the pipeline. See [[plano-b]].
 
+## Pane
+
+A single resizable region inside the main authoring area of the preview
+UI. Each pane shows exactly one artifact — a Source variant (React /
+HTML / Plain Text / Data) or the Preview iframe. Multiple panes can be
+open at once; users add/remove panes via the [[chip-strip]]. Panes are
+horizontally resizable (drag the divider). The number of open panes is
+not capped — let users pile chips if they want.
+
+Distinct from the [[inspection-panel]]: that's a single block with
+internal tabs, not a pane.
+
+Introduced in ADR-0004.
+
+## Source Area
+
+The horizontal region containing one or more Source panes (React, HTML,
+Plain Text, Data), opened via the [[chip-strip]]. Together with the
+Preview pane, it forms the main authoring area inside the [[shell]].
+
+Default layout: one Source pane (React) + the Preview pane, side-by-side.
+The user adds more Source variants by toggling chips.
+
+## Inspection Panel
+
+The dockable block hosting the Linter / Compatibility / Spam / Resend
+tabs. Distinct from [[pane]]s — it shows one inspection report at a time
+(switching tabs replaces the content), and it docks to bottom (default),
+right, left, or hides entirely. Position persists in localStorage.
+
+Pre-ADR-0004 this lived as a fixed bottom strip (the old `Toolbar`
+component); the dockable version preserves the same tab content and
+internal state machine but loses its hard-coded position.
+
+## Chip Strip
+
+The toggle bar above the [[source-area]] controlling which Source
+variants are open as [[pane]]s. Each chip (`React`, `HTML`, `Plain
+Text`, `Data`) toggles a pane. Active chips reflect what's currently
+shown; inactive chips can be clicked to open the corresponding pane.
+
+The Chip Strip replaces v0.1's `ActiveViewToggleGroup` (which was an
+exclusive radio — Preview xor Source). It is exclusively for Source
+variants — Preview is always available as a pane and is not
+chip-controlled.
+
 ---
 
 ## Naming conventions
