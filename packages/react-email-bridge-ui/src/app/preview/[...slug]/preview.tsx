@@ -7,15 +7,19 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { Toaster } from 'sonner';
 import { useDebouncedCallback } from 'use-debounce';
 import { Topbar } from '../../../components';
-import { CodeContainer } from '../../../components/code-container';
 import { MissingFixtureBanner } from '../../../components/missing-fixture-banner';
 import {
   makeIframeDocumentBubbleEvents,
   ResizableWrapper,
 } from '../../../components/resizable-wrapper';
 import { Send } from '../../../components/send';
+import {
+  SourceArea,
+  type SourceKind,
+  parseSourceParam,
+  serializeSourceParam,
+} from '../../../components/source-area';
 import { useToolbarState } from '../../../components/toolbar';
-import { Tooltip } from '../../../components/tooltip';
 import { EmulatedDarkModeToggle } from '../../../components/topbar/emulated-dark-mode-toggle';
 import { ViewSizeControls } from '../../../components/topbar/view-size-controls';
 import { usePreviewContext } from '../../../contexts/preview';
@@ -39,7 +43,7 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
   const searchParams = useSearchParams();
 
   const isDarkModeEnabled = searchParams.get('dark') !== null;
-  const activeLang = searchParams.get('lang') ?? 'tsx';
+  const activeSources = parseSourceParam(searchParams.get('source'));
 
   const handleDarkModeChange = (enabled: boolean) => {
     const params = new URLSearchParams(searchParams);
@@ -51,16 +55,16 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
     router.push(`${pathname}?${params.toString()}${location.hash}`);
   };
 
-  const handleLangChange = (lang: string) => {
+  const handleToggleSource = (kind: SourceKind) => {
+    const next = activeSources.includes(kind)
+      ? activeSources.filter((k) => k !== kind)
+      : [...activeSources, kind];
     const params = new URLSearchParams(searchParams);
-    params.set('lang', lang);
-    const isSameLang = searchParams.get('lang') === lang;
-    // Drop legacy ?view (UI v2 always shows Source + Preview side-by-side;
-    // see ADR-0004). Migration is one-shot via URL rewrite on first nav.
+    params.set('source', serializeSourceParam(next));
+    // Drop legacy ?view + ?lang (UI v2 uses ?source for the chip strip; see ADR-0004).
     params.delete('view');
-    router.push(
-      `${pathname}?${params.toString()}${isSameLang ? location.hash : ''}`,
-    );
+    params.delete('lang');
+    router.push(`${pathname}?${params.toString()}${location.hash}`);
   };
 
   const hasRenderingMetadata = typeof renderedEmailMetadata !== 'undefined';
@@ -147,43 +151,21 @@ const Preview = ({ emailTitle, className, ...props }: PreviewProps) => {
             className="w-full h-full"
           >
             <Panel id="source" defaultSize={50} minSize={20} order={1}>
-              <div className="h-full w-full p-4">
-                <div className="h-full flex">
-                  <Tooltip.Provider>
-                    <CodeContainer
-                      activeLang={activeLang}
-                      basename={renderedEmailMetadata.basename}
-                      markups={[
-                        {
-                          language: 'tsx',
-                          extension: renderedEmailMetadata.extname,
-                          content: renderedEmailMetadata.reactMarkup,
-                        },
-                        {
-                          language: 'html',
-                          content: renderedEmailMetadata.prettyMarkup,
-                        },
-                        {
-                          language: 'markdown',
-                          extension: 'md',
-                          content: renderedEmailMetadata.plainText,
-                        },
-                        {
-                          language: 'json',
-                          content: renderedEmailMetadata.fixture?.found
-                            ? JSON.stringify(
-                                renderedEmailMetadata.fixture.data,
-                                null,
-                                2,
-                              )
-                            : `// No fixture found at:\n//   ${renderedEmailMetadata.fixture?.path ?? '(unknown)'}\n//\n// Create the file with sample data to enable the preview.\n// The file must share the basename of the template, e.g.\n//   ${renderedEmailMetadata.basename}.tsx + ${renderedEmailMetadata.basename}.json`,
-                        },
-                      ]}
-                      setActiveLang={handleLangChange}
-                    />
-                  </Tooltip.Provider>
-                </div>
-              </div>
+              <SourceArea
+                active={activeSources}
+                onToggle={handleToggleSource}
+                content={{
+                  reactMarkup: renderedEmailMetadata.reactMarkup,
+                  prettyMarkup: renderedEmailMetadata.prettyMarkup,
+                  plainText: renderedEmailMetadata.plainText,
+                  fixture: renderedEmailMetadata.fixture?.found
+                    ? { found: true, data: renderedEmailMetadata.fixture.data }
+                    : renderedEmailMetadata.fixture
+                      ? { found: false, path: renderedEmailMetadata.fixture.path }
+                      : undefined,
+                  basename: renderedEmailMetadata.basename,
+                }}
+              />
             </Panel>
 
             <PanelResizeHandle className="group relative w-1.5 bg-slate-6 hover:bg-slate-8 transition-colors data-[resize-handle-state=drag]:bg-cyan-9">
