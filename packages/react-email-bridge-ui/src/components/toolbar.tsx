@@ -38,9 +38,12 @@ export type ToolbarTabValue =
 export const useToolbarState = () => {
   const searchParams = useSearchParams();
 
-  const activeTab = (searchParams.get('toolbar-panel') ?? undefined) as
-    | ToolbarTabValue
-    | undefined;
+  // UI-5: ?inspect-tab is the new name (ADR-0004). The legacy ?toolbar-panel
+  // is rewritten by useUrlMigration on mount; this fallback covers the brief
+  // window before that effect runs (one render).
+  const activeTab = (searchParams.get('inspect-tab') ??
+    searchParams.get('toolbar-panel') ??
+    undefined) as ToolbarTabValue | undefined;
 
   return {
     activeTab,
@@ -78,10 +81,12 @@ const ToolbarInner = ({
 
   const setActivePanelValue = (newValue: ToolbarTabValue | undefined) => {
     const params = new URLSearchParams(searchParams);
+    // UI-5: write the new ?inspect-tab; clean up legacy ?toolbar-panel if any.
+    params.delete('toolbar-panel');
     if (newValue === undefined) {
-      params.delete('toolbar-panel');
+      params.delete('inspect-tab');
     } else {
-      params.set('toolbar-panel', newValue);
+      params.set('inspect-tab', newValue);
     }
     router.push(`${pathname}?${params.toString()}${location.hash}`);
   };

@@ -29,6 +29,7 @@ import { ViewSizeControls } from '../../../components/topbar/view-size-controls'
 import { usePreviewContext } from '../../../contexts/preview';
 import { useClampedState } from '../../../hooks/use-clamped-state';
 import { useInspectionDock } from '../../../hooks/use-inspection-dock';
+import { useUrlMigration } from '../../../hooks/use-url-migration';
 import { cn } from '../../../utils';
 import { EmailFrame } from './email-frame';
 import { ErrorOverlay } from './error-overlay';
@@ -111,6 +112,7 @@ const Preview = ({
 
   const { toggled: toolbarToggled } = useToolbarState();
   const [dockPosition, setDockPosition] = useInspectionDock();
+  useUrlMigration();
 
   // Multi-pane layout (ADR-0004). Source Area (chip-driven panes) and Preview
   // live in a horizontal PanelGroup. The Inspection panel (Linter, Compatibility,
