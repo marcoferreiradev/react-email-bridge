@@ -328,7 +328,7 @@ react-email-bridge/                  # this repo
 ├── examples/
 │   ├── generic-hbs/                 # minimal — also the default scaffold
 │   └── vtex-store/                  # 13 VTEX templates — also the vtex-store scaffold
-├── scripts/new-project.mjs          # copies an example, rewrites for standalone use
+├── scripts/new-project.ts           # author shortcut — thin shim over the published `init`
 ├── validation/                      # P0 end-to-end stress test (28 asserts)
 └── docs/
     ├── adr/                         # architectural decisions

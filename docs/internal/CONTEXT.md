@@ -123,8 +123,12 @@ A directory under `examples/<name>/` that serves double-duty:
 1. **Dev fixture** in the monorepo — workspace-bound (`workspace:*`),
    `private: true`, runs in CI smoke-test steps so a regression in core
    immediately fails the example's render.
-2. **Source for Starter** — `scripts/new-project.mjs` reads from here
-   when scaffolding a user project (see [[starter]]).
+2. **Source for Starter** — `react-email-bridge init` reads from here
+   when scaffolding a user project. In dev, the workspace `examples/`
+   tree is auto-detected and copied from disk; in production, giget
+   fetches the same tree pinned to the CLI version. The author
+   shortcut `pnpm new-project` is a thin shim over the same code path.
+   (See [[starter]].)
 
 Adding a template to an Example also adds it to the Starter — there is no
 separate `starters/` directory to keep in sync. See ADR-0001.

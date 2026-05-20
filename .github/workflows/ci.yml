@@ -58,13 +58,16 @@ jobs:
           grep -q "{{#each ../../../../items}}" dist/order-invoiced.hbs
 
       - name: Smoke new-project bootstrap (generic-hbs + vtex-store)
-        # After ADR-0001 (examples-as-starter), new-project copies from
-        # examples/<name> and rewrites the package.json for a standalone
-        # project. --skip-install avoids fetching from npm (the bumped
-        # version may not be published yet at CI time).
+        # After ADR-0001 (examples-as-starter) + ADR-0003 (init creates new
+        # project), `pnpm new-project` is a thin shim over the same `init`
+        # function the published CLI uses. Local mode is auto-detected
+        # (walks up for pnpm-workspace.yaml + examples/<name>) so no giget
+        # fetch happens at CI time. --skip-install avoids fetching from npm
+        # (the bumped version may not be published yet at CI time).
+        # --skip-git keeps the CI runner free of nested git repos.
         run: |
           # generic-hbs (default template)
-          node scripts/new-project.mjs /tmp/ci-generic --template generic-hbs --skip-install
+          pnpm new-project /tmp/ci-generic --template generic-hbs --skip-install --skip-git
           test -f /tmp/ci-generic/emails/order-summary.tsx
           test -f /tmp/ci-generic/package.json
           test -f /tmp/ci-generic/tsconfig.json
@@ -76,7 +79,7 @@ jobs:
           ! test -e /tmp/ci-generic/vendor
 
           # vtex-store
-          node scripts/new-project.mjs /tmp/ci-vtex --template vtex-store --skip-install
+          pnpm new-project /tmp/ci-vtex --template vtex-store --skip-install --skip-git
           test -f /tmp/ci-vtex/emails/order-confirmed.tsx
           test -d /tmp/ci-vtex/components
           test -f /tmp/ci-vtex/tailwind.config.ts
