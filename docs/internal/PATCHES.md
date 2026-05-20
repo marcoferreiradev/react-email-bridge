@@ -155,6 +155,73 @@ preset-specific to the bridge).
 
 ---
 
+## P7 — UI v2: multi-pane preview layout
+
+**Where**:
+
+- New: `packages/react-email-bridge-ui/src/components/source-area/`
+  (chip-strip.tsx, source-pane.tsx, source-area.tsx, types.ts,
+  index.ts) — the Chip Strip + N Source panes (1–4) replacing the
+  single-active-source CodeContainer.
+- New: `packages/react-email-bridge-ui/src/components/inspection-dock-menu.tsx`
+  + `icons/icon-dock.tsx` — the dock-position dropdown for the
+  Inspection panel.
+- New: `packages/react-email-bridge-ui/src/hooks/use-inspection-dock.ts`,
+  `use-sidebar-collapsed.ts`, `use-url-migration.ts` — localStorage-backed
+  preferences for dock position and sidebar collapsed state, plus the
+  one-shot URL migration from v0.1 params.
+- Rewrite: `packages/react-email-bridge-ui/src/app/preview/[...slug]/preview.tsx`
+  — now owns the outer layout (Source pane | Preview pane horizontal
+  split via react-resizable-panels) and conditionally renders the
+  Inspection panel in 1 of 4 dock positions. Drops the iframe drag
+  handles; viewport size is still driven by Topbar ViewSizeControls.
+- Modified: `packages/react-email-bridge-ui/src/app/preview/[...slug]/page.tsx`
+  — moves Toolbar render into Preview so the layout has full placement
+  control.
+- Modified: `packages/react-email-bridge-ui/src/components/toolbar.tsx`
+  — new `dockPosition` + `onDockChange` props; outer wrapper uses
+  absolute positioning only when bottom; renames the URL param from
+  `?toolbar-panel` to `?inspect-tab` (legacy alias kept until next
+  navigation).
+- Modified: `packages/react-email-bridge-ui/src/components/shell.tsx`
+  — swaps useState for useSidebarCollapsed (localStorage-backed).
+- Modified: `packages/react-email-bridge-ui/src/components/code.tsx`
+  — `whitespace-pre-wrap` + `[overflow-wrap:anywhere]` so long lines
+  wrap inside panes instead of producing horizontal scroll.
+
+**What**: rewrite of the preview area from a single-active-view toggle
+(`?view=preview|source`) into a multi-pane layout. Source variants
+(React / HTML / Plain Text / Data) become independent resizable panes,
+opened by toggling chips. The Inspection panel (Linter / Compatibility /
+Spam / Resend) becomes dockable to bottom (default), right, left, or
+hidden — position persisted to localStorage. URL schema: `?source=`
+(active chips, shareable), `?inspect-tab=` (active inspection tab,
+shareable). Old `?view`, `?lang`, `?toolbar-panel` are migrated on
+mount.
+
+Adds `react-resizable-panels@^3` as a runtime dep. Adds workspace-root
+`pnpm.overrides` for `react`/`react-dom` to force a single 19.2.4 across
+the workspace (without the override, the workspace root's hoisted
+react@18 caused "Objects are not valid as React child" in dev mode).
+
+**Why**: see [ADR-0004](../adr/0004-multi-pane-preview-layout.md) for
+the full design tree and the seven locked decisions. Short version: the
+single-toggle model collapses authoring workflows (edit → preview →
+back to source → flip lang → back to preview → repeat) into N clicks
+per loop. Multi-pane is zero clicks per loop after initial setup, and
+cross-pane comparison (HTML next to Data next to Preview) becomes
+possible.
+
+**Upstream candidate?**: no. `@react-email/ui` is purpose-built around
+the single-active-view toggle as a deliberate authoring philosophy.
+The bridge's HBS-template-author use case has different needs (one
+render → two artifacts) that justify the divergence. This is exactly
+the kind of patch the fork exists to host (see [VENDORING.md](./VENDORING.md)).
+Rebases against new upstream releases will need to re-apply the layout
+changes to `preview.tsx`, `toolbar.tsx`, and `shell.tsx` by hand.
+
+---
+
 ## On the preview runtime's `helperMissing` fallback
 
 The `helperMissing` fallback (`{{customHelper x}}` renders as `[name(x)]`

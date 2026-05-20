@@ -9,12 +9,14 @@ import type { CompatibilityCheckingResult } from '../actions/email-validation/ch
 import { isBuilding } from '../app/env';
 import { usePreviewContext } from '../contexts/preview';
 import { useToolbarContext } from '../contexts/toolbar';
+import type { DockPosition } from '../hooks/use-inspection-dock';
 import { cn } from '../utils';
 import CodeSnippet from './code-snippet';
 import { IconArrowDown } from './icons/icon-arrow-down';
 import { IconCheck } from './icons/icon-check';
 import { IconInfo } from './icons/icon-info';
 import { IconReload } from './icons/icon-reload';
+import { InspectionDockMenu } from './inspection-dock-menu';
 import { Compatibility, useCompatibility } from './toolbar/compatibility';
 import { CopyForAI } from './toolbar/copy-for-ai';
 import { Linter, type LintingRow, useLinter } from './toolbar/linter';
@@ -36,9 +38,12 @@ export type ToolbarTabValue =
 export const useToolbarState = () => {
   const searchParams = useSearchParams();
 
-  const activeTab = (searchParams.get('toolbar-panel') ?? undefined) as
-    | ToolbarTabValue
-    | undefined;
+  // UI-5: ?inspect-tab is the new name (ADR-0004). The legacy ?toolbar-panel
+  // is rewritten by useUrlMigration on mount; this fallback covers the brief
+  // window before that effect runs (one render).
+  const activeTab = (searchParams.get('inspect-tab') ??
+    searchParams.get('toolbar-panel') ??
+    undefined) as ToolbarTabValue | undefined;
 
   return {
     activeTab,
@@ -51,6 +56,8 @@ const ToolbarInner = ({
   serverLintingRows,
   serverSpamCheckingResult,
   serverCompatibilityResults,
+  dockPosition = 'bottom',
+  onDockChange,
 
   prettyMarkup,
   reactMarkup,
@@ -74,10 +81,12 @@ const ToolbarInner = ({
 
   const setActivePanelValue = (newValue: ToolbarTabValue | undefined) => {
     const params = new URLSearchParams(searchParams);
+    // UI-5: write the new ?inspect-tab; clean up legacy ?toolbar-panel if any.
+    params.delete('toolbar-panel');
     if (newValue === undefined) {
-      params.delete('toolbar-panel');
+      params.delete('inspect-tab');
     } else {
-      params.set('toolbar-panel', newValue);
+      params.set('inspect-tab', newValue);
     }
     router.push(`${pathname}?${params.toString()}${location.hash}`);
   };
@@ -133,13 +142,20 @@ const ToolbarInner = ({
 
   const id = React.useId();
 
+  // dock=bottom: keep the v0.1 absolute-positioned slide-up behavior
+  // (collapses to header strip when no tab active, slides up when active).
+  // dock=right/left: inspection lives inside a sibling Panel, always expanded
+  // (the Panel itself owns the visible size; no slide-in animation).
+  const isBottom = dockPosition === 'bottom';
+
   return (
     <div
       data-toggled={toggled}
       className={cn(
-        'absolute bottom-0 left-0 right-0',
-        'border-t border-slate-6 group/toolbar text-xs text-slate-11 h-52 transition-transform',
-        'data-[toggled=false]:translate-y-42.5',
+        'border-slate-6 group/toolbar text-xs text-slate-11',
+        isBottom
+          ? 'absolute bottom-0 left-0 right-0 border-t h-52 transition-transform data-[toggled=false]:translate-y-42.5'
+          : 'relative h-full w-full',
       )}
     >
       <Tabs.Root
@@ -223,25 +239,40 @@ const ToolbarInner = ({
                   />
                 </ToolbarButton>
               )}
-              <ToolbarButton
-                tooltip="Toggle toolbar"
-                onClick={() => {
-                  if (activeTab === undefined) {
-                    setActivePanelValue('linter');
-                  } else {
-                    setActivePanelValue(undefined);
-                  }
-                }}
-              >
-                <IconArrowDown
-                  size={24}
-                  className="transition-transform group-data-[toggled=false]/toolbar:rotate-180"
+              {onDockChange ? (
+                <InspectionDockMenu
+                  position={dockPosition}
+                  onChange={onDockChange}
                 />
-              </ToolbarButton>
+              ) : null}
+              {isBottom ? (
+                <ToolbarButton
+                  tooltip="Toggle toolbar"
+                  onClick={() => {
+                    if (activeTab === undefined) {
+                      setActivePanelValue('linter');
+                    } else {
+                      setActivePanelValue(undefined);
+                    }
+                  }}
+                >
+                  <IconArrowDown
+                    size={24}
+                    className="transition-transform group-data-[toggled=false]/toolbar:rotate-180"
+                  />
+                </ToolbarButton>
+              ) : null}
             </div>
           </Tabs.List>
 
-          <div className="grow transition-opacity opacity-100 group-data-[toggled=false]/toolbar:opacity-0 overflow-y-auto pr-3 pl-4 pt-3">
+          <div
+            className={cn(
+              'grow overflow-y-auto pr-3 pl-4 pt-3',
+              isBottom
+                ? 'transition-opacity opacity-100 group-data-[toggled=false]/toolbar:opacity-0'
+                : '',
+            )}
+          >
             <Tabs.Content value="linter">
               {lintLoading ? (
                 <LoadingState message="Analyzing your code for linting issues..." />
@@ -388,12 +419,16 @@ interface ToolbarProps {
   serverSpamCheckingResult: SpamCheckingResult | undefined;
   serverLintingRows: LintingRow[] | undefined;
   serverCompatibilityResults: CompatibilityCheckingResult[] | undefined;
+  dockPosition?: DockPosition;
+  onDockChange?: (next: DockPosition) => void;
 }
 
 export function Toolbar({
   serverLintingRows,
   serverSpamCheckingResult,
   serverCompatibilityResults,
+  dockPosition,
+  onDockChange,
 }: ToolbarProps) {
   const { emailPath, emailSlug, renderedEmailMetadata } = usePreviewContext();
 
@@ -410,6 +445,8 @@ export function Toolbar({
       serverLintingRows={serverLintingRows}
       serverSpamCheckingResult={serverSpamCheckingResult}
       serverCompatibilityResults={serverCompatibilityResults}
+      dockPosition={dockPosition}
+      onDockChange={onDockChange}
     />
   );
 }

@@ -8,7 +8,6 @@ import {
 import { getEmailPathFromSlug } from '../../../actions/get-email-path-from-slug';
 import { renderEmailByPath } from '../../../actions/render-email-by-path';
 import { Shell } from '../../../components/shell';
-import { Toolbar } from '../../../components/toolbar';
 import type { LintingRow } from '../../../components/toolbar/linter';
 import type { SpamCheckingResult } from '../../../components/toolbar/spam-assassin';
 import { PreviewProvider } from '../../../contexts/preview';
@@ -129,10 +128,9 @@ This is most likely not an issue with the preview server. Maybe there was a typo
         {/* on the build of the preview server de-opting into         */}
         {/* client-side rendering on build                            */}
         <Suspense>
-          <Preview emailTitle={path.basename(emailPath)} />
-
           <ToolbarProvider hasApiKey={(resendApiKey ?? '').trim().length > 0}>
-            <Toolbar
+            <Preview
+              emailTitle={path.basename(emailPath)}
               serverLintingRows={lintingRows}
               serverSpamCheckingResult={spamCheckingResult}
               serverCompatibilityResults={compatibilityCheckingResults}

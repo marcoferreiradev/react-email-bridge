@@ -109,7 +109,11 @@ export const Code: React.FC<Readonly<CodeProps>> = ({
           >
             <div className="grid grid-cols-[auto_1fr] w-full">
               {tokens.map((line, i) => {
-                const lineProps = getLineProps({
+                // React 19 forbids spreading an object that contains a
+                // `key` prop into JSX (the key must be passed inline).
+                // getLineProps/getTokenProps from prism-react-renderer
+                // include `key`, so destructure it out before spreading.
+                const { key: _lineKey, ...lineProps } = getLineProps({
                   line,
                   key: i,
                 });
@@ -139,18 +143,24 @@ export const Code: React.FC<Readonly<CodeProps>> = ({
                       {i + 1}
                     </Link>
 
-                    {/* Code content cell */}
+                    {/* Code content cell — soft-wrap (whitespace-pre-wrap)
+                        wraps at spaces; overflow-wrap:anywhere breaks
+                        long unbroken strings like URLs / base64 / class
+                        names. Line numbers stay aligned to the first
+                        visual line of each row via grid-cols-[auto_1fr]. */}
                     <div
                       {...lineProps}
-                      className={cn('whitespace-pre transition-colors', {
-                        "before:mr-2 before:text-slate-11 before:content-['$']":
-                          language === 'bash' && tokens.length === 1,
-                      })}
+                      className={cn(
+                        'whitespace-pre-wrap [overflow-wrap:anywhere] min-w-0 transition-colors',
+                        {
+                          "before:mr-2 before:text-slate-11 before:content-['$']":
+                            language === 'bash' && tokens.length === 1,
+                        },
+                      )}
                     >
                       {line.map((token, key) => {
-                        const tokenProps = getTokenProps({
-                          token,
-                        });
+                        const { key: _tokenKey, ...tokenProps } =
+                          getTokenProps({ token });
                         const isException =
                           token.content === 'from' &&
                           line[key + 1]?.content === ':';
