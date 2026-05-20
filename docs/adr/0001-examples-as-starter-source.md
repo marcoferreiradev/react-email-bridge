@@ -107,4 +107,7 @@ when the first concrete need appears.
 4. **Use a degit-style template fetch (`pnpm dlx degit user/repo/examples/vtex-store target`).**
    Rejected for v0.2 — works, but adds a dependency on a third-party
    tool and bypasses our own CLI. May reconsider for v0.3 if scaffolding
-   logic grows complex.
+   logic grows complex. **(Reconsidered and accepted via giget in 0.2.0
+   — see [ADR-0003](./0003-init-creates-new-project.md). The
+   "bypasses our own CLI" objection no longer applies: giget runs
+   inside `init`, the CLI calls it as its fetch transport.)**

@@ -115,27 +115,28 @@ pnpm format   # check + apply safe fixes
 ## Scaffolding from a populated example
 
 Users get the canonical scaffold via `npx react-email-bridge init` (in the
-README). When working on the library itself, you sometimes want to scaffold
-the full `vtex-store` template instead — to manually exercise the
-copy-rewrite path, or to bootstrap a local test project against your
-in-development build.
+README). When working on the library itself, the same flow is available
+via the author shortcut — useful when you want to exercise the
+copy-rewrite path without going through `npx`:
 
 ```bash
 # Scaffold the VTEX-store example into a sibling directory
-pnpm -w run new-project ../my-vtex-emails --template vtex-store
+pnpm new-project ../my-vtex-emails --template vtex-store
 
 # Or the minimal generic-hbs (matches the default scaffold)
-pnpm -w run new-project ../my-generic-emails
+pnpm new-project ../my-generic-emails
+
+# Faster iteration: skip install/git
+pnpm new-project ../my-emails --skip-install --skip-git
 ```
 
-`new-project.mjs` copies `examples/<template>/` and rewrites the
-`package.json` so the destination depends on the published
-`react-email-bridge` from the npm registry (rather than the workspace
-ref). For pre-publish testing, pass `--skip-install` to inspect the
-output before npm install would fail.
-
-See [ADR-0001](./docs/adr/0001-examples-as-starter-source.md) for the
-rationale behind the examples-doubling-as-starters layout.
+`scripts/new-project.ts` is a thin shim that imports the same `init`
+function the published CLI uses. Local mode is auto-detected (the
+scaffold module walks up looking for `pnpm-workspace.yaml` +
+`examples/<template>/`), so the example is copied from disk rather than
+fetched via giget. See [ADR-0003](./docs/adr/0003-init-creates-new-project.md)
+for the resolution mechanism and [ADR-0001](./docs/adr/0001-examples-as-starter-source.md)
+for the examples-doubling-as-starters layout.
 
 ## Tarball smoke (internal)
 

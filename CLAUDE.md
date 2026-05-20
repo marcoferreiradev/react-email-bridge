@@ -95,6 +95,6 @@ The two published packages:
 - `packages/react-email-bridge-ui/` — forked `@react-email/ui`
 - `examples/vtex-store/` — real VTEX templates; also the source for `new-project --template vtex-store` per ADR-0001
 - `examples/generic-hbs/` — minimal example; also the default scaffold (`new-project` → `generic-hbs`)
-- `scripts/new-project.mjs` — copies an example + rewrites for standalone use (see ADR-0001)
+- `scripts/new-project.ts` — author shortcut, thin shim over the package's `init` command (see ADR-0001 + ADR-0003)
 - `refs/` (gitignored) — reference repos for ground-truth validation
 

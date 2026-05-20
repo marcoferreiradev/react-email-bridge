@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import os from 'node:os';
 import url from 'node:url';
 import { spawnSync } from 'node:child_process';
 
@@ -169,37 +168,101 @@ describe('CLI export', () => {
 });
 
 describe('CLI init', () => {
-  it('scaffolds emails/ + welcome.tsx + welcome.json + config + tsconfig', () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'reb-init-'));
-    projects.push(dir);
+  // init scaffolds a NEW project (per ADR-0003). Tests run with
+  // --skip-install + --skip-git for speed and to avoid touching network/git.
+  // The repo-local examples/ is auto-detected (template-source.ts walks up
+  // for pnpm-workspace.yaml + examples/<name>), so no giget call happens.
 
-    const result = runCli(dir, ['init']);
+  it('scaffolds a generic-hbs project by default', () => {
+    const parent = fs.mkdtempSync(path.join(TMP_ROOT, 'reb-init-'));
+    projects.push(parent);
+    const dest = path.join(parent, 'my-emails');
+
+    const result = runCli(parent, ['init', 'my-emails', '--skip-install', '--skip-git']);
+    if (result.status !== 0) {
+      console.error('STDOUT:', result.stdout);
+      console.error('STDERR:', result.stderr);
+    }
     expect(result.status).toBe(0);
 
-    expect(fs.existsSync(path.join(dir, 'emails/welcome.tsx'))).toBe(true);
-    expect(fs.existsSync(path.join(dir, 'emails/welcome.json'))).toBe(true);
-    expect(fs.existsSync(path.join(dir, 'react-email-bridge.config.ts'))).toBe(true);
-    expect(fs.existsSync(path.join(dir, 'tsconfig.json'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, 'package.json'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, 'tsconfig.json'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, '.npmrc'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, 'react-email-bridge.config.ts'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, 'README.md'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, 'emails'))).toBe(true);
 
-    const tsx = fs.readFileSync(path.join(dir, 'emails/welcome.tsx'), 'utf-8');
-    expect(tsx).toContain("from 'react-email-bridge'");
-    expect(tsx).toContain("from 'react-email-bridge/hbs'");
-    expect(tsx).toContain('export default');
-
-    const ts = fs.readFileSync(path.join(dir, 'tsconfig.json'), 'utf-8');
-    expect(ts).toContain('"jsx": "react-jsx"');
+    const pkg = JSON.parse(fs.readFileSync(path.join(dest, 'package.json'), 'utf-8'));
+    expect(pkg.name).toBe('my-emails');
+    expect(pkg.private).toBe(true);
+    expect(pkg.scripts.dev).toBe('react-email-bridge dev');
+    expect(pkg.scripts.export).toBe('react-email-bridge export --all');
+    expect(pkg.dependencies['react-email-bridge']).toMatch(/^\^/);
   });
 
-  it('is idempotent (does not overwrite existing files)', () => {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'reb-init-'));
-    projects.push(dir);
-    fs.mkdirSync(path.join(dir, 'emails'));
-    fs.writeFileSync(path.join(dir, 'emails/welcome.tsx'), '// already here');
+  it('selects vtex-store via --template flag', () => {
+    const parent = fs.mkdtempSync(path.join(TMP_ROOT, 'reb-init-'));
+    projects.push(parent);
+    const dest = path.join(parent, 'my-vtex');
 
-    const result = runCli(dir, ['init']);
+    const result = runCli(parent, [
+      'init',
+      'my-vtex',
+      '--template',
+      'vtex-store',
+      '--skip-install',
+      '--skip-git',
+    ]);
     expect(result.status).toBe(0);
 
-    const tsx = fs.readFileSync(path.join(dir, 'emails/welcome.tsx'), 'utf-8');
-    expect(tsx).toBe('// already here');
+    const pkg = JSON.parse(fs.readFileSync(path.join(dest, 'package.json'), 'utf-8'));
+    expect(pkg.devDependencies?.tailwindcss).toMatch(/^\^/);
+    expect(fs.existsSync(path.join(dest, 'tailwind.config.ts'))).toBe(true);
+    expect(fs.existsSync(path.join(dest, 'emails'))).toBe(true);
+  });
+
+  it('strips example-only files (CHANGELOG, PORTING, original README)', () => {
+    const parent = fs.mkdtempSync(path.join(TMP_ROOT, 'reb-init-'));
+    projects.push(parent);
+    const dest = path.join(parent, 'my-vtex');
+
+    const result = runCli(parent, [
+      'init',
+      'my-vtex',
+      '--template',
+      'vtex-store',
+      '--skip-install',
+      '--skip-git',
+    ]);
+    expect(result.status).toBe(0);
+
+    // PORTING.md exists in the example but should not leak into scaffold
+    expect(fs.existsSync(path.join(dest, 'PORTING.md'))).toBe(false);
+    // README.md should be the user-facing one we wrote, not the example's
+    const readme = fs.readFileSync(path.join(dest, 'README.md'), 'utf-8');
+    expect(readme).toContain('my-vtex');
+    expect(readme).toContain('react-email-bridge');
+  });
+
+  it('refuses to scaffold into a non-empty directory', () => {
+    const parent = fs.mkdtempSync(path.join(TMP_ROOT, 'reb-init-'));
+    projects.push(parent);
+    const dest = path.join(parent, 'occupied');
+    fs.mkdirSync(dest);
+    fs.writeFileSync(path.join(dest, 'sentinel.txt'), 'do not touch');
+
+    const result = runCli(parent, ['init', 'occupied', '--skip-install', '--skip-git']);
+    expect(result.status).not.toBe(0);
+    expect(stripAnsi(result.stdout + result.stderr)).toMatch(/not empty/i);
+    // sentinel survives — we never touched the dir
+    expect(fs.readFileSync(path.join(dest, 'sentinel.txt'), 'utf-8')).toBe('do not touch');
+  });
+
+  it('errors when <dir> positional is missing', () => {
+    const parent = fs.mkdtempSync(path.join(TMP_ROOT, 'reb-init-'));
+    projects.push(parent);
+    const result = runCli(parent, ['init']);
+    expect(result.status).not.toBe(0);
+    expect(stripAnsi(result.stdout + result.stderr)).toMatch(/missing required argument/i);
   });
 });

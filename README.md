@@ -68,17 +68,17 @@ The CLI is bundled. The live preview server (`react-email-bridge-ui`) is fetched
 ```bash
 npx react-email-bridge init my-emails
 cd my-emails
-npm install
 npm run dev          # http://localhost:3737
 ```
 
-`init` writes:
+`init` scaffolds a complete project, runs `<your-package-manager> install`, and initializes a git repo. The package manager is auto-detected from how you invoke the CLI (`npm`, `pnpm`, `yarn`, or `bun`).
 
 ```
 my-emails/
 ├── emails/
 │   ├── welcome.tsx          # your template
 │   └── welcome.json         # fixture used for preview only
+├── .npmrc
 ├── react-email-bridge.config.ts
 ├── tsconfig.json
 └── package.json
@@ -93,6 +93,26 @@ Open the URL the dev server prints. You'll see:
 - **Right edge** — drag to resize for desktop/mobile.
 
 Edit `emails/welcome.tsx` or `emails/welcome.json` — the iframe reloads automatically.
+
+### Want a richer starting point?
+
+Pass `--template vtex-store` for 13 pre-ported VTEX transactional templates + shared partials + Tailwind config:
+
+```bash
+npx react-email-bridge init my-vtex-emails --template vtex-store
+```
+
+Same flow — no need to clone the repo. Templates are fetched on-demand from GitHub, pinned to your installed CLI version.
+
+### Options
+
+```
+npx react-email-bridge init <dir> [options]
+
+  -t, --template <name>   Template to use (default: generic-hbs)
+  --skip-install          Skip running <pm> install
+  --skip-git              Skip git init + initial commit
+```
 
 ### Export
 
@@ -119,19 +139,6 @@ Writes `dist/welcome.hbs`:
 ```
 
 Copy-paste into VTEX Message Center's HTML field. VTEX fills the markers per send. Done.
-
-### Want a richer starting point?
-
-If you're starting fresh from VTEX templates, clone the repo and bootstrap from the populated example instead:
-
-```bash
-git clone https://github.com/marcoferreiradev/react-email-bridge.git
-cd react-email-bridge
-pnpm install
-pnpm -w run new-project ../my-vtex-emails --template vtex-store
-```
-
-That copies `examples/vtex-store/` (13 pre-ported VTEX transactional templates + shared partials + Tailwind config) into `../my-vtex-emails`, rewrites the package.json for standalone use, and runs `pnpm install`. See [CONTRIBUTING.md](./CONTRIBUTING.md#scaffolding-from-a-populated-example) for the full flow.
 
 ---
 
@@ -321,7 +328,7 @@ react-email-bridge/                  # this repo
 ├── examples/
 │   ├── generic-hbs/                 # minimal — also the default scaffold
 │   └── vtex-store/                  # 13 VTEX templates — also the vtex-store scaffold
-├── scripts/new-project.mjs          # copies an example, rewrites for standalone use
+├── scripts/new-project.ts           # author shortcut — thin shim over the published `init`
 ├── validation/                      # P0 end-to-end stress test (28 asserts)
 └── docs/
     ├── adr/                         # architectural decisions
