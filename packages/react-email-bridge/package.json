@@ -76,7 +76,7 @@
     "nypm": "^0.6.0",
     "picocolors": "^1.1.1",
     "prompts": "^2.4.2",
-    "react-email": "^6.1.4",
+    "react-email": "^6.3.3",
     "socket.io": "^4.8.0"
   },
   "devDependencies": {
